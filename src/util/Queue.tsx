@@ -1,39 +1,74 @@
-// this class represents a queue
+/**
+ * This class represents a queue
+ */
 export class Queue {
+  /**
+   * @param {string} name Name of the queue
+   * @param {Party[]} parties Order list of all parties such that lower index
+   *    implies earlier in queue
+   * @param {Date} end Time at which the queue ends
+   */
   name : string;
   parties: Party[];
   end: Date | undefined;
   // uid : string;
 
-  constructor(name?: string, end?: Date){
-      this.name = name ||"";
-      this.parties = [];
-      this.end = end;
-      // this.uid = uid || "";
+  /**
+   * @param {string} name Name of Queue
+   * @param {Date} end End time
+   */
+  constructor(name?: string, end?: Date) {
+    this.name = name ||'';
+    this.parties = [];
+    this.end = end;
+    // this.uid = uid || "";
   }
 
-  addParty(name?: string, size?: number, phoneNumber?: number, quote? :number){
+  /**
+   * Adds a party to the end of the queue
+   * @param {string} name Name of the Party
+   * @param {number} size Size of the party
+   * @param {number} phoneNumber phoneNumber of the party
+   * @param {number} quote The given estimated time to be called
+   */
+  addParty(name?: string, size?: number, phoneNumber?: number, quote? :number) {
     this.parties.push(new Party(name, size, phoneNumber, quote));
   }
 }
 
-class Party {
+/**
+ * A party in the queue
+ */
+export class Party {
+  /**
+   * @param {string} name Name of the Party
+   * @param {Date} checkIn Time of check in
+   * @param {number} size Size of the party
+   * @param {number} phoneNumber phoneNumber of the party
+   * @param {number} quote The given estimated time to be called
+   */
   name: string;
   checkIn : Date;
   size: number;
   phoneNumber: number;
-  quote: number; // quote of wait time given to party in min
-  //uid: string;
+  quote: number;
+  // uid: string;
 
-  constructor(name?: string, size?: number, phoneNumber?: number, quote? :number){
-    this.name = name ||"";
+  /**
+   * @param {string} name Name of the Party
+   * @param {number} size Size of the party
+   * @param {number} phoneNumber phoneNumber of the party
+   * @param {number} quote The given estimated time to be called
+   */
+  constructor(name?: string, size?: number, phoneNumber?: number,
+      quote? :number) {
+    this.name = name ||'';
     this.checkIn = new Date();
     this.size = size || -1;
     this.phoneNumber = phoneNumber || -1;
     this.quote = quote || -1;
-    //this.uid = uid || "";
+    // this.uid = uid || "";
   }
-
 }
 
 // ** TODO: impliment uid once database up
