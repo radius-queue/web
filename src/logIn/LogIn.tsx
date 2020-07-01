@@ -1,7 +1,7 @@
 import React from 'react';
 import {useForm} from './../logic/logic';
 
-interface signInValues {
+interface logInValues {
     email: string;
     password: string;
 }
@@ -41,7 +41,7 @@ const BusinessLogInPage = () => {
 /**
  * Validates the given username and password.
  */
-const submitFormValues = (formValues : signInValues) => {
+const submitFormValues = (formValues : logInValues) => {
     console.log([formValues.email, formValues.password]);
 }
 
