@@ -18,7 +18,7 @@ const BusinessLogInPage = () => {
   const [formValues, setFormValues] = useForm({email: '', password: ''});
 
   return (
-    <Card>
+    <Card id="login-card">
       <h1 className="form-header">Log In!</h1>
       <Form>
         <Form.Group controlId="businessLogInEmail">
@@ -61,7 +61,7 @@ const BusinessLogInPage = () => {
  */
 const submitFormValues = (formValues : logInValues) => {
   // TODO: Implement function (console.log is a placeholder)
-  console.log([formValues.email, formValues.password]);
+  console.log('Log in button pushed');
 };
 
 export default BusinessLogInPage;

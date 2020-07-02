@@ -4,6 +4,7 @@ import {TEST_QUEUE} from './util/HardcodedData';
 import BusinessLogInPage from './logIn/log-in';
 import RegistrationPage from './register/business-register';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 import {
   BrowserRouter as Router,

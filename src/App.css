@@ -37,11 +37,11 @@
   }
 }
 
-.card {
+#login-card {
   display: flex;
   padding: 10px;
   margin: 10px;
-  width: 18rem;
+  width: 15rem;
 }
 
 .form {
@@ -52,5 +52,5 @@
   text-align: center;
   background-color: white;
   border: none;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
