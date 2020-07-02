@@ -1,26 +1,9 @@
-/*
-Business Name
-Account Owner Name
-Account Email
-Account Password
-Address Field
-Hours of Operation
-Phone Number
-
-*/
-
 /**
  * This class represents a Business
  */
 export class Business {
-  /**
-   * @param {string} name Business name
-   * @param {string} string Account owner name
-   * @param {string} email Account email
-   * @param {BusinessLocation[]} locations Array of store location objects
-   */
   name: string;
-  ownerName: string;
+  ownerName: string[]; // [first, last]
   email: string;
   locations: BusinessLocation[];
   // password : string;
@@ -28,12 +11,12 @@ export class Business {
 
   /**
    * @param {string} name Business name
-   * @param {string} ownerName Account owner name
+   * @param {string[]} ownerName Account owner name [first, last]
    * @param {string} email Account email
    * @param {BusinessLocation[]} locations Optional array of store location
    *    objects, Default value is set to be empty array
    */
-  constructor(name: string, ownerName: string, email: string,
+  constructor(name: string, ownerName: string[], email: string,
       locations: BusinessLocation[] =[]) {
     this.name = name || '';
     this.ownerName = ownerName || '';
@@ -47,20 +30,11 @@ export class Business {
  * A specific business location
  */
 export class BusinessLocation {
-  /**
-   * @param {string} name Name of specific location
-   * @param {string} address Address of location
-   * @param {number[]} coordinates Geographic coordinates of location in
-   *    decimal degrees (DD). ex: [41.40338, 2.17403] lat, long
-   * @param {string[]} queues Array of queue ids associated with this location
-   * @param {number} geoFenceRadius Radius around business location (in miles)
-   *    that a customer is allowed to enter queue
-   */
   name: string;
   address: string;
-  coordinates: number[];
+  coordinates: number[]; // in decimal degrees (DD).
   queues: string[];
-  geoFenceRadius: number;
+  geoFenceRadius: number; // in miles
 
   /**
    * @param {string} name Name of specific location
