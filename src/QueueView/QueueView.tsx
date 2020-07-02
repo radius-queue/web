@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Queue, Party, Q_COLUMNS} from '../util/Queue';
+import {Queue, Party, Q_COLUMNS} from '../util/queue';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -25,7 +25,7 @@ export const QueueList = ({queue} : ListProps) => {
       console.log(list);
       setPartyList(list);
     }
-  }
+  };
 
   return (<div>
     <Card body>

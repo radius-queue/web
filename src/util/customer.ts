@@ -7,7 +7,6 @@ export class Customer {
   phoneNumber: string;
   currentQueue: string;
 
-
   /**
    * @param {string[]} name Customer Name [First, Last]
    * @param {string} email Customer email
