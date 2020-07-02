@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.card {
+  display: flex;
+  padding: 10px;
+  margin: 10px;
+  width: 18rem;
+}
+
+.form {
+  text-align: left;
+}
+
+.form-header {
+  text-align: center;
+  background-color: white;
+  border: none;
+  margin-bottom: 1rem;
+}
