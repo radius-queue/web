@@ -13,15 +13,9 @@ export class Queue {
    * @param {Party[]} parties Optional field for initializing current queue,
    *    Default value is set to empty array
    */
-<<<<<<< HEAD:src/util/Queue.ts
   constructor(name?: string, end?: Date, parties?: Party[]) {
     this.name = name ||'';
     this.parties = parties ? parties : [];
-=======
-  constructor(name: string, end: Date, parties: Party[] = []) {
-    this.name = name ||'';
-    this.parties = parties;
->>>>>>> f5a95cb02f1d23d93bf7896e8aec4ab6ace5dec9:src/util/Queue.tsx
     this.end = end;
     // this.uid = uid || "";
   }
@@ -65,5 +59,7 @@ export class Party {
     // this.uid = uid || "";
   }
 }
+
+export const Q_COLUMNS : string[] = ['#', 'Name', 'Party Size', 'Quoted Time'];
 
 // ** TODO: impliment uid once database up
