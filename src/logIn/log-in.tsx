@@ -5,13 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
-  useRouteMatch,
-  useParams
-} from "react-router-dom";
+} from 'react-router-dom';
 
 interface logInValues {
     email: string;
