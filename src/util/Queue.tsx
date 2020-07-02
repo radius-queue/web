@@ -16,10 +16,12 @@ export class Queue {
   /**
    * @param {string} name Name of Queue
    * @param {Date} end End time
+   * @param {Party[]} parties Optional field for initializing current queue,
+   *    Default value is set to empty array
    */
-  constructor(name?: string, end?: Date) {
+  constructor(name: string, end: Date, parties: Party[] = []) {
     this.name = name ||'';
-    this.parties = [];
+    this.parties = parties;
     this.end = end;
     // this.uid = uid || "";
   }
@@ -31,7 +33,7 @@ export class Queue {
    * @param {number} phoneNumber phoneNumber of the party
    * @param {number} quote The given estimated time to be called
    */
-  addParty(name?: string, size?: number, phoneNumber?: number, quote? :number) {
+  addParty(name: string, size: number, phoneNumber: number, quote:number) {
     this.parties.push(new Party(name, size, phoneNumber, quote));
   }
 }
@@ -60,13 +62,13 @@ export class Party {
    * @param {number} phoneNumber phoneNumber of the party
    * @param {number} quote The given estimated time to be called
    */
-  constructor(name?: string, size?: number, phoneNumber?: number,
-      quote? :number) {
-    this.name = name ||'';
+  constructor(name: string, size: number, phoneNumber: number,
+      quote:number) {
+    this.name = name;
     this.checkIn = new Date();
-    this.size = size || -1;
-    this.phoneNumber = phoneNumber || -1;
-    this.quote = quote || -1;
+    this.size = size;
+    this.phoneNumber = phoneNumber;
+    this.quote = quote;
     // this.uid = uid || "";
   }
 }
