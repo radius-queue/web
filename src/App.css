@@ -37,11 +37,18 @@
   }
 }
 
+#login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
 #login-card {
   display: flex;
   padding: 10px;
   margin: 10px;
-  width: 15rem;
+  width: 25rem;
 }
 
 .form {
@@ -52,5 +59,6 @@
   text-align: center;
   background-color: white;
   border: none;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.3rem;
+  font-size: 18pt;
 }
