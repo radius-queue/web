@@ -17,9 +17,9 @@ export class Queue {
    * @param {string} name Name of Queue
    * @param {Date} end End time
    */
-  constructor(name?: string, end?: Date) {
+  constructor(name?: string, end?: Date, parties?: Party[]) {
     this.name = name ||'';
-    this.parties = [];
+    this.parties = parties ? parties : [];
     this.end = end;
     // this.uid = uid || "";
   }
