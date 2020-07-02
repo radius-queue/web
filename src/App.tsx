@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import BusinessLogInPage from "./logIn/LogIn";
+import BusinessLogInPage from './logIn/log-in';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
