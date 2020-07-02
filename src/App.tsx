@@ -1,29 +1,55 @@
 import React from 'react';
 import {QueueList} from './QueueView/QueueView';
 import {TEST_QUEUE} from './util/HardcodedData';
+import BusinessLogInPage from './logIn/log-in';
 import RegistrationPage from './register/business-register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+} from 'react-router-dom';
+
 /**
-<<<<<<< HEAD
  * Top Level app component
  *
  * @return {HTMLElement} App HTML
  */
 function App() {
   return (
-    <QueueList queue={TEST_QUEUE} />
-=======
- * Presents the Business-Side Web App.
- * @return {html} Web App.
- */
-function App() {
-  return (
-    <div>
-      <BusinessLogInPage/>
-      <RegistrationPage/>
-    </div>
->>>>>>> 001df634b1bf5608c0f016b29ebd065f2ea50132
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/QueueView/QueueView">QueueView</Link>
+            </li>
+            <li>
+              <Link to="/logIn/log-in">Log In</Link>
+            </li>
+            <li>
+              <Link to="/register/business-register">Register</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path="/QueueView/QueueView">
+            <QueueList queue={TEST_QUEUE}/>
+          </Route>
+          <Route path="/logIn/log-in">
+            <BusinessLogInPage />
+          </Route>
+          <Route path="/register/business-register">
+            <RegistrationPage />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
