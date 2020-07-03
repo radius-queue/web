@@ -8,15 +8,16 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {useForm} from '../logic/logic';
+import Modal from 'react-bootstrap/Modal';
 import {CaretUpFill, CaretDownFill} from 'react-bootstrap-icons';
 import './queue-view.css';
 
 interface CardProps {
-  party: Party
+  party: Party | undefined
 }
 
-export const UserCard = ({party} : CardProps) => {
-  const [message, setMessage] = useForm({data: ''});
+const UserCard = ({party} : CardProps) => {
+  const [message, setMessage] = useState('');
 
   return !party ? <div></div> : (
     <Card id="party-card">
@@ -32,9 +33,8 @@ export const UserCard = ({party} : CardProps) => {
         <Form.Control
           as='textarea'
           placeholder='Type a Message'
-          name={'data'}
-          onChange={setMessage}
-          value={message.data}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
+          value={message}
           rows={3}
         />
         <Button style={{width: '100%'}}>Send Custom Message</Button>
@@ -46,10 +46,11 @@ export const UserCard = ({party} : CardProps) => {
 interface ListProps {
   queue: Queue,
   showParty: (party: Party) => void,
-  setQueue: (queue: Queue) => void
+  setQueue: (queue: Queue) => void,
+  showModal: () => void
 }
 
-export const QueueList = ({queue, showParty, setQueue} : ListProps) => {
+const QueueList = ({queue, showParty, setQueue, showModal} : ListProps) => {
   const moveOne = (index : number, offset: number) => {
     if (index + offset >= 0 && index + offset < queue.parties.length) {
       const list : Party[] = queue.parties.slice();
@@ -102,10 +103,88 @@ export const QueueList = ({queue, showParty, setQueue} : ListProps) => {
             </Row>
           </ListGroup.Item>))}
       </ListGroup>
-      <Button id="add-customer-button">Add a Customer</Button>
+      <Button id="add-customer-button" onClick={showModal}>Add a Party</Button>
     </Card>
   );
 };
+
+interface ModalProps {
+  show: boolean,
+  add: (p: Party) => void,
+  close: () => void,
+}
+
+const AddCustomerModal = ({show, close, add} : ModalProps) => {
+  const [name, setName] = useState('');
+  const [size, setSize] = useState('');
+  const [phoneNumber, setNumber] = useState('');
+
+  const clearState = () => {
+    setName('');
+    setSize('');
+    setNumber('');
+  };
+
+  const onSubmit = () => {
+    const party : Party = new Party(name, parseInt(size), phoneNumber, 50);
+
+    add(party);
+    clearState();
+  };
+
+  const onHide = () => {
+    clearState();
+    close();
+  };
+
+  return (
+    <Modal show={show} onHide={onHide}>
+      <Modal.Header>
+        <Modal.Title>Add a Party</Modal.Title>
+      </Modal.Header>
+      <Form style={{margin: '2%'}}>
+        <Row>
+          <Col>
+            <Form.Label>Party Name</Form.Label>
+            <Form.Control
+              placeholder='Michael Jordan'
+              type='text'
+              onChange={(e) => setName(e.target.value)}
+              name='name'
+              value={name}
+            />
+          </Col>
+          <Col>
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+              placeholder='555-555-5555'
+              type='text'
+              onChange={(e) => setNumber(e.target.value)}
+              name='phoneNumber'
+              value={phoneNumber}
+            />
+          </Col>
+        </Row>
+        <Row style={{marginTop: '5px'}}>
+          <Col>
+            <Form.Label>Party Size</Form.Label>
+            <Form.Control
+              placeholder='23'
+              type='number'
+              onChange={(e) => setSize(e.target.value)}
+              name='size'
+              value={size}
+            />
+          </Col>
+        </Row>
+      </Form>
+      <Modal.Footer>
+        <Button onClick={onSubmit}>Add Party</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
 
 interface ViewState {
   queue: Queue
@@ -119,10 +198,29 @@ interface ViewProps {
 export const QueueView = ({queue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
   const [party, setParty] = useState<Party | undefined>();
+  const [modal, setModal] = useState<boolean>(false);
+
+  const submit = (party: Party) => {
+    const list: Party[] = stateQ.parties.slice();
+
+    list.push(party);
+
+    setQ(new Queue(stateQ.name, stateQ.end, list));
+    setModal(false);
+  };
 
   return (
-    <Container id="queue-party-container">
-      <QueueList queue={stateQ} showParty={setParty} setQueue={setQ}/>
+    <Container id='queue-party-container'>
+      <AddCustomerModal
+        show={modal}
+        close={() => setModal(false)}
+        add={(p : Party) => submit(p)}
+      />
+      <QueueList queue={stateQ}
+        showParty={setParty}
+        setQueue={setQ}
+        showModal={() => setModal(true)}
+      />
       <UserCard party={party!}/>
     </Container>
   );
