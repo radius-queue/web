@@ -7,31 +7,35 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import './App.css';
 
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Link,
+  useRouteMatch,
 } from 'react-router-dom';
 
 export const Hub = () => {
+  const {path, url} = useRouteMatch();
   return (
-    <Router>
+    <div>
       <nav>
-        <Link to="/stats">Stats</Link>
-        <Link to="/queue-view">Queue</Link>
-        <Link to="/profile">Profile</Link>
+        <Link to={`${url}/stats`}>Stats</Link>
+        <Link to={`${url}/queue-view`}>Queue</Link>
+        <Link to={`${url}/profile`}>Profile</Link>
       </nav>
       <Switch>
-        <Route path="/stats">
+        <Route exact path={path}>
+          <h3>Welcome to the hub!</h3>
+        </Route>
+        <Route path={`${path}/stats`}>
           <StatsPage />
         </Route>
-        <Route path="/queue-view">
+        <Route path={`${path}/queue-view`}>
           <QueueList queue={TEST_QUEUE}/>
         </Route>
-        <Route path="/profile">
+        <Route path={`${path}/profile`}>
           <ProfilePage />
         </Route>
       </Switch>
-    </Router>
+    </div>
   );
 };
