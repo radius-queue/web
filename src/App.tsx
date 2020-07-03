@@ -1,5 +1,5 @@
 import React from 'react';
-import {QueueList} from './QueueView/QueueView';
+import {QueueList, UserCard, QueueView} from './QueueView/QueueView';
 import {TEST_QUEUE} from './util/HardcodedData';
 import BusinessLogInPage from './logIn/log-in';
 import RegistrationPage from './register/business-register';
@@ -40,7 +40,7 @@ function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/QueueView/QueueView">
-            <QueueList queue={TEST_QUEUE}/>
+            <QueueView queue={TEST_QUEUE}/>
           </Route>
           <Route path="/logIn/log-in">
             <BusinessLogInPage />

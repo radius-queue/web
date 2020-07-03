@@ -44,6 +44,22 @@
   align-items: center;
 }
 
+#centered-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#queue-container {
+  display: flex;
+  width: 100%;
+}
+
+#queue-card {
+  height: 100%;
+  width: 50%;
+}
+
 #login-card {
   display: flex;
   padding: 10px;
