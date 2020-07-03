@@ -58,6 +58,8 @@
 #queue-card {
   height: 100%;
   width: 50%;
+  padding: 1%;
+  justify-content: space-around;
 }
 
 #login-card {

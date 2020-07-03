@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import {useState} from 'react';
 
 /**
  * Hook for updating form fields. Takes in the initial
@@ -11,9 +11,12 @@ import React, { useState } from 'react';
  *         }
  * you should have at least one input that looks like:
  *     <input name="value" type='text' ... />
- * 
- * Refer to the video on React hooks "useState" in 
- * our chat for more information. 
+ *
+ * Refer to the video on React hooks "useState" in
+ * our chat for more information.
+ *
+ * @param {any} initialState
+ * @return {any}
  * */
 export const useForm = (initialState: any) => {
   const [state, setState] = useState(initialState);
@@ -23,8 +26,8 @@ export const useForm = (initialState: any) => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setState({
         ...state,
-        [e.target.name]: e.target.value
-      })
-    }
-  ]
-}
+        [e.target.name]: e.target.value,
+      });
+    },
+  ];
+};
