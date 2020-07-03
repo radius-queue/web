@@ -1,0 +1,42 @@
+#queue-party-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5pt;
+  height: 100%;
+  max-width: 100%;
+}
+
+#queue-card {
+  text-align: center;
+  width: 60%;
+  height: 98%;
+  border: 2pt solid #007bff;
+  padding: 1%;
+  min-height: 200px;
+  min-width: 550px;
+}
+
+#queue {
+  width: 100%;
+  border-bottom: none;
+}
+
+#party-card {
+  width: 39%;
+  height: 98%;
+  border: 2pt solid #007bff;
+  padding: 1%;
+}
+
+.list-group-item .row {
+  align-items: center;
+}
+
+.queue-entry:hover {
+  cursor: pointer;
+}
+
+#add-customer-button {
+  margin-top: 10px;
+}

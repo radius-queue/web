@@ -22,7 +22,7 @@ import {
 function App() {
   return (
     <Router>
-      <div>
+      <div id="whole-app">
         <nav>
           <ul>
             <li>
