@@ -1,5 +1,5 @@
 import React from 'react';
-import {QueueList} from './queue-view';
+import {QueueView} from './queue-view';
 import StatsPage from './stats';
 import ProfilePage from './profile';
 import {TEST_QUEUE} from './../util/HardcodedData';
@@ -30,7 +30,7 @@ export const Hub = () => {
           <StatsPage />
         </Route>
         <Route path={`${path}/queue-view`}>
-          <QueueList queue={TEST_QUEUE}/>
+          <QueueView queue={TEST_QUEUE}/>
         </Route>
         <Route path={`${path}/profile`}>
           <ProfilePage />

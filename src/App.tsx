@@ -44,7 +44,7 @@ function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/post-log-in/queue-view">
-            
+            <QueueView queue={TEST_QUEUE}/>
           </Route>
           <Route path="/pre-log-in/log-in">
             <BusinessLogInPage />
