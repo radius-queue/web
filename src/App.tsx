@@ -1,8 +1,9 @@
 import React from 'react';
-import {QueueList, UserCard, QueueView} from './QueueView/QueueView';
+import {QueueView} from './post-log-in/queue-view';
 import {TEST_QUEUE} from './util/HardcodedData';
-import BusinessLogInPage from './logIn/log-in';
-import RegistrationPage from './register/business-register';
+import BusinessLogInPage from './pre-log-in/log-in';
+import RegistrationPage from './pre-log-in/business-register';
+import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -25,13 +26,16 @@ function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/QueueView/QueueView">QueueView</Link>
+              <Link to="/post-log-in/queue-view">QueueView</Link>
             </li>
             <li>
-              <Link to="/logIn/log-in">Log In</Link>
+              <Link to="/pre-log-in/log-in">Log In</Link>
             </li>
             <li>
-              <Link to="/register/business-register">Register</Link>
+              <Link to="/pre-log-in/business-register">Register</Link>
+            </li>
+            <li>
+              <Link to="/post-log-in/hub">Hub</Link>
             </li>
           </ul>
         </nav>
@@ -39,14 +43,17 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/QueueView/QueueView">
-            <QueueView queue={TEST_QUEUE}/>
+          <Route path="/post-log-in/queue-view">
+            
           </Route>
-          <Route path="/logIn/log-in">
+          <Route path="/pre-log-in/log-in">
             <BusinessLogInPage />
           </Route>
-          <Route path="/register/business-register">
+          <Route path="/pre-log-in/business-register">
             <RegistrationPage />
+          </Route>
+          <Route path="/post-log-in/hub">
+            <Hub />
           </Route>
         </Switch>
       </div>

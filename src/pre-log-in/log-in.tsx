@@ -1,5 +1,5 @@
 import React from 'react';
-import {useForm} from './../logic/logic';
+import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -58,8 +58,9 @@ const BusinessLogInPage = () => {
       </Card>
       <div>
         <p>
-          New to Ahead?
-          <Link to="../../register/business-register"> Register here.</Link>
+          New to Ahead? <Link to="../../register/business-register">
+            Register here.
+          </Link>
         </p>
       </div>
     </div>
