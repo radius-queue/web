@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Queue, Party, Q_COLUMNS} from '../util/queue';
+import {Queue, Party} from '../util/queue';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -7,9 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
-import {useForm} from '../logic/logic';
 import Modal from 'react-bootstrap/Modal';
-import {CaretUpFill, CaretDownFill} from 'react-bootstrap-icons';
+import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
 import './queue-view.css';
 
 interface CardProps {
@@ -47,10 +46,11 @@ interface ListProps {
   queue: Queue,
   showParty: (party: Party) => void,
   setQueue: (queue: Queue) => void,
-  showModal: () => void
+  showAddModal: () => void,
+  showDeleteModal: () => void
 }
 
-const QueueList = ({queue, showParty, setQueue, showModal} : ListProps) => {
+const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal} : ListProps) => {
   const moveOne = (index : number, offset: number) => {
     if (index + offset >= 0 && index + offset < queue.parties.length) {
       const list : Party[] = queue.parties.slice();
@@ -59,7 +59,7 @@ const QueueList = ({queue, showParty, setQueue, showModal} : ListProps) => {
 
       list[index + offset] = list[index];
       list[index] = target;
-
+      console.log(list);
       setQueue(new Queue(queue.name, queue.end, list));
     }
   };
@@ -68,9 +68,6 @@ const QueueList = ({queue, showParty, setQueue, showModal} : ListProps) => {
     <Card id='queue-card'>
       <ListGroup id='queue' variant="flush">
         <ListGroup.Item>
-          {/* {Q_COLUMNS.map((val: string) => <Col key={val} md={2}>
-            {val}
-          </Col>)} */}
           <Row>
             <Col md={1}>#</Col>
             <Col md={4}>Name</Col>
@@ -80,7 +77,7 @@ const QueueList = ({queue, showParty, setQueue, showModal} : ListProps) => {
           </Row>
         </ListGroup.Item>
         {queue.parties.map((person: Party, idx: number) =>
-          (<ListGroup.Item className="queue-entry" key={person.name} onClick={() => showParty(person)}>
+          (<ListGroup.Item className="queue-entry" key={idx} onClick={() => showParty(person)}>
             <Row>
               <Col md={1}>{idx + 1}</Col>
               <Col md={4}>{person.name}</Col>
@@ -99,22 +96,29 @@ const QueueList = ({queue, showParty, setQueue, showModal} : ListProps) => {
                 >
                   <CaretDownFill />
                 </Button>
+                <Button
+                  style={{margin: '3px'}}
+                  onClick={showDeleteModal}
+                >
+                  <TrashFill />
+                </Button>
               </Col>
             </Row>
           </ListGroup.Item>))}
       </ListGroup>
-      <Button id="add-customer-button" onClick={showModal}>Add a Party</Button>
+      <Button id="add-customer-button" onClick={showAddModal}>Add a Party</Button>
     </Card>
   );
 };
 
 interface ModalProps {
   show: boolean,
-  add: (p: Party) => void,
+  mainAction: (p: Party) => void,
+  party ?: Party, 
   close: () => void,
 }
 
-const AddCustomerModal = ({show, close, add} : ModalProps) => {
+const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [name, setName] = useState('');
   const [size, setSize] = useState('');
   const [phoneNumber, setNumber] = useState('');
@@ -128,7 +132,7 @@ const AddCustomerModal = ({show, close, add} : ModalProps) => {
   const onSubmit = () => {
     const party : Party = new Party(name, parseInt(size), phoneNumber, 50);
 
-    add(party);
+    mainAction(party);
     clearState();
   };
 
@@ -185,6 +189,25 @@ const AddCustomerModal = ({show, close, add} : ModalProps) => {
   );
 };
 
+const DeleteCustomerModal = ({show, close, party, mainAction} : ModalProps) => {
+  const onDelete = () => {
+    mainAction(party!);
+    close();
+  };
+
+  return (
+    <Modal show={show} onHide={close}>
+      <Modal.Header>
+        <Modal.Title>
+          Are you sure you want to remove {party!.name} from the queue?
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Footer>
+        <Button onClick={onDelete}>Remove {party!.name}</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
 
 interface ViewProps {
   queue: Queue
@@ -193,7 +216,8 @@ interface ViewProps {
 export const QueueView = ({queue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
   const [party, setParty] = useState<Party | undefined>(queue.parties[0]);
-  const [modal, setModal] = useState<boolean>(false);
+  const [addModal, setAddModal] = useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
   const submit = (party: Party) => {
     const list: Party[] = stateQ.parties.slice();
@@ -201,20 +225,33 @@ export const QueueView = ({queue} : ViewProps) => {
     list.push(party);
 
     setQ(new Queue(stateQ.name, stateQ.end, list));
-    setModal(false);
+    setAddModal(false);
+  };
+
+  const removeParty = (party: Party) => {
+    const list: Party[] = stateQ.parties.filter((val) => val !== party);
+
+    setQ(new Queue(stateQ.name, stateQ.end, list));
   };
 
   return (
     <Container id='queue-party-container'>
       <AddCustomerModal
-        show={modal}
-        close={() => setModal(false)}
-        add={(p : Party) => submit(p)}
+        show={addModal}
+        close={() => setAddModal(false)}
+        mainAction={(p : Party) => submit(p)}
+      />
+      <DeleteCustomerModal
+        show={deleteModal}
+        close={() => setDeleteModal(false)}
+        mainAction={(p: Party) => removeParty(p)}
+        party={party!}
       />
       <QueueList queue={stateQ}
         showParty={setParty}
         setQueue={setQ}
-        showModal={() => setModal(true)}
+        showAddModal={() => setAddModal(true)}
+        showDeleteModal={() => setDeleteModal(true)}
       />
       <UserCard party={party!}/>
     </Container>
