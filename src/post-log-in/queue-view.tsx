@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
+<<<<<<< HEAD
 import {Queue, Party} from '../util/queue';
+=======
+import {Queue, Party, Q_COLUMNS} from '../util/queue';
+import PropTypes from 'prop-types';
+>>>>>>> 2ac64036c873131bff8fc6c49e63d88c9ee669b0
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -14,6 +19,7 @@ import './queue-view.css';
 interface CardProps {
   party: Party | undefined
 }
+
 
 const UserCard = ({party} : CardProps) => {
   const [message, setMessage] = useState('');
@@ -42,6 +48,9 @@ const UserCard = ({party} : CardProps) => {
   );
 };
 
+UserCard.propTypes = {
+  party: PropTypes.element,
+};
 interface ListProps {
   queue: Queue,
   showParty: (party: Party) => void,
