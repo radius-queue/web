@@ -194,18 +194,13 @@ const AddCustomerModal = ({show, close, add} : ModalProps) => {
 };
 
 
-interface ViewState {
-  queue: Queue
-  currentParty: Party | undefined
-}
-
 interface ViewProps {
   queue: Queue
 }
 
 export const QueueView = ({queue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
-  const [party, setParty] = useState<Party | undefined>();
+  const [party, setParty] = useState<Party | undefined>(queue.parties[0]);
   const [modal, setModal] = useState<boolean>(false);
 
   const submit = (party: Party) => {
