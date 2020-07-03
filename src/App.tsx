@@ -3,6 +3,7 @@ import {QueueList} from './post-log-in/queue-view';
 import {TEST_QUEUE} from './util/HardcodedData';
 import BusinessLogInPage from './pre-log-in/log-in';
 import RegistrationPage from './pre-log-in/business-register';
+import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -33,6 +34,9 @@ function App() {
             <li>
               <Link to="/pre-log-in/business-register">Register</Link>
             </li>
+            <li>
+              <Link to="/post-log-in/hub">Hub</Link>
+            </li>
           </ul>
         </nav>
 
@@ -47,6 +51,9 @@ function App() {
           </Route>
           <Route path="/pre-log-in/business-register">
             <RegistrationPage />
+          </Route>
+          <Route path="/post-log-in/hub">
+            <Hub />
           </Route>
         </Switch>
       </div>
