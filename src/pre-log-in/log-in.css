@@ -1,0 +1,25 @@
+#login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#login-card {
+  display: flex;
+  padding: 10px;
+  margin: 10px;
+  width: 25rem;
+}
+
+.form {
+  text-align: left;
+}
+
+.form-header {
+  text-align: center;
+  background-color: white;
+  border: none;
+  margin-bottom: 1.3rem;
+  font-size: 18pt;
+}

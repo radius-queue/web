@@ -6,8 +6,10 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
 import {useForm} from '../logic/logic';
 import {CaretUpFill, CaretDownFill} from 'react-bootstrap-icons';
+import './queue-view.css';
 
 interface CardProps {
   party: Party
@@ -16,30 +18,29 @@ interface CardProps {
 export const UserCard = ({party} : CardProps) => {
   const [message, setMessage] = useForm({data: ''});
 
-  return !party ? <div></div> :
-    (<div id='queue-card'>
-      <Card>
-        <h1>{party.name}</h1>
-        <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
-        <Card.Text>Estimated Wait Time: {party.quote} minutes</Card.Text>
-        <Card.Text>Size: {party.size}</Card.Text>
-        <div id='centered-container'>
-          <Button style={{margin: '10px'}}>Send Ready Notification</Button>
-          <Button style={{margin: '10px'}}>Send 5 Min. Notification</Button>
-        </div>
-        <Form.Group>
-          <Form.Control
-            as='textarea'
-            placeholder='Type a Message'
-            name={'data'}
-            onChange={setMessage}
-            value={message.data}
-            rows={3}
-          />
-          <Button style={{width: '100%'}}>Send Custom Message</Button>
-        </Form.Group>
-      </Card>
-    </div>);
+  return !party ? <div></div> : (
+    <Card id="party-card">
+      <h1>{party.name}</h1>
+      <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
+      <Card.Text>Estimated Wait Time: {party.quote} minutes</Card.Text>
+      <Card.Text>Size: {party.size}</Card.Text>
+      <div id='centered-container'>
+        <Button style={{margin: '10px'}}>Send Ready Notification</Button>
+        <Button style={{margin: '10px'}}>Send 5 Min. Notification</Button>
+      </div>
+      <Form.Group>
+        <Form.Control
+          as='textarea'
+          placeholder='Type a Message'
+          name={'data'}
+          onChange={setMessage}
+          value={message.data}
+          rows={3}
+        />
+        <Button style={{width: '100%'}}>Send Custom Message</Button>
+      </Form.Group>
+    </Card>
+  );
 };
 
 interface ListProps {
@@ -62,50 +63,48 @@ export const QueueList = ({queue, showParty, setQueue} : ListProps) => {
     }
   };
 
-  return (<div id='queue-card'>
-    <Card body>
-      <Container>
-        <Row>
-          {Q_COLUMNS.map((val: string) => <Col key={val}>
+  return (
+    <Card id='queue-card'>
+      <ListGroup id='queue' variant="flush">
+        <ListGroup.Item>
+          {/* {Q_COLUMNS.map((val: string) => <Col key={val} md={2}>
             {val}
-          </Col>)}
-          <Col></Col>
-        </Row>
-      </Container>
-    </Card>
-    {queue.parties.map((person: Party, idx: number) =>
-      (<Card key={person.name} body>
-        <Container>
-          <Row onClick={() => showParty(person)}>
-            <Col>{idx + 1}</Col>
-            <Col>{person.name}</Col>
-            <Col>{person.size}</Col>
-            <Col>{person.quote}</Col>
-            <Col>
-              <Button
-                style={{margin: '3px'}}
-                onClick={() => moveOne(idx, -1)}
-              >
-                <CaretUpFill />
-              </Button>
-              <Button
-                style={{margin: '3px'}}
-                onClick={() => moveOne(idx, 1)}
-              >
-                <CaretDownFill />
-              </Button>
-            </Col>
+          </Col>)} */}
+          <Row>
+            <Col md={1}>#</Col>
+            <Col md={4}>Name</Col>
+            <Col md={2}>Party Size</Col>
+            <Col md={2}>Time in Line</Col>
+            <Col md={3}>Actions</Col>
           </Row>
-        </Container>
-      </Card>))}
-    <Card body>
-      <Container>
-        <Row id='centered-container'>
-          <Button style={{marginLeft: '10px'}}>Add a Customer</Button>
-        </Row>
-      </Container>
+        </ListGroup.Item>
+        {queue.parties.map((person: Party, idx: number) =>
+          (<ListGroup.Item className="queue-entry" key={person.name} onClick={() => showParty(person)}>
+            <Row>
+              <Col md={1}>{idx + 1}</Col>
+              <Col md={4}>{person.name}</Col>
+              <Col md={2}>{person.size}</Col>
+              <Col md={2}>{person.quote}</Col>
+              <Col md={3}>
+                <Button
+                  style={{margin: '3px'}}
+                  onClick={() => moveOne(idx, -1)}
+                >
+                  <CaretUpFill />
+                </Button>
+                <Button
+                  style={{margin: '3px'}}
+                  onClick={() => moveOne(idx, 1)}
+                >
+                  <CaretDownFill />
+                </Button>
+              </Col>
+            </Row>
+          </ListGroup.Item>))}
+      </ListGroup>
+      <Button id="add-customer-button">Add a Customer</Button>
     </Card>
-  </div>);
+  );
 };
 
 interface ViewState {
@@ -122,9 +121,9 @@ export const QueueView = ({queue} : ViewProps) => {
   const [party, setParty] = useState<Party | undefined>();
 
   return (
-    <div id='queue-container'>
+    <Container id="queue-party-container">
       <QueueList queue={stateQ} showParty={setParty} setQueue={setQ}/>
       <UserCard party={party!}/>
-    </div>
+    </Container>
   );
 };

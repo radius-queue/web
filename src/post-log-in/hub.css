@@ -1,0 +1,17 @@
+#hub-content {
+  height: 94%;
+}
+
+#whole-hub {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+  max-width: 100%;
+  justify-content: space-between;
+}
+
+#hub-nav {
+  height: 6%;
+  min-height: 45px;
+}
