@@ -11,13 +11,14 @@
   border: 2pt solid #007bff;
   position: absolute;
   top: 6.5vh;
-  right: 0vw;
+  right: 0.5vw;
   width: 38vw;
-  bottom: 58vh;
+  bottom: 65.5vh;
+  overflow: scroll;
 }
 
-#control-group-container {
-  padding: 2%;
+#add-customer-button {
+  margin: 5px; 
 }
 
 #control-button-group {
@@ -34,7 +35,6 @@
 #control-message-button {
   width: 100%;
   margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 #messanger {
@@ -63,7 +63,7 @@
   margin-left: 5px;
   bottom: 0.5vh;
   top: 35vh;
-  right: 0vw;
+  right: 0.5vw;
   width: 38vw;
   overflow: scroll;
 }
