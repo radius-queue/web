@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
-<<<<<<< HEAD
-import {Queue, Party} from '../util/queue';
-=======
 import {Queue, Party, Q_COLUMNS} from '../util/queue';
 import PropTypes from 'prop-types';
->>>>>>> 2ac64036c873131bff8fc6c49e63d88c9ee669b0
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';

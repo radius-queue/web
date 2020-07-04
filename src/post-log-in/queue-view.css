@@ -9,12 +9,13 @@
 
 #queue-card {
   text-align: center;
-  width: 60%;
-  height: 98%;
   border: 2pt solid #007bff;
-  padding: 1%;
-  min-height: 200px;
-  min-width: 550px;
+  position: absolute;
+  bottom: 0.5vh;
+  top: 13vh;
+  left: 0.5vw;
+  width: 60.5vw;
+  overflow: scroll;
 }
 
 #queue {
@@ -23,10 +24,13 @@
 }
 
 #party-card {
-  width: 39%;
-  height: 98%;
   border: 2pt solid #007bff;
-  padding: 1%;
+  position: absolute;
+  bottom: 0.5vh;
+  top: 13vh;
+  right: 0.5vw;
+  width: 38vw;
+  overflow: scroll;
 }
 
 .list-group-item .row {
