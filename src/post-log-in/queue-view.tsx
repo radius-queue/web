@@ -30,7 +30,7 @@ const UserCard = ({party} : CardProps) => {
         <Button style={{margin: '10px'}}>Send Ready Notification</Button>
         <Button style={{margin: '10px'}}>Send 5 Min. Notification</Button>
       </div>
-      <Form.Group>
+      <Form.Group className='almost-width'>
         <Form.Control
           as='textarea'
           placeholder='Type a Message'
@@ -111,7 +111,7 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal} :
             </Row>
           </ListGroup.Item>))}
       </ListGroup>
-      <Button id="add-customer-button" onClick={showAddModal}>Add a Party</Button>
+      <Button className='almost-width' onClick={showAddModal}>Add a Party</Button>
     </Card>
   );
 };

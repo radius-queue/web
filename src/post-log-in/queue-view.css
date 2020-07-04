@@ -12,7 +12,7 @@
   border: 2pt solid #007bff;
   position: absolute;
   bottom: 0.5vh;
-  top: 15vh;
+  top: 6.5vh;
   left: 0.5vw;
   width: 60.5vw;
   
@@ -28,7 +28,7 @@
   border: 2pt solid #007bff;
   position: absolute;
   bottom: 0.5vh;
-  top: 15vh;
+  top: 35vh;
   right: 0.5vw;
   width: 38vw;
   overflow: scroll;
@@ -42,6 +42,7 @@
   cursor: pointer;
 }
 
-#add-customer-button {
+.almost-width {
+  width: calc(100% - 6px);
   margin: 3px;
 }
