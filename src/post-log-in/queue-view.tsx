@@ -71,16 +71,16 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal} :
 
   return (
     <Card id='queue-card'>
+      <Card.Header>
+        <Row>
+          <Col md={1}>#</Col>
+          <Col md={4}>Name</Col>
+          <Col md={2}>Party Size</Col>
+          <Col md={2}>Time in Line</Col>
+          <Col md={3}>Actions</Col>
+        </Row>
+      </Card.Header>
       <ListGroup id='queue' variant="flush">
-        <ListGroup.Item>
-          <Row>
-            <Col md={1}>#</Col>
-            <Col md={4}>Name</Col>
-            <Col md={2}>Party Size</Col>
-            <Col md={2}>Time in Line</Col>
-            <Col md={3}>Actions</Col>
-          </Row>
-        </ListGroup.Item>
         {queue.parties.map((person: Party, idx: number) =>
           (<ListGroup.Item className="queue-entry" key={idx} onClick={() => showParty(person)}>
             <Row>
@@ -119,7 +119,7 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal} :
 interface ModalProps {
   show: boolean,
   mainAction: (p: Party) => void,
-  party ?: Party, 
+  party ?: Party,
   close: () => void,
 }
 
