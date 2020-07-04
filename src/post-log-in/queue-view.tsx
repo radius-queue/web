@@ -21,25 +21,28 @@ const UserCard = ({party} : CardProps) => {
   const [message, setMessage] = useState('');
 
   return !party ? <div></div> : (
-    <Card id="party-card">
-      <h1>{party.name}</h1>
-      <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
-      <Card.Text>Estimated Wait Time: {party.quote} minutes</Card.Text>
-      <Card.Text>Size: {party.size}</Card.Text>
-      <div id='centered-container'>
-        <Button style={{margin: '10px'}}>Send Ready Notification</Button>
-        <Button style={{margin: '10px'}}>Send 5 Min. Notification</Button>
-      </div>
-      <Form.Group>
-        <Form.Control
-          as='textarea'
-          placeholder='Type a Message'
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
-          value={message}
-          rows={3}
-        />
-        <Button style={{width: '100%'}}>Send Custom Message</Button>
-      </Form.Group>
+    <Card id='party-card'>
+      <Card.Body>
+        <Card.Title as='h1'>{party.name}</Card.Title>
+        <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
+        <Card.Text>Estimated Wait Time: {party.quote} minutes</Card.Text>
+        <Card.Text>Size: {party.size}</Card.Text>
+        <div id='centered-container'>
+          <Button style={{margin: '10px'}}>Send Ready Notification</Button>
+          <Button style={{margin: '10px'}}>Send 5 Min. Notification</Button>
+        </div>
+        <Form.Group>
+          <Form.Control
+            as='textarea'
+            placeholder='Type a Message'
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setMessage(e.target.value)}
+            value={message}
+            rows={3}
+          />
+          <Button style={{width: '100%'}}>Send Custom Message</Button>
+        </Form.Group>
+      </Card.Body>
     </Card>
   );
 };
@@ -55,7 +58,8 @@ interface ListProps {
   showDeleteModal: () => void
 }
 
-const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal} : ListProps) => {
+const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal}
+  : ListProps) => {
   const moveOne = (index : number, offset: number) => {
     if (index + offset >= 0 && index + offset < queue.parties.length) {
       const list : Party[] = queue.parties.slice();
@@ -82,7 +86,11 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal} :
       </Card.Header>
       <ListGroup id='queue' variant="flush">
         {queue.parties.map((person: Party, idx: number) =>
-          (<ListGroup.Item className="queue-entry" key={idx} onClick={() => showParty(person)}>
+          (<ListGroup.Item
+            className="queue-entry"
+            key={idx}
+            onClick={() => showParty(person)}
+          >
             <Row>
               <Col md={1}>{idx + 1}</Col>
               <Col md={4}>{person.name}</Col>
@@ -111,7 +119,12 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal} :
             </Row>
           </ListGroup.Item>))}
       </ListGroup>
-      <Button id="add-customer-button" onClick={showAddModal}>Add a Party</Button>
+      <Button
+        id="add-customer-button"
+        onClick={showAddModal}
+      >
+        Add a Party
+      </Button>
     </Card>
   );
 };
@@ -164,7 +177,12 @@ const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
       <Modal.Header>
         <Modal.Title>Add a Party</Modal.Title>
       </Modal.Header>
-      <Form style={{margin: '2%'}} onSubmit={onSubmit} validated={invalid} noValidate>
+      <Form
+        style={{margin: '2%'}}
+        onSubmit={onSubmit}
+        validated={invalid}
+        noValidate
+      >
         <Form.Row>
           <Col>
             <Form.Group>
@@ -176,7 +194,9 @@ const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
                 name='name'
                 required
               />
-              <Form.Control.Feedback type='invalid'>Please Enter a Name</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>
+                Please Enter a Name
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
@@ -189,7 +209,9 @@ const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
                 name='phoneNumber'
                 required
               />
-              <Form.Control.Feedback type='invalid'>Please Enter a Phone Number</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>
+                Please Enter a Phone Number
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Form.Row>
@@ -205,7 +227,9 @@ const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
                 max={100}
                 required
               />
-              <Form.Control.Feedback type='invalid'>Please Enter a Valid Group Size</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>
+                Please Enter a Valid Group Size
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Form.Row>
@@ -263,7 +287,7 @@ export const QueueView = ({queue} : ViewProps) => {
   };
 
   return (
-    <Container id='queue-party-container'>
+    <Container className='wrap'>
       <AddCustomerModal
         show={addModal}
         close={() => setAddModal(false)}
@@ -275,6 +299,20 @@ export const QueueView = ({queue} : ViewProps) => {
         mainAction={(p: Party) => removeParty(p)}
         party={party!}
       />
+      <div id='control-group-container'>
+        <div id='button-group'>
+          <Button>Open Queue</Button>
+          <Button>Close Queue</Button>
+        </div>
+        <Form.Group>
+          <Form.Control
+            as='textarea'
+            placeholder='Type a Message'
+            rows={3}
+          />
+          <Button style={{width: '100%'}}>Send Custom Message</Button>
+        </Form.Group>
+      </div>
       <QueueList queue={stateQ}
         showParty={setParty}
         setQueue={setQ}
