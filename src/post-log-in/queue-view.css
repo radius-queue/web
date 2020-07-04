@@ -12,22 +12,23 @@
   border: 2pt solid #007bff;
   position: absolute;
   bottom: 0.5vh;
-  top: 13vh;
+  top: 15vh;
   left: 0.5vw;
   width: 60.5vw;
-  overflow: scroll;
+  
 }
 
 #queue {
   width: 100%;
   border-bottom: none;
+  overflow: scroll;
 }
 
 #party-card {
   border: 2pt solid #007bff;
   position: absolute;
   bottom: 0.5vh;
-  top: 13vh;
+  top: 15vh;
   right: 0.5vw;
   width: 38vw;
   overflow: scroll;
@@ -42,5 +43,5 @@
 }
 
 #add-customer-button {
-  margin-top: 10px;
+  margin: 3px;
 }
