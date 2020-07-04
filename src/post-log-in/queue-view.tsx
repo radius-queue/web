@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Queue, Party, Q_COLUMNS} from '../util/queue';
+import {Queue, Party} from '../util/queue';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
@@ -30,7 +30,7 @@ const UserCard = ({party} : CardProps) => {
         <Button style={{margin: '10px'}}>Send Ready Notification</Button>
         <Button style={{margin: '10px'}}>Send 5 Min. Notification</Button>
       </div>
-      <Form.Group className='almost-width'>
+      <Form.Group>
         <Form.Control
           as='textarea'
           placeholder='Type a Message'
@@ -111,7 +111,7 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal} :
             </Row>
           </ListGroup.Item>))}
       </ListGroup>
-      <Button className='almost-width' onClick={showAddModal}>Add a Party</Button>
+      <Button id="add-customer-button" onClick={showAddModal}>Add a Party</Button>
     </Card>
   );
 };
@@ -127,6 +127,13 @@ const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [name, setName] = useState('');
   const [size, setSize] = useState('');
   const [phoneNumber, setNumber] = useState('');
+  const [invalid, setInvalid] = useState(false);
+
+  const setSizeField = (val: string) => {
+    if (val.length === 0 || val[val.length-1] !== 'e') {
+      setSize(val);
+    }
+  };
 
   const clearState = () => {
     setName('');
@@ -134,16 +141,22 @@ const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
     setNumber('');
   };
 
-  const onSubmit = () => {
-    const party : Party = new Party(name, parseInt(size), phoneNumber, 50);
-
-    mainAction(party);
-    clearState();
-  };
-
   const onHide = () => {
     clearState();
     close();
+    setInvalid(false);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!e.currentTarget.checkValidity()) {
+      setInvalid(true);
+      return;
+    }
+    const party : Party = new Party(name, parseInt(size), phoneNumber, 50);
+
+    mainAction(party);
+    onHide();
   };
 
   return (
@@ -151,45 +164,55 @@ const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
       <Modal.Header>
         <Modal.Title>Add a Party</Modal.Title>
       </Modal.Header>
-      <Form style={{margin: '2%'}}>
-        <Row>
+      <Form style={{margin: '2%'}} onSubmit={onSubmit} validated={invalid} noValidate>
+        <Form.Row>
           <Col>
-            <Form.Label>Party Name</Form.Label>
-            <Form.Control
-              placeholder='Michael Jordan'
-              type='text'
-              onChange={(e) => setName(e.target.value)}
-              name='name'
-              value={name}
-            />
+            <Form.Group>
+              <Form.Label>Party Name</Form.Label>
+              <Form.Control
+                placeholder='Michael Jordan'
+                type='text'
+                onChange={(e) => setName(e.target.value)}
+                name='name'
+                required
+              />
+              <Form.Control.Feedback type='invalid'>Please Enter a Name</Form.Control.Feedback>
+            </Form.Group>
           </Col>
           <Col>
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control
-              placeholder='555-555-5555'
-              type='text'
-              onChange={(e) => setNumber(e.target.value)}
-              name='phoneNumber'
-              value={phoneNumber}
-            />
+            <Form.Group>
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                placeholder='555-555-5555'
+                type='text'
+                onChange={(e) => setNumber(e.target.value)}
+                name='phoneNumber'
+                required
+              />
+              <Form.Control.Feedback type='invalid'>Please Enter a Phone Number</Form.Control.Feedback>
+            </Form.Group>
           </Col>
-        </Row>
-        <Row style={{marginTop: '5px'}}>
+        </Form.Row>
+        <Form.Row style={{marginTop: '5px'}}>
           <Col>
-            <Form.Label>Party Size</Form.Label>
-            <Form.Control
-              placeholder='23'
-              type='number'
-              onChange={(e) => setSize(e.target.value)}
-              name='size'
-              value={size}
-            />
+            <Form.Group>
+              <Form.Label>Party Size</Form.Label>
+              <Form.Control
+                placeholder='23'
+                type='number'
+                onChange={(e) => setSizeField(e.target.value)}
+                name='size'
+                max={100}
+                required
+              />
+              <Form.Control.Feedback type='invalid'>Please Enter a Valid Group Size</Form.Control.Feedback>
+            </Form.Group>
           </Col>
-        </Row>
+        </Form.Row>
+        <Modal.Footer>
+          <Button type='submit'>Add Party</Button>
+        </Modal.Footer>
       </Form>
-      <Modal.Footer>
-        <Button onClick={onSubmit}>Add Party</Button>
-      </Modal.Footer>
     </Modal>
   );
 };
@@ -230,13 +253,13 @@ export const QueueView = ({queue} : ViewProps) => {
     list.push(party);
 
     setQ(new Queue(stateQ.name, stateQ.end, list));
-    setAddModal(false);
   };
 
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
 
     setQ(new Queue(stateQ.name, stateQ.end, list));
+    setParty(list[0]);
   };
 
   return (
