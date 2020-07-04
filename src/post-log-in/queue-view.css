@@ -7,7 +7,7 @@
   max-width: 100%;
 }
 
-#control-group-container {
+#control-group-card {
   border: 2pt solid #007bff;
   position: absolute;
   top: 6.5vh;
@@ -16,8 +16,28 @@
   bottom: 58vh;
 }
 
-#button-group {
+#control-group-container {
+  padding: 2%;
+}
+
+#control-button-group {
   text-align: center;
+  width: 100%;
+}
+
+#control-button {
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 45%;
+}
+
+#control-message-button {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#messanger {
   width: 100%;
 }
 

@@ -8,8 +8,8 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Modal from 'react-bootstrap/Modal';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
+import {AddCustomerModal, DeleteCustomerModal} from './queue-modals';
 import './queue-view.css';
 
 interface CardProps {
@@ -129,138 +129,6 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal}
   );
 };
 
-interface ModalProps {
-  show: boolean,
-  mainAction: (p: Party) => void,
-  party ?: Party,
-  close: () => void,
-}
-
-const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
-  const [name, setName] = useState('');
-  const [size, setSize] = useState('');
-  const [phoneNumber, setNumber] = useState('');
-  const [invalid, setInvalid] = useState(false);
-
-  const setSizeField = (val: string) => {
-    if (val.length === 0 || val[val.length-1] !== 'e') {
-      setSize(val);
-    }
-  };
-
-  const clearState = () => {
-    setName('');
-    setSize('');
-    setNumber('');
-  };
-
-  const onHide = () => {
-    clearState();
-    close();
-    setInvalid(false);
-  };
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!e.currentTarget.checkValidity()) {
-      setInvalid(true);
-      return;
-    }
-    const party : Party = new Party(name, parseInt(size), phoneNumber, 50);
-
-    mainAction(party);
-    onHide();
-  };
-
-  return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header>
-        <Modal.Title>Add a Party</Modal.Title>
-      </Modal.Header>
-      <Form
-        style={{margin: '2%'}}
-        onSubmit={onSubmit}
-        validated={invalid}
-        noValidate
-      >
-        <Form.Row>
-          <Col>
-            <Form.Group>
-              <Form.Label>Party Name</Form.Label>
-              <Form.Control
-                placeholder='Michael Jordan'
-                type='text'
-                onChange={(e) => setName(e.target.value)}
-                name='name'
-                required
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter a Name
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group>
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                placeholder='555-555-5555'
-                type='text'
-                onChange={(e) => setNumber(e.target.value)}
-                name='phoneNumber'
-                required
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter a Phone Number
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Form.Row>
-        <Form.Row style={{marginTop: '5px'}}>
-          <Col>
-            <Form.Group>
-              <Form.Label>Party Size</Form.Label>
-              <Form.Control
-                placeholder='23'
-                type='number'
-                onChange={(e) => setSizeField(e.target.value)}
-                name='size'
-                max={100}
-                required
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter a Valid Group Size
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Form.Row>
-        <Modal.Footer>
-          <Button type='submit'>Add Party</Button>
-        </Modal.Footer>
-      </Form>
-    </Modal>
-  );
-};
-
-const DeleteCustomerModal = ({show, close, party, mainAction} : ModalProps) => {
-  const onDelete = () => {
-    mainAction(party!);
-    close();
-  };
-
-  return (
-    <Modal show={show} onHide={close}>
-      <Modal.Header>
-        <Modal.Title>
-          Are you sure you want to remove {party!.name} from the queue?
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Footer>
-        <Button onClick={onDelete}>Remove {party!.name}</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
-
 interface ViewProps {
   queue: Queue
 }
@@ -288,6 +156,30 @@ export const QueueView = ({queue} : ViewProps) => {
 
   return (
     <Container className='wrap'>
+      <Card id='control-group-card'>
+        <Card.Body id='control-group-container'>
+          <div id='control-button-group'>
+            <Button id='control-button'>Open Queue</Button>
+            <Button id='control-button'>Close Queue</Button>
+          </div>
+          <Form.Group style={{textAlign: 'center'}}>
+            <Form.Control
+              as='textarea'
+              placeholder='Type a Message'
+              rows={3}
+              id='messanger'
+            />
+            <Button id='control-message-button'>Send Message to All</Button>
+          </Form.Group>
+        </Card.Body>
+      </Card>
+      <QueueList queue={stateQ}
+        showParty={setParty}
+        setQueue={setQ}
+        showAddModal={() => setAddModal(true)}
+        showDeleteModal={() => setDeleteModal(true)}
+      />
+      <UserCard party={party!}/>
       <AddCustomerModal
         show={addModal}
         close={() => setAddModal(false)}
@@ -299,27 +191,6 @@ export const QueueView = ({queue} : ViewProps) => {
         mainAction={(p: Party) => removeParty(p)}
         party={party!}
       />
-      <div id='control-group-container'>
-        <div id='button-group'>
-          <Button>Open Queue</Button>
-          <Button>Close Queue</Button>
-        </div>
-        <Form.Group>
-          <Form.Control
-            as='textarea'
-            placeholder='Type a Message'
-            rows={3}
-          />
-          <Button style={{width: '100%'}}>Send Custom Message</Button>
-        </Form.Group>
-      </div>
-      <QueueList queue={stateQ}
-        showParty={setParty}
-        setQueue={setQ}
-        showAddModal={() => setAddModal(true)}
-        showDeleteModal={() => setDeleteModal(true)}
-      />
-      <UserCard party={party!}/>
     </Container>
   );
 };
