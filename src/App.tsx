@@ -23,6 +23,22 @@ function App() {
   return (
     <Router>
       <div id="whole-app">
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path="/post-log-in/queue-view">
+            <QueueView queue={TEST_QUEUE}/>
+          </Route>
+          <Route path="/pre-log-in/log-in">
+            <BusinessLogInPage />
+          </Route>
+          <Route path="/pre-log-in/business-register">
+            <RegistrationPage />
+          </Route>
+          <Route path="/post-log-in/hub">
+            <Hub />
+          </Route>
+        </Switch>
         <nav>
           <ul>
             <li>
@@ -40,22 +56,7 @@ function App() {
           </ul>
         </nav>
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/post-log-in/queue-view">
-            <QueueView queue={TEST_QUEUE}/>
-          </Route>
-          <Route path="/pre-log-in/log-in">
-            <BusinessLogInPage />
-          </Route>
-          <Route path="/pre-log-in/business-register">
-            <RegistrationPage />
-          </Route>
-          <Route path="/post-log-in/hub">
-            <Hub />
-          </Route>
-        </Switch>
+
       </div>
     </Router>
   );
