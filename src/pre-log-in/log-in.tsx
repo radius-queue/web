@@ -61,7 +61,7 @@ const BusinessLogInPage = () => {
       </Card>
       <div>
         <p>
-          New to Ahead? <Link to="../../register/business-register">
+          New to Ahead? <Link to="./business-register">
             Register here.
           </Link>
         </p>
