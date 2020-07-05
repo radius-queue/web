@@ -1,36 +1,23 @@
 import React from 'react';
 import {useForm} from './../logic/logic';
+import './../firebase.ts';
+import firebase from 'firebase/app';
 
 interface registerValues {
-    businessName: string;
-    ownerName: string;
     email: string;
     password: string;
-    address: string;
-    hours: string;
-    phone: string;
+    confirmPassword: string;
 }
 
 const RegistrationPage = () => {
-  const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
-    email: '', password: '', address: '', hours: '', phone: ''});
+  const [formValues, setFormValues] = useForm({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
 
   return (
     <div className="form">
-      <input
-        type="text"
-        name="businessName"
-        value={formValues.businessName}
-        placeholder="Business Name"
-        onChange={setFormValues}
-      />
-      <input
-        type="text"
-        name="ownerName"
-        value={formValues.ownerName}
-        placeholder="Owner Name"
-        onChange={setFormValues}
-      />
       <input
         type="text"
         name="email"
@@ -46,35 +33,17 @@ const RegistrationPage = () => {
         onChange={setFormValues}
       />
       <input
-        type="text"
-        name="address"
-        value={formValues.address}
-        placeholder="Address"
-        onChange={setFormValues}
-      />
-      <input
-        type="text"
-        name="hours"
-        value={formValues.hours}
-        placeholder="Hours"
-        onChange={setFormValues}
-      />
-      <input
-        type="text"
-        name="phone"
-        value={formValues.phone}
-        placeholder="Phone Number"
+        type="password"
+        name="confirmPassword"
+        value={formValues.confirmPassword}
+        placeholder="Confirm Password"
         onChange={setFormValues}
       />
       <button onClick={() => submitFormValues(
           {
-            businessName: formValues.businessName,
-            ownerName: formValues.ownerName,
             email: formValues.email,
             password: formValues.password,
-            address: formValues.address,
-            hours: formValues.hours,
-            phone: formValues.phone,
+            confirmPassword: formValues.confirmPassword,
           },
       )}>Register</button>
     </div>
@@ -82,7 +51,19 @@ const RegistrationPage = () => {
 };
 
 const submitFormValues = (formValues : registerValues) => {
-  console.log('TODO: Push data to Firebase.');
+  if (formValues.password !== formValues.confirmPassword) {
+    console.log('mismatching passwords');
+  } else {
+    firebase.auth()
+        .createUserWithEmailAndPassword(formValues.email, formValues.password)
+        .catch(function(error) {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log('error code: ' + errorCode);
+          console.log('error message: ' + errorMessage);
+        });
+    console.log('register button clicked');
+  }
 };
 
 export default RegistrationPage;
