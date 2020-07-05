@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './log-in.css';
+import './../firebase.ts';
+import firebase from 'firebase/app';
 
 import {
   Link,
@@ -74,7 +76,14 @@ const BusinessLogInPage = () => {
  *    user when logging in
  */
 const submitFormValues = (formValues : logInValues) => {
-  // TODO: Implement function (console.log is a placeholder)
+  firebase.auth()
+      .signInWithEmailAndPassword(formValues.email, formValues.password)
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('error code: ' + errorCode);
+        console.log('error message: ' + errorMessage);
+      });
   console.log('Log in button pushed');
 };
 
