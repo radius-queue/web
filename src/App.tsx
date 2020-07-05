@@ -2,7 +2,7 @@ import React from 'react';
 import {QueueView} from './post-log-in/queue-view';
 import {TEST_QUEUE} from './util/HardcodedData';
 import BusinessLogInPage from './pre-log-in/log-in';
-import RegistrationPage from './pre-log-in/business-register';
+import RegistrationPage from './pre-log-in/register';
 import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -32,7 +32,7 @@ function App() {
           <Route path="/pre-log-in/log-in">
             <BusinessLogInPage />
           </Route>
-          <Route path="/pre-log-in/business-register">
+          <Route path="/pre-log-in/register">
             <RegistrationPage />
           </Route>
           <Route path="/post-log-in/hub">
@@ -48,7 +48,7 @@ function App() {
               <Link to="/pre-log-in/log-in">Log In</Link>
             </li>
             <li>
-              <Link to="/pre-log-in/business-register">Register</Link>
+              <Link to="/pre-log-in/register">Register</Link>
             </li>
             <li>
               <Link to="/post-log-in/hub">Hub</Link>
