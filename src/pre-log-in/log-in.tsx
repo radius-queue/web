@@ -53,7 +53,7 @@ const BusinessLogInPage = () => {
   return (
     <div id="login-container">
       <Card id="login-card">
-        <h1 className="form-header">Sign in to Ahead for Business</h1>
+        <h1 className="form-header">Sign in to Radius for Business</h1>
         <Form noValidate onSubmit={submitFormValues}>
           <Form.Group controlId="businessLogInEmail">
             <Form.Label>Email Address:</Form.Label>
@@ -87,7 +87,7 @@ const BusinessLogInPage = () => {
       </Card>
       <div>
         <p>
-          New to Ahead? <Link to="./business-register">
+          New to Radius? <Link to="./register">
             Register here.
           </Link>
         </p>
