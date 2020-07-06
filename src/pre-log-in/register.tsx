@@ -26,7 +26,7 @@ const RegistrationPage = () => {
   return (
     <div id="reg-container">
       <Card bg='dark' text='white' id="reg-card">
-        <Card.Title className="form-header">
+        <Card.Title className="form-header-reg">
         Register your business with Radius.</Card.Title>
 
         <Card.Body>
