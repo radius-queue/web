@@ -21,7 +21,7 @@ export const Hub = () => {
   return (
     <div id="whole-hub">
       <Navbar bg="primary" variant="dark" id="hub-nav">
-        <Navbar.Brand>Ahead</Navbar.Brand>
+        <Navbar.Brand>Radius</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link as={Link} to={`${url}/stats`}>Stats</Nav.Link>
           <Nav.Link as={Link} to={`${url}/queue-view`}>Queue</Nav.Link>
