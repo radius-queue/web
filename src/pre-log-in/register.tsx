@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './register.css';
 import Col from 'react-bootstrap/Col';
+import './../firebase.ts';
+import firebase from 'firebase/app';
 
 interface registerValues {
     businessName: string;
@@ -142,7 +144,19 @@ const RegistrationPage = () => {
 };
 
 const submitFormValues = (formValues : registerValues) => {
-  console.log('TODO: Push data to Firebase.');
+  if (formValues.password !== formValues.confirm) {
+    console.log('Passwords do not match, please try again.');
+  } else {
+    firebase.auth()
+        .createUserWithEmailAndPassword(formValues.email, formValues.password)
+        .catch(function(error) {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log('error code: ' + errorCode);
+          console.log('error message: ' + errorMessage);
+        });
+    console.log('registration.= button clicked');
+  }
 };
 
 export default RegistrationPage;
