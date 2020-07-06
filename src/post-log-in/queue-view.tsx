@@ -52,14 +52,15 @@ UserCard.propTypes = {
 };
 interface ListProps {
   queue: Queue,
+  currentParty: Party | undefined,
   showParty: (party: Party) => void,
   setQueue: (queue: Queue) => void,
   showAddModal: () => void,
   showDeleteModal: () => void
 }
 
-const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal}
-  : ListProps) => {
+const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
+  showDeleteModal} : ListProps) => {
   const moveOne = (index : number, offset: number) => {
     if (index + offset >= 0 && index + offset < queue.parties.length) {
       const list : Party[] = queue.parties.slice();
@@ -68,7 +69,7 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal}
 
       list[index + offset] = list[index];
       list[index] = target;
-      console.log(list);
+
       setQueue(new Queue(queue.name, queue.end, list));
     }
   };
@@ -90,6 +91,8 @@ const QueueList = ({queue, showParty, setQueue, showAddModal, showDeleteModal}
             className="queue-entry"
             key={idx}
             onClick={() => showParty(person)}
+            active={person === currentParty}
+            action
           >
             <Row>
               <Col md={1}>{idx + 1}</Col>
@@ -179,6 +182,7 @@ export const QueueView = ({queue} : ViewProps) => {
         setQueue={setQ}
         showAddModal={() => setAddModal(true)}
         showDeleteModal={() => setDeleteModal(true)}
+        currentParty={party}
       />
       <UserCard party={party!}/>
       <AddCustomerModal
