@@ -7,6 +7,7 @@ import './register.css';
 import Col from 'react-bootstrap/Col';
 import './../firebase.ts';
 import firebase from 'firebase/app';
+import { isBoolean } from 'util';
 
 interface registerValues {
   businessName: string;
@@ -45,45 +46,44 @@ const RegistrationPage = () => {
     return result;
   };
 
-  const validateEmailAndPassword : () => ValidityState = () => {
-    const result : ValidityState = {
-      submitted: true,
-      email: [true, ''],
-      password: [true, ''],
-    };
-    if (formValues.email.split('@').length !== 2) {
-      result.email[0] = false;
-      result.email[1] = 'Please enter a valid email address.';
-    }
-    if (formValues.password.length < 6 ||
-      formValues.password !== formValues.confirm) {
-      result.password[0] = false;
-      result.password[1] = formValues.password.length < 6 ?
-        'Password must be at least 6 characters.' : 'Passwords do not match.';
+  const validatePassword : () => [boolean, string] = () => {
+    const result : [boolean, string] = [true, ''];
+    if (formValues.password.length < 6) {
+      result[0] = false;
+      result[1] = 'Passwords must be at least 6 characters';
+    } else if (formValues.password !== formValues.confirm) {
+      result[0] = false;
+      result[1] = 'Passwords do not match.';
     }
     return result;
   };
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validityObject : ValidityState = validateEmailAndPassword();
+    setValidity(initialState);
+    const validityObject : any = {
+      submitted: true,
+      password: validatePassword(),
+      email: [true, ''],
+    };
     const fieldsFilled : boolean = allFieldsCompleted();
-    if (!!validityObject.password[0] &&
-        !!validityObject.email[0] && fieldsFilled) {
-      firebase.auth()
+    let shouldSetValidity : boolean = true;
+    if (!!validityObject.password[0] && fieldsFilled) {
+      const createResult = await firebase.auth()
           .createUserWithEmailAndPassword(formValues.email, formValues.password)
           .catch(function(error) {
-            const errorMessage = error.message;
-            if (errorMessage ===
-              'The email address is already in use by another account.') {
-              setValidity({
-                ...validityObject,
-                email: [false,
-                  'The email address is already in use by another account.'],
-              });
-            }
+            const result : [boolean, string] = [false, error.message];
+            setValidity({
+              ...validityObject,
+              email: result,
+            });
+            return false;
           });
-    } else {
+      if (typeof createResult === 'boolean') {
+        shouldSetValidity = false;
+      }
+    }
+    if (shouldSetValidity) {
       setValidity(validityObject);
     }
   };
@@ -148,7 +148,6 @@ const RegistrationPage = () => {
                 placeholder="account@example.com"
                 onChange={setFormValues}
                 isInvalid={validity.submitted && !validity.email[0]}
-                isValid={validity.submitted && !!validity.email[0]}
               />
               <Form.Control.Feedback type='invalid'>
                 {validity.email[1]}
