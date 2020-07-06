@@ -35,7 +35,7 @@ export class BusinessLocation {
   hours: [Date, Date][];
   coordinates: number[]; // in decimal degrees (DD).
   queues: string[];
-  geoFenceRadius: number; // in miles
+  geoFenceRadius: number; // in meters
 
   /**
    * @param {string} name Name of specific location
@@ -47,7 +47,7 @@ export class BusinessLocation {
    * @param {string[]} queues Optional array of queue ids associated with
    *    this location, Default value of empty array
    * @param {number} geoFenceRadius Optional radius around business location
-   *    (in miles) that a customer is allowed to enter queue, Default value
+   *    (in meters) that a customer is allowed to enter queue, Default value
    *    of -1
    */
   constructor(name: string, address: string, hours: [Date, Date][],
