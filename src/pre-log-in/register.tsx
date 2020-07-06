@@ -7,7 +7,8 @@ import './register.css';
 import Col from 'react-bootstrap/Col';
 import './../firebase.ts';
 import firebase from 'firebase/app';
-import { isBoolean } from 'util';
+import {isBoolean} from 'util';
+import {Link} from 'react-router-dom';
 
 interface registerValues {
   businessName: string;
@@ -255,6 +256,11 @@ const RegistrationPage = () => {
         </Card.Body>
 
       </Card>
+      <div>
+        Already have an account? <Link to="./log-in">
+          Sign in here.
+        </Link>
+      </div>
     </div>
   );
 };
