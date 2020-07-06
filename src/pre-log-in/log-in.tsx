@@ -24,8 +24,8 @@ interface ValidityState {
 const BusinessLogInPage = () => {
   const [formValues, setFormValues] = useForm({email: '', password: ''});
   const [validity, setValidity] = useState<ValidityState>({
-    username: false,
-    password: false,
+    username: true,
+    password: true,
     message: undefined,
   });
 
@@ -33,10 +33,17 @@ const BusinessLogInPage = () => {
     e.preventDefault();
     firebase.auth()
         .signInWithEmailAndPassword(formValues.email, formValues.password)
-        .catch((error) => {
+        .then(() => {
           setValidity({
             username: true,
             password: true,
+            message: undefined,
+          });
+        })
+        .catch((error) => {
+          setValidity({
+            username: false,
+            password: false,
             message: error.message,
           });
         });
@@ -56,9 +63,11 @@ const BusinessLogInPage = () => {
               value={formValues.email}
               placeholder="account@example.com"
               onChange={setFormValues}
-              isInvalid={validity.username}
+              isInvalid={!validity.username}
             />
-            <Form.Control.Feedback type='invalid'>{validity.message}</Form.Control.Feedback>
+            <Form.Control.Feedback type='invalid'>
+              {validity.message}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="businessLogInPassword">
             <Form.Label>Password:</Form.Label>
@@ -68,7 +77,7 @@ const BusinessLogInPage = () => {
               value={formValues.password}
               placeholder="Password"
               onChange={setFormValues}
-              isInvalid={validity.password}
+              isInvalid={!validity.password}
             />
           </Form.Group>
           <Button type='submit' block>
@@ -86,12 +95,5 @@ const BusinessLogInPage = () => {
     </div>
   );
 };
-
-/**
- * Validates the given username and password.
- * @param {logInValues} formValues Email and password entered by the
- *    user when logging in
- */
-
 
 export default BusinessLogInPage;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -9,19 +9,84 @@ import './../firebase.ts';
 import firebase from 'firebase/app';
 
 interface registerValues {
-    businessName: string;
-    ownerName: string;
-    email: string;
-    password: string;
-    confirm: string;
-    address: string;
-    hours: string;
-    phone: string;
+  businessName: string;
+  ownerName: string;
+  email: string;
+  password: string;
+  confirm: string;
+  address: string;
+  hours: string;
+  phone: string;
 }
+
+interface ValidityState {
+  submitted: boolean;
+  email: [boolean, string];
+  password: [boolean, string];
+}
+
+const initialState : ValidityState = {
+  submitted: false,
+  email: [true, ''],
+  password: [true, ''],
+};
 
 const RegistrationPage = () => {
   const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
     email: '', password: '', confirm: '', address: '', hours: '', phone: ''});
+
+  const [validity, setValidity] = useState(initialState);
+
+  const allFieldsCompleted : () => boolean = () => {
+    let result : boolean = true;
+    for (const field of Object.keys(formValues)) {
+      result = result && formValues[field].length > 0;
+    }
+    return result;
+  };
+
+  const validateEmailAndPassword : () => ValidityState = () => {
+    const result : ValidityState = {
+      submitted: true,
+      email: [true, ''],
+      password: [true, ''],
+    };
+    if (formValues.email.split('@').length !== 2) {
+      result.email[0] = false;
+      result.email[1] = 'Please enter a valid email address.';
+    }
+    if (formValues.password.length < 6 ||
+      formValues.password !== formValues.confirm) {
+      result.password[0] = false;
+      result.password[1] = formValues.password.length < 6 ?
+        'Password must be at least 6 characters.' : 'Passwords do not match.';
+    }
+    return result;
+  };
+
+  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const validityObject : ValidityState = validateEmailAndPassword();
+    const fieldsFilled : boolean = allFieldsCompleted();
+    if (!!validityObject.password[0] &&
+        !!validityObject.email[0] && fieldsFilled) {
+      firebase.auth()
+          .createUserWithEmailAndPassword(formValues.email, formValues.password)
+          .catch(function(error) {
+            const errorMessage = error.message;
+            if (errorMessage ===
+              'The email address is already in use by another account.') {
+              setValidity({
+                ...validityObject,
+                email: [false,
+                  'The email address is already in use by another account.'],
+              });
+            }
+          });
+    } else {
+      setValidity(validityObject);
+    }
+  };
 
   return (
     <div id="reg-container">
@@ -30,7 +95,7 @@ const RegistrationPage = () => {
         Register your business with Radius.</Card.Title>
 
         <Card.Body>
-          <Form>
+          <Form noValidate onSubmit={submitForm}>
             <Form.Row>
               <Col>
                 <Form.Group controlId="businessName">
@@ -41,7 +106,15 @@ const RegistrationPage = () => {
                     value={formValues.businessName}
                     placeholder="Enter name of business here"
                     onChange={setFormValues}
+                    isValid={validity.submitted &&
+                      formValues.businessName.length > 0}
+                    isInvalid={validity.submitted &&
+                      formValues.businessName.length === 0}
                   />
+                  <Form.Control.Feedback type='invalid'>
+                    Please Enter a Business Name
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Col>
               <Col>
@@ -53,7 +126,15 @@ const RegistrationPage = () => {
                     value={formValues.ownerName}
                     placeholder="Enter name of owner here"
                     onChange={setFormValues}
+                    isValid={validity.submitted &&
+                      formValues.ownerName.length > 0}
+                    isInvalid={validity.submitted &&
+                      formValues.ownerName.length === 0}
                   />
+                  <Form.Control.Feedback type='invalid'>
+                    Please Enter an Owner Name
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Col>
             </Form.Row>
@@ -64,9 +145,15 @@ const RegistrationPage = () => {
                 type="email"
                 name="email"
                 value={formValues.email}
-                placeholder="Enter e-mail here"
+                placeholder="account@example.com"
                 onChange={setFormValues}
+                isInvalid={validity.submitted && !validity.email[0]}
+                isValid={validity.submitted && !!validity.email[0]}
               />
+              <Form.Control.Feedback type='invalid'>
+                {validity.email[1]}
+              </Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="password">
@@ -77,7 +164,13 @@ const RegistrationPage = () => {
                 value={formValues.password}
                 placeholder="Enter password here"
                 onChange={setFormValues}
+                isValid={validity.submitted && !!validity.password[0]}
+                isInvalid={validity.submitted && !validity.password[0]}
               />
+              <Form.Control.Feedback type='invalid'>
+                {validity.password[1]}
+              </Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="confirm">
@@ -88,7 +181,13 @@ const RegistrationPage = () => {
                 value={formValues.confirm}
                 placeholder="Confirm password"
                 onChange={setFormValues}
+                isValid={validity.submitted && !!validity.password[0]}
+                isInvalid={validity.submitted && !validity.password[0]}
               />
+              <Form.Control.Feedback type='invalid'>
+                {validity.password[1]}
+              </Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="address">
@@ -97,9 +196,17 @@ const RegistrationPage = () => {
                 type="text"
                 name="address"
                 value={formValues.address}
-                placeholder="Enter address here"
+                placeholder="555 Example Dr. City, Country Zip"
                 onChange={setFormValues}
+                isInvalid={validity.submitted &&
+                  formValues.address.length === 0}
+                isValid={validity.submitted &&
+                  formValues.address.length > 0}
               />
+              <Form.Control.Feedback type='invalid'>
+                Please Enter a Location Address
+              </Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="hours">
@@ -108,9 +215,17 @@ const RegistrationPage = () => {
                 type="text"
                 name="hours"
                 value={formValues.hours}
-                placeholder="Enter hours of operation here"
+                placeholder="10AM - 12PM"
                 onChange={setFormValues}
+                isValid={validity.submitted &&
+                  formValues.hours.length > 0}
+                isInvalid={validity.submitted &&
+                  formValues.hours.length === 0}
               />
+              <Form.Control.Feedback type='invalid'>
+                Please Enter Hours of Operation
+              </Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="phone">
@@ -121,42 +236,28 @@ const RegistrationPage = () => {
                 value={formValues.phone}
                 placeholder="Enter phone number here"
                 onChange={setFormValues}
+                isInvalid={validity.submitted &&
+                  formValues.phone.length === 0}
+                isValid={validity.submitted &&
+                  formValues.phone.length > 0}
               />
+              <Form.Control.Feedback type='invalid'>
+                Please Enter A Phone Number
+              </Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
+            <Button
+              type='submit'
+              style={{width: '100%'}}
+            >
+              Register
+            </Button>
           </Form>
-          <Button variant="primary" onClick={() => submitFormValues(
-              {
-                businessName: formValues.businessName,
-                ownerName: formValues.ownerName,
-                email: formValues.email,
-                password: formValues.password,
-                confirm: formValues.confirm,
-                address: formValues.address,
-                hours: formValues.hours,
-                phone: formValues.phone,
-              },
-          )}>Register</Button>
         </Card.Body>
 
       </Card>
     </div>
   );
-};
-
-const submitFormValues = (formValues : registerValues) => {
-  if (formValues.password !== formValues.confirm) {
-    console.log('Passwords do not match, please try again.');
-  } else {
-    firebase.auth()
-        .createUserWithEmailAndPassword(formValues.email, formValues.password)
-        .catch(function(error) {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log('error code: ' + errorCode);
-          console.log('error message: ' + errorMessage);
-        });
-    console.log('registration.= button clicked');
-  }
 };
 
 export default RegistrationPage;

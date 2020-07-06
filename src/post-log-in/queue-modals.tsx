@@ -16,13 +16,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [name, setName] = useState('');
   const [size, setSize] = useState('');
   const [phoneNumber, setNumber] = useState('');
-  const [invalid, setInvalid] = useState(false);
-
-  const setSizeField = (val: string) => {
-    if (val.length === 0 || val[val.length-1] !== 'e') {
-      setSize(val);
-    }
-  };
+  const [validated, setValidated] = useState(false);
 
   const clearState = () => {
     setName('');
@@ -33,13 +27,13 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const onHide = () => {
     clearState();
     close();
-    setInvalid(false);
+    setValidated(false);
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!e.currentTarget.checkValidity()) {
-      setInvalid(true);
+      setValidated(true);
       return;
     }
     const party : Party = new Party(name, parseInt(size), phoneNumber, 50);
@@ -56,7 +50,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
       <Form
         style={{margin: '2%'}}
         onSubmit={onSubmit}
-        validated={invalid}
+        validated={validated}
         noValidate
       >
         <Form.Row>
@@ -98,7 +92,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
               <Form.Control
                 placeholder='23'
                 type='number'
-                onChange={(e) => setSizeField(e.target.value)}
+                onChange={(e) => setSize(e.target.value)}
                 name='size'
                 max={100}
                 required
@@ -117,7 +111,8 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   );
 };
 
-export const DeleteCustomerModal = ({show, close, party, mainAction} : ModalProps) => {
+export const DeleteCustomerModal = ({show, close, party, mainAction}
+  : ModalProps) => {
   const onDelete = () => {
     mainAction(party!);
     close();
