@@ -1,17 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './log-in.css';
-
+import './../firebase.ts';
+import firebase from 'firebase/app';
 import {
   Link,
 } from 'react-router-dom';
 
-interface logInValues {
-    email: string;
-    password: string;
+interface ValidityState {
+  username: boolean,
+  password: boolean,
+  message: string | undefined,
 }
 
 /**
@@ -21,12 +23,38 @@ interface logInValues {
  */
 const BusinessLogInPage = () => {
   const [formValues, setFormValues] = useForm({email: '', password: ''});
+  const [validity, setValidity] = useState<ValidityState>({
+    username: true,
+    password: true,
+    message: undefined,
+  });
+
+  const submitFormValues = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    firebase.auth()
+        .signInWithEmailAndPassword(formValues.email, formValues.password)
+        .then(() => {
+          setValidity({
+            username: true,
+            password: true,
+            message: undefined,
+          });
+        })
+        .catch((error) => {
+          setValidity({
+            username: false,
+            password: false,
+            message: error.message,
+          });
+        });
+    console.log('Log in button pushed');
+  };
 
   return (
     <div id="login-container">
       <Card id="login-card">
         <h1 className="form-header">Sign in to Ahead for Business</h1>
-        <Form>
+        <Form noValidate onSubmit={submitFormValues}>
           <Form.Group controlId="businessLogInEmail">
             <Form.Label>Email Address:</Form.Label>
             <Form.Control
@@ -35,7 +63,11 @@ const BusinessLogInPage = () => {
               value={formValues.email}
               placeholder="account@example.com"
               onChange={setFormValues}
+              isInvalid={!validity.username}
             />
+            <Form.Control.Feedback type='invalid'>
+              {validity.message}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="businessLogInPassword">
             <Form.Label>Password:</Form.Label>
@@ -45,37 +77,23 @@ const BusinessLogInPage = () => {
               value={formValues.password}
               placeholder="Password"
               onChange={setFormValues}
+              isInvalid={!validity.password}
             />
           </Form.Group>
-          <Button onClick={() => submitFormValues(
-              {
-                email: formValues.email,
-                password: formValues.password,
-              },
-          )} block>
+          <Button type='submit' block>
             Log In
           </Button>
         </Form>
       </Card>
       <div>
         <p>
-          New to Ahead? <Link to="../../register/business-register">
+          New to Ahead? <Link to="./business-register">
             Register here.
           </Link>
         </p>
       </div>
     </div>
   );
-};
-
-/**
- * Validates the given username and password.
- * @param {logInValues} formValues Email and password entered by the
- *    user when logging in
- */
-const submitFormValues = (formValues : logInValues) => {
-  // TODO: Implement function (console.log is a placeholder)
-  console.log('Log in button pushed');
 };
 
 export default BusinessLogInPage;

@@ -1,0 +1,18 @@
+#reg-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#reg-card {
+    display: flex;
+    padding: 20px;
+    margin: 10px;
+    min-width: 550px;
+}
+
+.form-header-reg {
+    background-color: rgb(52, 58, 64);
+    text-align: center;
+}
