@@ -1,17 +1,17 @@
-#reg-container {
+#profile-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
 
-#reg-card {
+#profile-card {
     display: flex;
     padding: 20px;
     margin: 10px;
+    min-width: 750px;
 }
 
-.form-header-reg {
-    background-color: rgb(52, 58, 64);
+.form-header-profile {
     text-align: center;
 }
