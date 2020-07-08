@@ -38,6 +38,7 @@ function App() {
           <Route path="/post-log-in/hub">
             <Hub />
           </Route>
+          <Route path="/" render={() => <div>404</div>} />
         </Switch>
         <nav>
           <ul>
