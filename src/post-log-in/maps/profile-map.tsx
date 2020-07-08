@@ -36,7 +36,7 @@ export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
 
   return (
     <GoogleMapReact
-      bootstrapURLKeys={{key: 'AIzaSyAmXeMZgo52LGxdxTOApHXrREv8eBdoB5c'}}
+      bootstrapURLKeys={{key: 'OUR-API-KEY'}}
       defaultCenter={center}
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
