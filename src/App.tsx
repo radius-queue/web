@@ -7,12 +7,15 @@ import {ProfileMap} from './post-log-in/maps/profile-map';
 import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import firebase from 'firebase/app';
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
+  Redirect,
+  useLocation,
 } from 'react-router-dom';
 
 /**
@@ -27,19 +30,19 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/post-log-in/queue-view">
+          <Route exact path="/post-log-in/queue-view">
             <QueueView queue={TEST_QUEUE}/>
           </Route>
-          <Route path="/pre-log-in/log-in">
+          <Route exact path="/pre-log-in/log-in">
             <BusinessLogInPage />
           </Route>
-          <Route path="/pre-log-in/register">
+          <Route exact path="/pre-log-in/register">
             <RegistrationPage />
           </Route>
-          <Route path="/post-log-in/hub">
+          <PrivateRoute path="/post-log-in/hub">
             <Hub />
-          </Route>
-          <Route path='/post-log-in/map'>
+          </PrivateRoute>
+          <Route exact path='/post-log-in/map'>
             <ProfileMap {...UW_MAP_PROPS}/>
           </Route>
           <Route path="/" render={() => <div>404</div>} />
@@ -61,6 +64,9 @@ function App() {
             <li>
               <Link to='/post-log-in/map'>Map</Link>
             </li>
+            <li onClick={() => signOut()}>
+              <button>Sign Out</button>
+            </li>
           </ul>
         </nav>
 
@@ -69,5 +75,46 @@ function App() {
     </Router>
   );
 }
+
+/**
+ * 
+ */
+function signOut() {
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  });
+}
+
+/**
+ * 
+ * @param param0 
+ */
+function PrivateRoute({children, ...rest}: privateRouteProps) {
+  const location = useLocation();
+  return (
+    <Route
+      {...rest}
+      render={() =>
+        firebase.auth().currentUser ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/pre-log-in/log-in',
+              state: {from: location},
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
+interface privateRouteProps {
+  children: any,
+  path: string,
+};
 
 export default App;
