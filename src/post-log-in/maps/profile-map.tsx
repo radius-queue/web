@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import GoogleMapReact from 'google-map-react';
 
 interface Coordinates {
@@ -7,20 +7,23 @@ interface Coordinates {
 }
 
 export interface MapProps {
-  center: Coordinates, // coordinates of the center of the circle
+  center: google.maps.LatLng, // coordinates of the center of the circle
   radius: number, // radius of their geofence in meters
   buildingLocation: Coordinates, // coordinates of business location
 }
 
 export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
-  const renderMarker = (map: any, maps: any) => {
-    const marker = new maps.Marker({
+  const [currentCenter, setCenter] = useState<google.maps.LatLng>(center);
+  const[currentRadius, setRadius] = useState<number>(radius);
+
+  const renderMarker = (map: any) => {
+    const marker = new google.maps.Marker({
       position: buildingLocation,
       map,
       title: 'Hello World!',
     });
 
-    const circle = new maps.Circle({
+    const circle = new google.maps.Circle({
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2,
@@ -29,6 +32,16 @@ export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
       map,
       center: center,
       radius: radius,
+      editable: true,
+      draggable: true,
+    });
+
+    google.maps.event.addListener(circle, 'radius_changed', () => {
+      setRadius(circle.getRadius());
+    });
+
+    google.maps.event.addListener(circle, 'center_changed', () => {
+      setCenter(circle.getCenter());
     });
 
     return [marker, circle];
@@ -36,12 +49,11 @@ export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
 
   return (
     <GoogleMapReact
-      bootstrapURLKeys={{key: 'OUR-API-KEY'}}
-      defaultCenter={center}
+      bootstrapURLKeys={{key: 'OUR_API_KEY'}}
+      defaultCenter={{lng: center.lng(), lat: center.lat()}}
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
-      onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map, maps)}
-    >
-    </GoogleMapReact>
+      onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}
+    />
   );
 };
