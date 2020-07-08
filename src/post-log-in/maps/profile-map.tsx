@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import GoogleMapReact from 'google-map-react';
+import GOOGLE_API_KEY from '../../google-key';
 
 interface Coordinates {
   lat: number,

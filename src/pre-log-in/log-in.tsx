@@ -8,6 +8,8 @@ import './../firebase.ts';
 import firebase from 'firebase/app';
 import {
   Link,
+  useLocation,
+  useHistory,
 } from 'react-router-dom';
 
 interface ValidityState {
@@ -29,11 +31,16 @@ const BusinessLogInPage = () => {
     message: undefined,
   });
 
-  const submitFormValues = (e: React.FormEvent<HTMLFormElement>) => {
+  const history = useHistory();
+  const location = useLocation();
+
+  const {from}: any = location.state || {from: {pathname: '/'}};
+
+  const submitFormValues = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    firebase.auth()
+    await firebase.auth()
         .signInWithEmailAndPassword(formValues.email, formValues.password)
-        .then(() => {
+        .then((e) => {
           setValidity({
             username: true,
             password: true,
@@ -47,7 +54,7 @@ const BusinessLogInPage = () => {
             message: error.message,
           });
         });
-    console.log('Log in button pushed');
+    history.replace(from.pathname);
   };
 
   return (

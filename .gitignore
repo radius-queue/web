@@ -1,9 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-#App
-/src/App.tsx
-/src/App.css
-/src/App.test.tsx
+#API Key
+/src/google-key.ts
 
 # dependencies
 /node_modules
