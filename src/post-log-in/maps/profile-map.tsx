@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import GoogleMapReact from 'google-map-react';
+import GOOGLE_API_KEY from '../../google-key';
 
 interface Coordinates {
   lat: number,
@@ -49,7 +50,7 @@ export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
 
   return (
     <GoogleMapReact
-      bootstrapURLKeys={{key: 'OUR_API_KEY'}}
+      bootstrapURLKeys={{key: GOOGLE_API_KEY}}
       defaultCenter={{lng: center.lng(), lat: center.lat()}}
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
