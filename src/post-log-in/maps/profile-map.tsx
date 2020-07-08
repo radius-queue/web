@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
 
 interface Coordinates {
@@ -12,29 +12,31 @@ export interface MapProps {
   buildingLocation: Coordinates, // coordinates of business location
 }
 
-const Pin = (props: {lat: number, lng: number}) => {
-  return (<div>
-    &#xf276;
-  </div>);
-};
-
 export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
-  const [mapCenter, setMapCenter] = useState<Coordinates>(center);
-  const [bulding, setBuilding] = useState<Coordinates>(buildingLocation);
-  const [fence, setFence] = useState<number>(radius);
-
   const renderMarker = (map: any, maps: any) => {
     const marker = new maps.Marker({
       position: buildingLocation,
       map,
       title: 'Hello World!',
     });
-    return marker;
+
+    const circle = new maps.Circle({
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.3,
+      map,
+      center: center,
+      radius: radius,
+    });
+
+    return [marker, circle];
   };
 
   return (
     <GoogleMapReact
-      bootstrapURLKeys={{key: 'AIzaSyDBblrLk1wekXnzrIN9baw4Wz-WcI8s7Tc'}}
+      bootstrapURLKeys={{key: 'AIzaSyAmXeMZgo52LGxdxTOApHXrREv8eBdoB5c'}}
       defaultCenter={center}
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
