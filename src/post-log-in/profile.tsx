@@ -7,6 +7,8 @@ import './profile.css';
 import Col from 'react-bootstrap/Col';
 import './../firebase.ts';
 import firebase from 'firebase/app';
+import Row from 'react-bootstrap/Row';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 interface ValidityState {
   submitted: boolean;
@@ -22,7 +24,8 @@ const initialState : ValidityState = {
 
 const ProfilePage = () => {
   const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
-    address: '', city: '', state: '', zip: '', hours: '', phone: ''});
+    address: '', city: '', state: '', zip: '',
+    hoursOpen: '', openAP: '', hoursClose: '', closeAP: '', phone: ''});
 
   const [validity, setValidity] = useState(initialState);
 
@@ -197,24 +200,84 @@ const ProfilePage = () => {
               </Col>
             </Form.Row>
 
-            <Form.Group controlId="hours">
-              <Form.Label>Hours of Operation</Form.Label>
-              <Form.Control
-                type="text"
-                name="hours"
-                value={formValues.hours}
-                placeholder="10AM - 12PM"
-                onChange={setFormValues}
-                isValid={validity.submitted &&
-                  formValues.hours.length > 0}
-                isInvalid={validity.submitted &&
-                  formValues.hours.length === 0}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter Hours of Operation
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
+            <Form.Row>
+              <Form.Group as={Row} controlId="hoursOpen">
+                <Form.Label id="day">
+                  Monday
+                </Form.Label>
+                <Col>
+                  <Form.Control
+                    type="number"
+                    max="12"
+                    min="1"
+                    name="newHoursOpen"
+                    value={formValues.newHoursOpen}
+                    placeholder="Enter a number between 1-12"
+                    onChange={setFormValues}
+                    isValid={validity.submitted &&
+                    formValues.newHoursOpen > 0 && formValues.newHours < 13}
+                    isInvalid={validity.submitted &&
+                    (formValues.newHoursOpen < 1 || formValues.newHours > 12)}
+                  />
+                  <Form.Control.Feedback type='invalid'>
+                  Please enter a number between 1 and 12
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                </Col>
+              </Form.Group>
+
+              <Col>
+                <Form.Group>
+                  <Dropdown>
+                    <Dropdown.Toggle variant="outline-dark" id="openAP">
+                      Select
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item>AM</Dropdown.Item>
+                      <Dropdown.Item>PM</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Form.Group>
+              </Col>
+
+              <Form.Group as={Row} controlId="hoursClose">
+                <Col>
+                  <Form.Control
+                    type="number"
+                    max="12"
+                    min="1"
+                    name="newHoursClose"
+                    value={formValues.newHoursClose}
+                    placeholder="Enter a number between 1-12"
+                    onChange={setFormValues}
+                    isValid={validity.submitted &&
+                    formValues.newHoursClose > 0 && formValues.newHours < 13}
+                    isInvalid={validity.submitted &&
+                    (formValues.newHoursClose > 1 || formValues.newHours > 12)}
+                  />
+                  <Form.Control.Feedback type='invalid'>
+                  Please enter a number between 1 and 12
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                </Col>
+              </Form.Group>
+
+              <Form.Group>
+                <Col>
+                  <Dropdown>
+                    <Dropdown.Toggle variant="outline-dark" id="closeAP">
+                      Select
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item>AM</Dropdown.Item>
+                      <Dropdown.Item>PM</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+              </Form.Group>
+            </Form.Row>
 
             <Form.Group controlId="phone">
               <Form.Label>Phone Number</Form.Label>
