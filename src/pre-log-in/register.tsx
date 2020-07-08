@@ -4,22 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './register.css';
-import Col from 'react-bootstrap/Col';
 import './../firebase.ts';
 import firebase from 'firebase/app';
-import {isBoolean} from 'util';
 import {Link} from 'react-router-dom';
-
-interface registerValues {
-  businessName: string;
-  ownerName: string;
-  email: string;
-  password: string;
-  confirm: string;
-  address: string;
-  hours: string;
-  phone: string;
-}
 
 interface ValidityState {
   submitted: boolean;
@@ -34,8 +21,8 @@ const initialState : ValidityState = {
 };
 
 const RegistrationPage = () => {
-  const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
-    email: '', password: '', confirm: '', address: '', hours: '', phone: ''});
+  const [formValues, setFormValues] = useForm({email: '', password: '',
+    confirm: ''});
 
   const [validity, setValidity] = useState(initialState);
 
@@ -97,49 +84,6 @@ const RegistrationPage = () => {
 
         <Card.Body>
           <Form noValidate onSubmit={submitForm}>
-            <Form.Row>
-              <Col>
-                <Form.Group controlId="businessName">
-                  <Form.Label>Business Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="businessName"
-                    value={formValues.businessName}
-                    placeholder="Enter name of business here"
-                    onChange={setFormValues}
-                    isValid={validity.submitted &&
-                      formValues.businessName.length > 0}
-                    isInvalid={validity.submitted &&
-                      formValues.businessName.length === 0}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                    Please Enter a Business Name
-                  </Form.Control.Feedback>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="ownerName">
-                  <Form.Label>Owner Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="ownerName"
-                    value={formValues.ownerName}
-                    placeholder="Enter name of owner here"
-                    onChange={setFormValues}
-                    isValid={validity.submitted &&
-                      formValues.ownerName.length > 0}
-                    isInvalid={validity.submitted &&
-                      formValues.ownerName.length === 0}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                    Please Enter an Owner Name
-                  </Form.Control.Feedback>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-            </Form.Row>
-
             <Form.Group controlId="email">
               <Form.Label>E-mail</Form.Label>
               <Form.Control
@@ -190,68 +134,8 @@ const RegistrationPage = () => {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="address">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                type="text"
-                name="address"
-                value={formValues.address}
-                placeholder="555 Example Dr. City, Country Zip"
-                onChange={setFormValues}
-                isInvalid={validity.submitted &&
-                  formValues.address.length === 0}
-                isValid={validity.submitted &&
-                  formValues.address.length > 0}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter a Location Address
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group controlId="hours">
-              <Form.Label>Hours of Operation</Form.Label>
-              <Form.Control
-                type="text"
-                name="hours"
-                value={formValues.hours}
-                placeholder="10AM - 12PM"
-                onChange={setFormValues}
-                isValid={validity.submitted &&
-                  formValues.hours.length > 0}
-                isInvalid={validity.submitted &&
-                  formValues.hours.length === 0}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter Hours of Operation
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group controlId="phone">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="text"
-                name="phone"
-                value={formValues.phone}
-                placeholder="Enter phone number here"
-                onChange={setFormValues}
-                isInvalid={validity.submitted &&
-                  formValues.phone.length === 0}
-                isValid={validity.submitted &&
-                  formValues.phone.length > 0}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter A Phone Number
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Button
-              type='submit'
-              style={{width: '100%'}}
-            >
-              Register
-            </Button>
+            <Button type='submit' style={{width: '100%'}}>
+            Register</Button>
           </Form>
         </Card.Body>
 

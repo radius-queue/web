@@ -1,8 +1,9 @@
 import React from 'react';
 import {QueueView} from './post-log-in/queue-view';
-import {TEST_QUEUE} from './util/HardcodedData';
+import {TEST_QUEUE, UW_MAP_PROPS} from './util/HardcodedData';
 import BusinessLogInPage from './pre-log-in/log-in';
 import RegistrationPage from './pre-log-in/register';
+import {ProfileMap} from './post-log-in/maps/profile-map';
 import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -38,6 +39,10 @@ function App() {
           <Route path="/post-log-in/hub">
             <Hub />
           </Route>
+          <Route path='/post-log-in/map'>
+            <ProfileMap {...UW_MAP_PROPS}/>
+          </Route>
+          <Route path="/" render={() => <div>404</div>} />
         </Switch>
         <nav>
           <ul>
@@ -52,6 +57,9 @@ function App() {
             </li>
             <li>
               <Link to="/post-log-in/hub">Hub</Link>
+            </li>
+            <li>
+              <Link to='/post-log-in/map'>Map</Link>
             </li>
           </ul>
         </nav>
