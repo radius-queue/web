@@ -19,6 +19,10 @@ export default async function getQueue(uid : string) {
       }).catch(function(error) {
         console.log('Error getting document:', error);
       });
+
+  if (ret) {
+    ret.uid = uid;
+  }
   return ret;
 }
 

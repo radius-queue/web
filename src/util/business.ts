@@ -1,26 +1,32 @@
+import firebase from 'firebase/app';
 /**
  * This class represents a Business
  */
 export class Business {
   name: string;
-  ownerName: string[]; // [first, last]
+  firstName: string;
+  lastName:string;
   email: string;
   locations: BusinessLocation[];
   // password : string;
-  // uid : string;
+  uid : string;
 
   /**
    * @param {string} name Business name
-   * @param {string[]} ownerName Account owner name [first, last]
+   * @param {string} firstName Owner First Name
+   * @param {string} lastName Owner Last Name
    * @param {string} email Account email
+   * @param {string} uid Unique Identifier
    * @param {BusinessLocation[]} locations Optional array of store location
    *    objects, Default value is set to be empty array
    */
-  constructor(name: string, ownerName: string[], email: string,
-      locations: BusinessLocation[] =[]) {
-    this.name = name || '';
-    this.ownerName = ownerName || '';
-    this.email = email || '';
+  constructor(name: string, firstName: string, lastName: string, email: string,
+      uid: string, locations: BusinessLocation[] =[]) {
+    this.name = name;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.uid = uid;
     this.locations = locations;
     // this.uid = uid || "";
   }
@@ -56,8 +62,78 @@ export class BusinessLocation {
     this.name = name;
     this.address = address;
     this.hours = hours;
-    this.coordinates = coordinates || [];
+    this.coordinates = coordinates;
     this.queues = queues;
     this.geoFenceRadius = geoFenceRadius;
   }
+
+  /**
+  * @param party
+  */
+  static fromFirebase(location: any): BusinessLocation {
+    const locPrams : [string, string, [Date, Date][], number[], string[]] = [
+      location.name,
+      location.address,
+      BusinessLocation.hoursFromFirebase(location.hours),
+      [location.coordinates.getLatitude(), location.coordinates.getLongitude()],
+      location.queues,
+      location.geoFenceRadius,
+    ];
+    return new BusinessLocation(...locPrams);
+  }
+
+  /**
+  * @param party
+  */
+  static toFirebase(location: BusinessLocation): any {
+    return {
+      name: location.name,
+      address: location.address,
+      hours: BusinessLocation.hoursToFirebase(location.hours), // need fixing
+      coordinates: new firebase.firestore.GeoPoint(
+          location.coordinates[0],
+          location.coordinates[1],
+      ),
+      queues: location.queues,
+      geoFenceRadius: location.geoFenceRadius,
+    };
+  }
+
+  /**
+   *
+   * @param hours
+   */
+  static hoursToFirebase(hours: [Date, Date][]): any {
+    const ret: {[id:string]: [Date, Date]} = {};
+    for (let i = 0; i < DATE_INDEX.size; i++) {
+      const day = hours[i];
+      const dayName: string = DATE_INDEX.get(i)!;
+      ret[dayName] = [day[0], day[1]];
+    }
+    return ret;
+  }
+
+  /**
+   *
+   * @param hours
+   */
+  static hoursFromFirebase(hours: any): [Date, Date][] {
+    const ret: [Date, Date][] = [];
+    for (let i = 0; i < DATE_INDEX.size; i++) {
+      const day = hours.get(DATE_INDEX.get(i));
+      ret.push([day[0].toDate(), day[1].toDate()]);
+    }
+    return ret;
+  }
 }
+
+const DATE_INDEX: Map<number, string> = new Map<number, string>([
+  [0, 'Sunday'],
+  [1, 'Monday'],
+  [2, 'Tuesday'],
+  [3, 'Wednesday'],
+  [4, 'Thursday'],
+  [5, 'Friday'],
+  [6, 'Saturday'],
+]);
+

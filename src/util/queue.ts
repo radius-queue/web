@@ -5,20 +5,21 @@ import firebase from 'firebase/app';
 export class Queue {
   name : string;
   parties: Party[]; // where parties[0] is the front of the line
-  end: Date | undefined;
-  // uid : string;
+  end: Date;
+  uid : string;
 
   /**
    * @param {string} name Name of Queue
    * @param {Date} end End time
+   * @param {string} uid Uid of Queue
    * @param {Party[]} parties Optional field for initializing current queue,
    *    Default value is set to empty array
    */
-  constructor(name?: string, end?: Date, parties?: Party[]) {
-    this.name = name ||'';
-    this.parties = parties ? parties : [];
+  constructor(name: string, end: Date, uid: string, parties?: Party[]) {
+    this.name = name;
+    this.parties = parties ? parties :[];
     this.end = end;
-    // this.uid = uid || "";
+    this.uid = uid;
   }
 
   /**
@@ -102,9 +103,11 @@ export const queueConverter = {
   },
   fromFirestore: function(snapshot: any, options: any) {
     const data = snapshot.data(options);
+    console.log(data);
     return new Queue(
         data.name,
         data.end.toDate(),
+        '',
         data.parties.map((party: any)=> Party.fromFirebase(party)),
     );
   },
