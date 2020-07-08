@@ -1,16 +1,16 @@
-import {Queue, queueConverter} from './queue';
+import { Customer, customerConverter } from "./customer";
 import {firestore} from '../firebase';
 
 /**
  * @param uid
  */
-export default async function getQueue(uid : string) {
-  let ret: Queue | undefined;
-  await firestore.collection('queues').doc(uid)
-      .withConverter(queueConverter)
+export default async function getCustomer(uid : string) {
+  let ret: Customer | undefined;
+  await firestore.collection('customer').doc(uid)
+      .withConverter(customerConverter)
       .get().then(function(doc) {
         if (doc.exists) {
-          const q: Queue | undefined = doc.data();
+          const q: Customer | undefined = doc.data();
           // Use a City instance method
           ret = q;
         } else {
@@ -25,5 +25,3 @@ export default async function getQueue(uid : string) {
   }
   return ret;
 }
-
-

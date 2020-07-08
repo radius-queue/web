@@ -70,7 +70,7 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
       list[index + offset] = list[index];
       list[index] = target;
 
-      setQueue(new Queue(queue.name, queue.end, list));
+      setQueue(new Queue(queue.name, queue.end, queue.uid, list));
     }
   };
 
@@ -147,13 +147,13 @@ export const QueueView = ({queue} : ViewProps) => {
 
     list.push(party);
 
-    setQ(new Queue(stateQ.name, stateQ.end, list));
+    setQ(new Queue(stateQ.name, stateQ.end, stateQ.uid, list));
   };
 
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
 
-    setQ(new Queue(stateQ.name, stateQ.end, list));
+    setQ(new Queue(stateQ.name, stateQ.end, stateQ.uid, list));
     setParty(list[0]);
   };
 
