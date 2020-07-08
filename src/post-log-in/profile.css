@@ -15,3 +15,15 @@
 .form-header-profile {
     text-align: center;
 }
+
+#hoursOpen {
+    min-width: 150px;
+}
+
+#hoursClose {
+    min-width: 150px;
+}
+
+#day {
+    min-width: 150px;
+}

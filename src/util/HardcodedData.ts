@@ -8,10 +8,7 @@ const TEST_PARTY : Party[] = [new Party('Russell Wilson', 3, '123-456-789', 20),
 export const TEST_QUEUE : Queue = new Queue('Test', new Date(), '0', TEST_PARTY);
 
 export const UW_MAP_PROPS : MapProps = {
-  center: {
-    lat: 47.655548,
-    lng: -122.303200,
-  },
+  center: new google.maps.LatLng(47.655548, -122.303200),
   buildingLocation: {
     lat: 47.655548,
     lng: -122.303200,
