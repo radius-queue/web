@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import './../firebase.ts';
 import firebase from 'firebase/app';
 import Row from 'react-bootstrap/Row';
-import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/Dropdown';
 
 interface ValidityState {
   submitted: boolean;
@@ -65,6 +65,15 @@ const ProfilePage = () => {
       setValidity(validityObject);
     }
   };
+
+  const [amPm] =React.useState([
+    {
+      label: 'Select',
+      value: 'Select',
+    },
+    {label: 'AM', value: 'AM'},
+    {label: 'PM', value: 'PM'},
+  ]);
 
   return (
     <div id="profile-container">
@@ -202,22 +211,24 @@ const ProfilePage = () => {
 
             <Form.Row>
               <Form.Group as={Row} controlId="hoursOpen">
-                <Form.Label id="day">
+                <Col>
+                  <Form.Label id="day">
                   Monday
-                </Form.Label>
+                  </Form.Label>
+                </Col>
                 <Col>
                   <Form.Control
                     type="number"
                     max="12"
                     min="1"
-                    name="newHoursOpen"
-                    value={formValues.newHoursOpen}
-                    placeholder="Enter a number between 1-12"
+                    name="hoursOpen"
+                    value={formValues.hoursOpen}
+                    placeholder="Opening Hour"
                     onChange={setFormValues}
                     isValid={validity.submitted &&
-                    formValues.newHoursOpen > 0 && formValues.newHours < 13}
+                    formValues.hoursOpen > 0 && formValues.hoursOpen < 13}
                     isInvalid={validity.submitted &&
-                    (formValues.newHoursOpen < 1 || formValues.newHours > 12)}
+                    (formValues.hoursOpen < 1 || formValues.hoursOpen > 12)}
                   />
                   <Form.Control.Feedback type='invalid'>
                   Please enter a number between 1 and 12
@@ -228,16 +239,16 @@ const ProfilePage = () => {
 
               <Col>
                 <Form.Group>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="outline-dark" id="openAP">
-                      Select
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item>AM</Dropdown.Item>
-                      <Dropdown.Item>PM</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <select>
+                    {amPm.map((amPm) => (
+                      <option
+                        key={amPm.value}
+                        value={amPm.value}
+                      >
+                        {amPm.label}
+                      </option>
+                    ))}
+                  </select>
                 </Form.Group>
               </Col>
 
@@ -247,14 +258,14 @@ const ProfilePage = () => {
                     type="number"
                     max="12"
                     min="1"
-                    name="newHoursClose"
-                    value={formValues.newHoursClose}
-                    placeholder="Enter a number between 1-12"
+                    name="hoursClose"
+                    value={formValues.hoursClose}
+                    placeholder="Closing Hour"
                     onChange={setFormValues}
                     isValid={validity.submitted &&
-                    formValues.newHoursClose > 0 && formValues.newHours < 13}
+                    formValues.hoursClose > 0 && formValues.hoursClose < 13}
                     isInvalid={validity.submitted &&
-                    (formValues.newHoursClose > 1 || formValues.newHours > 12)}
+                    (formValues.hoursClose > 1 || formValues.hoursClose > 12)}
                   />
                   <Form.Control.Feedback type='invalid'>
                   Please enter a number between 1 and 12
@@ -265,16 +276,18 @@ const ProfilePage = () => {
 
               <Form.Group>
                 <Col>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="outline-dark" id="closeAP">
-                      Select
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item>AM</Dropdown.Item>
-                      <Dropdown.Item>PM</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <Form.Group>
+                    <select id="closeAP">
+                      {amPm.map((amPm) => (
+                        <option
+                          key={amPm.value}
+                          value={amPm.value}
+                        >
+                          {amPm.label}
+                        </option>
+                      ))}
+                    </select>
+                  </Form.Group>
                 </Col>
               </Form.Group>
             </Form.Row>
@@ -285,7 +298,7 @@ const ProfilePage = () => {
                 type="text"
                 name="phone"
                 value={formValues.phone}
-                placeholder="Enter phone number here"
+                placeholder="###-###-####"
                 onChange={setFormValues}
                 isInvalid={validity.submitted &&
                   formValues.phone.length === 0}

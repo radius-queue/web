@@ -1,7 +1,7 @@
 #profile-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -16,14 +16,26 @@
     text-align: center;
 }
 
+#day {
+    float: left;
+}
+
 #hoursOpen {
     min-width: 150px;
+    float: right;
+}
+
+#openAP {
+    float: left;
 }
 
 #hoursClose {
     min-width: 150px;
+    float: left;
 }
 
-#day {
-    min-width: 150px;
+#closeAP {
+    float: left;
 }
+
+

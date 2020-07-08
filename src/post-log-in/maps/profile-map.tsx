@@ -14,7 +14,7 @@ export interface MapProps {
 
 export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
   const [currentCenter, setCenter] = useState<google.maps.LatLng>(center);
-  const[currentRadius, setRadius] = useState<number>(radius);
+  const [currentRadius, setRadius] = useState<number>(radius);
 
   const renderMarker = (map: any) => {
     const marker = new google.maps.Marker({
@@ -49,7 +49,7 @@ export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
 
   return (
     <GoogleMapReact
-      bootstrapURLKeys={{key: 'OUR_API_KEY'}}
+      bootstrapURLKeys={{key: 'API_KEY_HERE'}}
       defaultCenter={{lng: center.lng(), lat: center.lat()}}
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
