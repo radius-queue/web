@@ -77,7 +77,7 @@ function App() {
 }
 
 /**
- * 
+ * Signs the current user out.
  */
 function signOut() {
   firebase.auth().signOut().then(function() {
@@ -88,8 +88,12 @@ function signOut() {
 }
 
 /**
- * 
- * @param param0 
+ * Wrapper for the Route to the hub page. Requires authentication
+ * before allowing the user into the hub. Redirects to the log in
+ * page for authentication if user is not logged in.
+ * @param {privateRouteProps} param0 children and path
+ * of the PrivateRoute
+ * @return {Route} Route to hub if logged in, log in page if not.
  */
 function PrivateRoute({children, ...rest}: privateRouteProps) {
   const location = useLocation();
