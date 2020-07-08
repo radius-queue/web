@@ -71,14 +71,16 @@ export class BusinessLocation {
   * @param party
   */
   static fromFirebase(location: any): BusinessLocation {
-    const locPrams : [string, string, [Date, Date][], number[], string[]] = [
-      location.name,
-      location.address,
-      BusinessLocation.hoursFromFirebase(location.hours),
-      [location.coordinates.getLatitude(), location.coordinates.getLongitude()],
-      location.queues,
-      location.geoFenceRadius,
-    ];
+    const locPrams : [string, string, [Date, Date][], number[],
+     string[], number] = [
+       location.name,
+       location.address,
+       BusinessLocation.hoursFromFirebase(location.hours),
+       [location.coordinates.getLatitude(),
+         location.coordinates.getLongitude()],
+       location.queues,
+       location.geoFenceRadius,
+     ];
     return new BusinessLocation(...locPrams);
   }
 
