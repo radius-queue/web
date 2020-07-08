@@ -10,7 +10,6 @@ import {
   Link,
   useLocation,
   useHistory,
-  withRouter,
 } from 'react-router-dom';
 
 interface ValidityState {
