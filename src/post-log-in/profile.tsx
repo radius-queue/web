@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -13,6 +13,9 @@ interface ProfileProps {
   uid: string;
 }
 const ProfilePage = ({uid}: ProfileProps) => {
+  useEffect(()= > {
+    firebase.firestore()
+  })
   const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
     address: '', city: '', state: '', zip: '', phone: ''});
 

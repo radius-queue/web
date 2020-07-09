@@ -29,7 +29,7 @@ function App() {
           <RegistrationPage />
         </Route>
         <PrivateRoute path="/post-log-in/hub">
-          <Hub />
+          <Hub uid={'GoodFoods'}/>
         </PrivateRoute>
         <Route exact path="/pre-log-in/log-in">
           <BusinessLogInPage />
