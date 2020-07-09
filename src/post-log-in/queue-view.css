@@ -1,8 +1,8 @@
 #control-group-card {
   border: 2pt solid #007bff;
   position: absolute;
-  top: 6.5vh;
-  right: 0.5vw;
+  top: 10vh;
+  right: 4vw;
   width: 38vw;
   bottom: 65.5vh;
   overflow: scroll;
@@ -31,14 +31,18 @@
   width: 100%;
 }
 
+.card-header {
+  background-color: #dadada !important;
+}
+
 #queue-card {
   text-align: center;
   border: 2pt solid #007bff;
   position: absolute;
-  bottom: 0.5vh;
-  top: 6.5vh;
-  left: 0.5vw;
-  width: 60.5vw;
+  bottom: 4vh;
+  top: 10vh;
+  left: 4vw;
+  width: 53vw;
 }
 
 #queue {
@@ -50,10 +54,9 @@
 #party-card {
   border: 2pt solid #007bff;
   position: absolute;
-  margin-left: 5px;
-  bottom: 0.5vh;
-  top: 35vh;
-  right: 0.5vw;
+  bottom: 4vh;
+  top: 36vh;
+  right: 4vw;
   width: 38vw;
   overflow: scroll;
 }
@@ -73,4 +76,8 @@
 .almost-width {
   width: calc(100% - 6px);
   margin: 3px;
+}
+
+.list-group-item.active {
+  background-color: #4a9bf3 !important;
 }
