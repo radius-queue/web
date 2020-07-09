@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState, useDebugValue} from 'react';
 import BusinessLogInPage from './pre-log-in/log-in';
 import RegistrationPage from './pre-log-in/register';
 import {Hub} from './post-log-in/hub';
@@ -21,13 +21,23 @@ import {
  * @return {HTMLElement} App HTML
  */
 function App() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const unsub: firebase.Unsubscribe = auth.onAuthStateChanged((newUser) => {
+      setIsLoading(false);
+    });
+
+    return unsub;
+  }, []);
+
   return (
     <Router>
       <Switch>
         <Route exact path="/pre-log-in/register">
           <RegistrationPage />
         </Route>
-        <PrivateRoute path="/post-log-in/hub">
+        <PrivateRoute path="/post-log-in/hub" isLoading={isLoading}>
           <Hub uid={'GoodFoods'}/>
         </PrivateRoute>
         <Route exact path="/pre-log-in/log-in">
@@ -52,14 +62,13 @@ function App() {
  * of the PrivateRoute
  * @return {Route} Route to hub if logged in, log in page if not.
  */
-function PrivateRoute({children, ...rest}: privateRouteProps) {
+function PrivateRoute({children, isLoading, ...rest}: privateRouteProps) {
   const location = useLocation();
-  console.log(auth.currentUser);
   return (
     <Route
       {...rest}
       render={() =>
-        auth.currentUser ? (
+        isLoading || auth.currentUser ? (
           children
         ) : (
           <Redirect
@@ -77,6 +86,7 @@ function PrivateRoute({children, ...rest}: privateRouteProps) {
 interface privateRouteProps {
   children: any,
   path: string,
+  isLoading: boolean,
 };
 
 export default App;
