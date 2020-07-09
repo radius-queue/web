@@ -38,21 +38,19 @@ export const Hub = ({uid}: HubProps) => {
           <Nav.Link as={Link} to={`${url}/profile`}>Profile</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link as={Link} to={`${url}`} onClick={() => signOut(history)}>Sign out</Nav.Link>
+          <Nav.Link as={Link} to={`${url}`}
+            onClick={() => signOut(history)}>Sign out</Nav.Link>
         </Nav>
       </Navbar>
       <div id="hub-content">
         <Switch>
-          <Route exact path={path}>
-            <h3>Welcome to the hub!</h3>
-          </Route>
-          <Route path={`${path}/stats`}>
+          <Route exact path={`${path}/stats`}>
             <StatsPage />
           </Route>
-          <Route path={`${path}/queue-view`}>
+          <Route exact path={`${path}/queue-view`}>
             <QueueView queue={TEST_QUEUE}/>
           </Route>
-          <Route path={`${path}/profile`}>
+          <Route exact path={`${path}/profile`}>
             <ProfilePage uid={uid}/>
           </Route>
         </Switch>

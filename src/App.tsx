@@ -4,7 +4,7 @@ import RegistrationPage from './pre-log-in/register';
 import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import firebase from 'firebase/app';
+import {auth} from './firebase';
 
 import {
   BrowserRouter as Router,
@@ -33,11 +33,12 @@ function App() {
         <Route exact path="/pre-log-in/log-in">
           <BusinessLogInPage />
         </Route>
-        <Route path="/" render={() =>
+        <Route exact path="/" render={() =>
           <div>
             <Link to="/pre-log-in/register">Register</Link>
             <Link to="/post-log-in/hub">Log In</Link>
           </div>} />
+        <Route path="/" render={() => <div>404</div>} />
       </Switch>
     </Router>
   );
@@ -53,11 +54,12 @@ function App() {
  */
 function PrivateRoute({children, ...rest}: privateRouteProps) {
   const location = useLocation();
+  console.log(auth.currentUser);
   return (
     <Route
       {...rest}
       render={() =>
-        firebase.auth().currentUser ? (
+        auth.currentUser ? (
           children
         ) : (
           <Redirect
