@@ -20,7 +20,11 @@ import {
   useHistory,
 } from 'react-router-dom';
 
-export const Hub = () => {
+interface HubProps {
+  uid: string,
+}
+
+export const Hub = ({uid}: HubProps) => {
   const history = useHistory();
   const {path, url} = useRouteMatch();
 
@@ -49,7 +53,7 @@ export const Hub = () => {
             <QueueView queue={TEST_QUEUE}/>
           </Route>
           <Route path={`${path}/profile`}>
-            <ProfilePage uid={user}/>
+            <ProfilePage uid={uid}/>
           </Route>
         </Switch>
       </div>
