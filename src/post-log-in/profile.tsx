@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import './profile.css';
 import Col from 'react-bootstrap/Col';
 import Map from './maps/profile-map';
+import {firestore} from '../firebase';
 import {UW_MAP_PROPS} from '../util/HardcodedData';
 import './../firebase.ts';
 
@@ -13,9 +14,28 @@ interface ProfileProps {
   uid: string;
 }
 const ProfilePage = ({uid}: ProfileProps) => {
-  useEffect(()= > {
-    firebase.firestore()
-  })
+  const [business, setBusiness] = useState({
+    email: 'Loading',
+    firstName: 'Loading',
+    lastName: 'Loading',
+    locations: 'Loading',
+    name: 'Loading',
+  });
+  useEffect(() => {
+    const getData = async () => {
+      const businessData: any = await firestore.collection('businesses').doc(uid).get();
+      setBusiness({
+        email: businessData.get('email'),
+        firstName: businessData.get('firstName'),
+        lastName: businessData.get('lastName'),
+        locations: businessData.get('locations'),
+        name: businessData.get('name'),
+      });
+      console.log(business);
+    };
+
+    getData();
+  }, []);
   const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
     address: '', city: '', state: '', zip: '', phone: ''});
 
@@ -52,6 +72,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
                       formValues.businessName.length > 0}
                     isInvalid={submitted &&
                       formValues.businessName.length === 0}
+                    defaultValue={business.name}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter a Business Name
@@ -72,7 +93,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
                       formValues.ownerName.length > 0}
                     isInvalid={submitted &&
                       formValues.ownerName.length === 0}
-                    defaultValue={uid!.displayName!}
+                    defaultValue={`${business.firstName} ${business.lastName}`}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter an Owner Name
