@@ -37,9 +37,9 @@ export const Hub = ({uid}: HubProps) => {
           <Nav.Link as={Link} to={`${url}/queue-view`}>Queue</Nav.Link>
           <Nav.Link as={Link} to={`${url}/profile`}>Profile</Nav.Link>
         </Nav>
-        <Form inline>
-          <Button as={Link} to={`${url}`} onClick={() => signOut(history)}>Sign out</Button>
-        </Form>
+        <Nav>
+          <Nav.Link as={Link} to={`${url}`} onClick={() => signOut(history)}>Sign out</Nav.Link>
+        </Nav>
       </Navbar>
       <div id="hub-content">
         <Switch>
