@@ -32,6 +32,7 @@
 }
 
 .card-header {
+  border-radius: 0 !important;
   background-color: #dadada !important;
 }
 
@@ -80,4 +81,5 @@
 
 .list-group-item.active {
   background-color: #4a9bf3 !important;
+  border-color: #4a9bf3 !important;
 }
