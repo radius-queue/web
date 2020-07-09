@@ -7,6 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import firebase from 'firebase/app';
 // import './App.css';
 
 import {
@@ -14,13 +17,11 @@ import {
   Route,
   Link,
   useRouteMatch,
+  useHistory,
 } from 'react-router-dom';
 
-interface HubProps {
-  uid: string;
-}
-
-export const Hub = ({user} : HubProps) => {
+export const Hub = () => {
+  const history = useHistory();
   const {path, url} = useRouteMatch();
 
   return (
@@ -32,6 +33,9 @@ export const Hub = ({user} : HubProps) => {
           <Nav.Link as={Link} to={`${url}/queue-view`}>Queue</Nav.Link>
           <Nav.Link as={Link} to={`${url}/profile`}>Profile</Nav.Link>
         </Nav>
+        <Form inline>
+          <Button as={Link} to={`${url}`} onClick={() => signOut(history)}>Sign out</Button>
+        </Form>
       </Navbar>
       <div id="hub-content">
         <Switch>
@@ -52,3 +56,15 @@ export const Hub = ({user} : HubProps) => {
     </div>
   );
 };
+
+/**
+ * Signs the current user out and redirects to log in page.
+ * @param {router-history} history the router history from the page.
+ */
+function signOut(history: any) {
+  firebase.auth().signOut().then(function() {
+    history.push('/');
+  }).catch(function(error) {
+    // An error happened.
+  });
+}

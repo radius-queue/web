@@ -1,6 +1,4 @@
 import React from 'react';
-import {QueueView} from './post-log-in/queue-view';
-import {TEST_QUEUE, UW_MAP_PROPS} from './util/HardcodedData';
 import BusinessLogInPage from './pre-log-in/log-in';
 import RegistrationPage from './pre-log-in/register';
 import Map from './post-log-in/maps/profile-map';
@@ -26,6 +24,7 @@ import {
 function App() {
   return (
     <Router>
+<<<<<<< HEAD
       <div id="whole-app">
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -72,19 +71,26 @@ function App() {
 
 
       </div>
+=======
+      <Switch>
+        <Route exact path="/pre-log-in/register">
+          <RegistrationPage />
+        </Route>
+        <PrivateRoute path="/post-log-in/hub">
+          <Hub />
+        </PrivateRoute>
+        <Route exact path="/pre-log-in/log-in">
+          <BusinessLogInPage />
+        </Route>
+        <Route path="/" render={() =>
+          <div>
+            <Link to="/pre-log-in/register">Register</Link>
+            <Link to="/post-log-in/hub">Log In</Link>
+          </div>} />
+      </Switch>
+>>>>>>> 8689ffa22ee901be2fe85dfdf17a7683ebb78cef
     </Router>
   );
-}
-
-/**
- * Signs the current user out.
- */
-function signOut() {
-  firebase.auth().signOut().then(function() {
-    // Sign-out successful.
-  }).catch(function(error) {
-    // An error happened.
-  });
 }
 
 /**
