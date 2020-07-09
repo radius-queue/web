@@ -5,82 +5,34 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './profile.css';
 import Col from 'react-bootstrap/Col';
+import Map from './maps/profile-map';
+import {UW_MAP_PROPS} from '../util/HardcodedData';
 import './../firebase.ts';
-import firebase from 'firebase/app';
-import Row from 'react-bootstrap/Row';
-import DropdownButton from 'react-bootstrap/Dropdown';
 
-interface ValidityState {
-  submitted: boolean;
-  email: [boolean, string];
-  password: [boolean, string];
+interface ProfileProps {
+  uid: string;
 }
-
-const initialState : ValidityState = {
-  submitted: false,
-  email: [true, ''],
-  password: [true, ''],
-};
-
-const ProfilePage = () => {
+const ProfilePage = ({uid}: ProfileProps) => {
   const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
-    address: '', city: '', state: '', zip: '',
-    hoursOpen: '', openAP: '', hoursClose: '', closeAP: '', phone: ''});
+    address: '', city: '', state: '', zip: '', phone: ''});
 
-  const [validity, setValidity] = useState(initialState);
-
-  const allFieldsCompleted : () => boolean = () => {
-    let result : boolean = true;
-    for (const field of Object.keys(formValues)) {
-      result = result && formValues[field].length > 0;
-    }
-    return result;
-  };
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setValidity(initialState);
-    const validityObject : any = {
-      submitted: true,
-    };
+    setSubmitted(true);
 
-    const fieldsFilled : boolean = allFieldsCompleted();
-    let shouldSetValidity : boolean = true;
-    if (!!validityObject.password[0] && fieldsFilled) {
-      const createResult = await firebase.auth()
-          .createUserWithEmailAndPassword(formValues.email, formValues.password)
-          .catch(function(error) {
-            const result : [boolean, string] = [false, error.message];
-            setValidity({
-              ...validityObject,
-              email: result,
-            });
-            return false;
-          });
-      if (typeof createResult === 'boolean') {
-        shouldSetValidity = false;
-      }
-    }
-    if (shouldSetValidity) {
-      setValidity(validityObject);
-    }
+    /**
+     * TODO: PUSH TO FIREBASE
+     * */
   };
 
-  const [amPm] =React.useState([
-    {
-      label: 'Select',
-      value: 'Select',
-    },
-    {label: 'AM', value: 'AM'},
-    {label: 'PM', value: 'PM'},
-  ]);
-
   return (
-    <div id="profile-container">
-      <Card border="dark" style={{width: '18rem'}} id="profile-card">
+    <div>
+      <Card id="profile-container">
         <Card.Title className="form-header-profile">
-        Fill out your business info to get started!</Card.Title>
-
+          My Profile
+        </Card.Title>
         <Card.Body>
           <Form noValidate onSubmit={submitForm}>
             <Form.Row>
@@ -93,9 +45,9 @@ const ProfilePage = () => {
                     value={formValues.businessName}
                     placeholder="Enter name of business here"
                     onChange={setFormValues}
-                    isValid={validity.submitted &&
+                    isValid={submitted &&
                       formValues.businessName.length > 0}
-                    isInvalid={validity.submitted &&
+                    isInvalid={submitted &&
                       formValues.businessName.length === 0}
                   />
                   <Form.Control.Feedback type='invalid'>
@@ -113,10 +65,11 @@ const ProfilePage = () => {
                     value={formValues.ownerName}
                     placeholder="Enter name of owner here"
                     onChange={setFormValues}
-                    isValid={validity.submitted &&
+                    isValid={submitted &&
                       formValues.ownerName.length > 0}
-                    isInvalid={validity.submitted &&
+                    isInvalid={submitted &&
                       formValues.ownerName.length === 0}
+                    defaultValue={uid!.displayName!}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter an Owner Name
@@ -133,9 +86,9 @@ const ProfilePage = () => {
                 value={formValues.address}
                 placeholder="555 Example Dr."
                 onChange={setFormValues}
-                isInvalid={validity.submitted &&
+                isInvalid={submitted &&
                   formValues.address.length === 0}
-                isValid={validity.submitted &&
+                isValid={submitted &&
                   formValues.address.length > 0}
               />
               <Form.Control.Feedback type='invalid'>
@@ -154,9 +107,9 @@ const ProfilePage = () => {
                     value={formValues.city}
                     placeholder="Seattle"
                     onChange={setFormValues}
-                    isInvalid={validity.submitted &&
+                    isInvalid={submitted &&
                   formValues.city.length === 0}
-                    isValid={validity.submitted &&
+                    isValid={submitted &&
                   formValues.city.length > 0}
                   />
                   <Form.Control.Feedback type='invalid'>
@@ -175,9 +128,9 @@ const ProfilePage = () => {
                     value={formValues.state}
                     placeholder="WA"
                     onChange={setFormValues}
-                    isInvalid={validity.submitted &&
+                    isInvalid={submitted &&
                   formValues.state.length === 0}
-                    isValid={validity.submitted &&
+                    isValid={submitted &&
                   formValues.state.length > 0}
                   />
                   <Form.Control.Feedback type='invalid'>
@@ -196,9 +149,9 @@ const ProfilePage = () => {
                     value={formValues.zip}
                     placeholder="98195"
                     onChange={setFormValues}
-                    isInvalid={validity.submitted &&
+                    isInvalid={submitted &&
                   formValues.zip.length === 0}
-                    isValid={validity.submitted &&
+                    isValid={submitted &&
                   formValues.zip.length > 0}
                   />
                   <Form.Control.Feedback type='invalid'>
@@ -209,88 +162,45 @@ const ProfilePage = () => {
               </Col>
             </Form.Row>
 
-            <Form.Row>
-              <Form.Group as={Row} controlId="hoursOpen">
-                <Col>
-                  <Form.Label id="day">
-                  Monday
-                  </Form.Label>
-                </Col>
-                <Col>
-                  <Form.Control
-                    type="number"
-                    max="12"
-                    min="1"
-                    name="hoursOpen"
-                    value={formValues.hoursOpen}
-                    placeholder="Opening Hour"
-                    onChange={setFormValues}
-                    isValid={validity.submitted &&
-                    formValues.hoursOpen > 0 && formValues.hoursOpen < 13}
-                    isInvalid={validity.submitted &&
-                    (formValues.hoursOpen < 1 || formValues.hoursOpen > 12)}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                  Please enter a number between 1 and 12
-                  </Form.Control.Feedback>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Col>
-              </Form.Group>
-
-              <Col>
-                <Form.Group>
-                  <select>
-                    {amPm.map((amPm) => (
-                      <option
-                        key={amPm.value}
-                        value={amPm.value}
-                      >
-                        {amPm.label}
-                      </option>
-                    ))}
-                  </select>
-                </Form.Group>
+            {/* <Form.Row>
+              <Col md='auto'>
+                <Form.Label id="day">Monday</Form.Label>
               </Col>
-
-              <Form.Group as={Row} controlId="hoursClose">
-                <Col>
+              <Form.Group as={Col} controlId="hoursOpen">
+                <Col md='auto'>
+                  <Form.Label>Open:</Form.Label>
                   <Form.Control
-                    type="number"
-                    max="12"
-                    min="1"
-                    name="hoursClose"
-                    value={formValues.hoursClose}
-                    placeholder="Closing Hour"
+                    type="time"
+                    name="hoursOpen"
                     onChange={setFormValues}
-                    isValid={validity.submitted &&
-                    formValues.hoursClose > 0 && formValues.hoursClose < 13}
-                    isInvalid={validity.submitted &&
-                    (formValues.hoursClose > 1 || formValues.hoursClose > 12)}
+                    isValid={submitted &&
+                    formValues.hoursOpen.length > 0}
+                    isInvalid={submitted &&
+                    formValues.hoursOpen.length === 0}
                   />
                   <Form.Control.Feedback type='invalid'>
-                  Please enter a number between 1 and 12
+                    Please enter your Hours of Operation
                   </Form.Control.Feedback>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Col>
               </Form.Group>
-
-              <Form.Group>
-                <Col>
-                  <Form.Group>
-                    <select id="closeAP">
-                      {amPm.map((amPm) => (
-                        <option
-                          key={amPm.value}
-                          value={amPm.value}
-                        >
-                          {amPm.label}
-                        </option>
-                      ))}
-                    </select>
-                  </Form.Group>
-                </Col>
+              <Form.Group as={Col} controlId="hoursClose">
+                <Form.Label>Close:</Form.Label>
+                <Form.Control
+                  type="time"
+                  name="hoursClose"
+                  onChange={setFormValues}
+                  isValid={submitted &&
+                  formValues.hoursClose.length > 0}
+                  isInvalid={submitted &&
+                  formValues.hoursClose === 0}
+                />
+                <Form.Control.Feedback type='invalid'>
+                    Please Enter a Closing Time
+                </Form.Control.Feedback>
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-            </Form.Row>
+            </Form.Row>*/}
 
             <Form.Group controlId="phone">
               <Form.Label>Phone Number</Form.Label>
@@ -300,9 +210,9 @@ const ProfilePage = () => {
                 value={formValues.phone}
                 placeholder="###-###-####"
                 onChange={setFormValues}
-                isInvalid={validity.submitted &&
+                isInvalid={submitted &&
                   formValues.phone.length === 0}
-                isValid={validity.submitted &&
+                isValid={submitted &&
                   formValues.phone.length > 0}
               />
               <Form.Control.Feedback type='invalid'>
@@ -311,10 +221,13 @@ const ProfilePage = () => {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Button type='submit' style={{width: '100%'}}>
-            Register</Button>
+              Submit
+            </Button>
           </Form>
         </Card.Body>
-
+      </Card>
+      <Card id='map-container'>
+        <Map {...UW_MAP_PROPS}/>
       </Card>
     </div>
   );

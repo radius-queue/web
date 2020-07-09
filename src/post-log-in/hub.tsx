@@ -16,8 +16,13 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-export const Hub = () => {
+interface HubProps {
+  uid: string;
+}
+
+export const Hub = ({user} : HubProps) => {
   const {path, url} = useRouteMatch();
+
   return (
     <div id="whole-hub">
       <Navbar bg="primary" variant="dark" id="hub-nav">
@@ -40,7 +45,7 @@ export const Hub = () => {
             <QueueView queue={TEST_QUEUE}/>
           </Route>
           <Route path={`${path}/profile`}>
-            <ProfilePage />
+            <ProfilePage uid={user}/>
           </Route>
         </Switch>
       </div>

@@ -1,37 +1,46 @@
 #profile-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 38vw;
+  top: 10vh;
+  height: 84vh;
+  left: 7vw;
+  justify-content: space-between;
+  align-items: center;
+  border: 2pt solid #007bff;
 }
 
-#profile-card {
-    display: flex;
-    padding: 20px;
-    margin: 10px;
-    min-width: 750px;
+#map-container {
+  position: absolute;
+  left: 47vw;
+  top: 10vh;
+  width: 45vw;
+  height: 84vh;
+  border: 2pt solid #007bff;
 }
 
 .form-header-profile {
-    text-align: center;
+  margin-top: 20px;
+  text-align: center;
 }
 
 #day {
-    float: left;
+  float: left;
 }
 
 #hoursOpen {
-    min-width: 150px;
-    float: right;
+  min-width: 150px;
+  float: right;
 }
 
 #openAP {
-    float: left;
+  float: left;
 }
 
 #hoursClose {
-    min-width: 150px;
-    float: left;
+  min-width: 150px;
+  float: left;
 }
 
 #closeAP {

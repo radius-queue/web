@@ -158,7 +158,7 @@ export const QueueView = ({queue} : ViewProps) => {
   };
 
   return (
-    <Container className='wrap'>
+    <Container>
       <Card id='control-group-card'>
         <Card.Body id='control-group-container'>
           <Card.Title className='text-center'>Queue Actions</Card.Title>

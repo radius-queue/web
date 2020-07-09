@@ -13,7 +13,7 @@ export interface MapProps {
   buildingLocation: Coordinates, // coordinates of business location
 }
 
-export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
+const Map = ({center, radius, buildingLocation} : MapProps) => {
   const [currentCenter, setCenter] = useState<google.maps.LatLng>(center);
   const [currentRadius, setRadius] = useState<number>(radius);
 
@@ -44,13 +44,11 @@ export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
     google.maps.event.addListener(circle, 'center_changed', () => {
       setCenter(circle.getCenter());
     });
-
-    return [marker, circle];
   };
 
   return (
     <GoogleMapReact
-      bootstrapURLKeys={{key: 'API_KEY_HERE'}}
+      bootstrapURLKeys={{key: GOOGLE_API_KEY}}
       defaultCenter={{lng: center.lng(), lat: center.lat()}}
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
@@ -58,3 +56,5 @@ export const ProfileMap = ({center, radius, buildingLocation} : MapProps) => {
     />
   );
 };
+
+export default Map;

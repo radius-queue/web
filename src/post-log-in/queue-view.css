@@ -1,12 +1,3 @@
-#queue-party-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5pt;
-  height: 100%;
-  max-width: 100%;
-}
-
 #control-group-card {
   border: 2pt solid #007bff;
   position: absolute;

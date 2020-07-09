@@ -3,7 +3,7 @@ import {QueueView} from './post-log-in/queue-view';
 import {TEST_QUEUE, UW_MAP_PROPS} from './util/HardcodedData';
 import BusinessLogInPage from './pre-log-in/log-in';
 import RegistrationPage from './pre-log-in/register';
-import {ProfileMap} from './post-log-in/maps/profile-map';
+import Map from './post-log-in/maps/profile-map';
 import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -40,10 +40,10 @@ function App() {
             <RegistrationPage />
           </Route>
           <PrivateRoute path="/post-log-in/hub">
-            <Hub />
+            <Hub uid={'GoodFoods'}/>
           </PrivateRoute>
           <Route exact path='/post-log-in/map'>
-            <ProfileMap {...UW_MAP_PROPS}/>
+            <Map {...UW_MAP_PROPS}/>
           </Route>
           <Route path="/" render={() => <div>404</div>} />
         </Switch>
