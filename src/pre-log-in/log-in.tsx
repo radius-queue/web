@@ -8,7 +8,6 @@ import './../firebase.ts';
 import firebase from 'firebase/app';
 import {
   Link,
-  useLocation,
   useHistory,
 } from 'react-router-dom';
 
@@ -32,9 +31,6 @@ const BusinessLogInPage = () => {
   });
 
   const history = useHistory();
-  const location = useLocation();
-
-  const {from}: any = location.state || {from: {pathname: '/'}};
 
   const submitFormValues = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,7 +53,7 @@ const BusinessLogInPage = () => {
           changePage = false;
         });
     if (changePage) {
-      history.replace(from.pathname);
+      history.replace('/post-log-in/hub');
     }
   };
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useDebugValue} from 'react';
+import React, {useEffect, useState} from 'react';
 import BusinessLogInPage from './pre-log-in/log-in';
 import RegistrationPage from './pre-log-in/register';
 import {Hub} from './post-log-in/hub';
@@ -69,7 +69,7 @@ function PrivateRoute({children, isLoading, ...rest}: privateRouteProps) {
       {...rest}
       render={() =>
         isLoading || auth.currentUser ? (
-          children
+          auth.currentUser ? children : null
         ) : (
           <Redirect
             to={{

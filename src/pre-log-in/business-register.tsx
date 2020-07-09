@@ -2,6 +2,9 @@ import React from 'react';
 import {useForm} from './../logic/logic';
 import './../firebase.ts';
 import firebase from 'firebase/app';
+import {
+  useHistory,
+} from 'react-router-dom';
 
 interface registerValues {
     email: string;
@@ -15,6 +18,24 @@ const RegistrationPage = () => {
     password: '',
     confirmPassword: '',
   });
+
+  const history = useHistory();
+
+  const submitFormValues = async (formValues : registerValues) => {
+    let changePage: boolean = true;
+    if (formValues.password !== formValues.confirmPassword) {
+      console.log('mismatching passwords');
+    } else {
+      firebase.auth()
+          .createUserWithEmailAndPassword(formValues.email, formValues.password)
+          .catch(function(error) {
+            changePage = false;
+          });
+      if (changePage) {
+        history.replace('/post-log-in/hub');
+      }
+    }
+  };
 
   return (
     <div className="form">
@@ -48,22 +69,6 @@ const RegistrationPage = () => {
       )}>Register</button>
     </div>
   );
-};
-
-const submitFormValues = (formValues : registerValues) => {
-  if (formValues.password !== formValues.confirmPassword) {
-    console.log('mismatching passwords');
-  } else {
-    firebase.auth()
-        .createUserWithEmailAndPassword(formValues.email, formValues.password)
-        .catch(function(error) {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log('error code: ' + errorCode);
-          console.log('error message: ' + errorMessage);
-        });
-    console.log('register button clicked');
-  }
 };
 
 export default RegistrationPage;

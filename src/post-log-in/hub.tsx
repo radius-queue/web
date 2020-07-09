@@ -7,8 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import firebase from 'firebase/app';
 // import './App.css';
 

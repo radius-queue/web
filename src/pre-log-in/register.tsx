@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 import './register.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 interface ValidityState {
   submitted: boolean;
@@ -25,6 +25,8 @@ const RegistrationPage = () => {
     confirm: ''});
 
   const [validity, setValidity] = useState(initialState);
+
+  const history = useHistory();
 
   const allFieldsCompleted : () => boolean = () => {
     let result : boolean = true;
@@ -49,6 +51,7 @@ const RegistrationPage = () => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setValidity(initialState);
+    let changePage: boolean = true;
     const validityObject : any = {
       submitted: true,
       password: validatePassword(),
@@ -65,14 +68,20 @@ const RegistrationPage = () => {
               ...validityObject,
               email: result,
             });
+            changePage = false;
             return false;
           });
       if (typeof createResult === 'boolean') {
         shouldSetValidity = false;
       }
+    } else {
+      changePage = false;
     }
     if (shouldSetValidity) {
       setValidity(validityObject);
+    }
+    if (changePage) {
+      history.replace('/post-log-in/hub');
     }
   };
 
