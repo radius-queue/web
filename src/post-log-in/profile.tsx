@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,7 +6,6 @@ import Card from 'react-bootstrap/Card';
 import './profile.css';
 import Col from 'react-bootstrap/Col';
 import Map from './maps/profile-map';
-import {firestore} from '../firebase';
 import {UW_MAP_PROPS} from '../util/HardcodedData';
 import './../firebase.ts';
 
@@ -14,28 +13,6 @@ interface ProfileProps {
   uid: string;
 }
 const ProfilePage = ({uid}: ProfileProps) => {
-  const [business, setBusiness] = useState({
-    email: 'Loading',
-    firstName: 'Loading',
-    lastName: 'Loading',
-    locations: 'Loading',
-    name: 'Loading',
-  });
-  useEffect(() => {
-    const getData = async () => {
-      const businessData: any = await firestore.collection('businesses').doc(uid).get();
-      setBusiness({
-        email: businessData.get('email'),
-        firstName: businessData.get('firstName'),
-        lastName: businessData.get('lastName'),
-        locations: businessData.get('locations'),
-        name: businessData.get('name'),
-      });
-      console.log(business);
-    };
-
-    getData();
-  }, []);
   const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
     address: '', city: '', state: '', zip: '', phone: ''});
 
@@ -65,14 +42,13 @@ const ProfilePage = ({uid}: ProfileProps) => {
                   <Form.Control
                     type="text"
                     name="businessName"
-                    value={formValues.businessName}
-                    placeholder="Enter name of business here"
                     onChange={setFormValues}
+                    value={formValues.businessName}
                     isValid={submitted &&
                       formValues.businessName.length > 0}
                     isInvalid={submitted &&
                       formValues.businessName.length === 0}
-                    defaultValue={business.name}
+                    placeholder={'My Amazing Business'}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter a Business Name
@@ -86,14 +62,13 @@ const ProfilePage = ({uid}: ProfileProps) => {
                   <Form.Control
                     type="text"
                     name="ownerName"
-                    value={formValues.ownerName}
-                    placeholder="Enter name of owner here"
+                    placeholder="John Smith"
                     onChange={setFormValues}
                     isValid={submitted &&
                       formValues.ownerName.length > 0}
                     isInvalid={submitted &&
                       formValues.ownerName.length === 0}
-                    defaultValue={`${business.firstName} ${business.lastName}`}
+                    value={formValues.ownerName}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter an Owner Name
@@ -245,7 +220,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Button type='submit' style={{width: '100%'}}>
-              Submit
+              Submit Changes
             </Button>
           </Form>
         </Card.Body>

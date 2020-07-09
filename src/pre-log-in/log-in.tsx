@@ -38,6 +38,7 @@ const BusinessLogInPage = () => {
 
   const submitFormValues = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let changePage : boolean = true;
     await firebase.auth()
         .signInWithEmailAndPassword(formValues.email, formValues.password)
         .then((e) => {
@@ -53,8 +54,11 @@ const BusinessLogInPage = () => {
             password: false,
             message: error.message,
           });
+          changePage = false;
         });
-    history.replace(from.pathname);
+    if (changePage) {
+      history.replace(from.pathname);
+    }
   };
 
   return (
