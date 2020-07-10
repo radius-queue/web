@@ -5,9 +5,10 @@ interface AutocompleteProps {
   onChange: (val: string) => void;
   isValid: boolean;
   isInvalid: boolean;
+  setCenter: (coords: google.maps.LatLng) => void;
 }
 
-export const AddressAutocomplete = ({onChange, isValid, isInvalid}: AutocompleteProps) => {
+export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter}: AutocompleteProps) => {
   let autocompleteObject : google.maps.places.Autocomplete;
   const [value, setValue] = useState<string>('');
 
@@ -16,14 +17,16 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid}: Autocomplete
       document.getElementById('autocomplete') as HTMLInputElement,
     );
 
-    autocompleteObject.setFields(['address']);
+    autocompleteObject.setFields(['geometry', 'formatted_address']);
     autocompleteObject.addListener('place_changed', () => selectValue(value));
   };
 
   const selectValue = (val: string) => {
     const result : google.maps.places.PlaceResult = autocompleteObject.getPlace();
-    onChange(result.name!);
-    changeValue(result.name!);
+    console.log(result);
+    changeValue(result.formatted_address!);
+    onChange(result.formatted_address!);
+    setCenter(result.geometry?.location!);
   };
 
   const changeValue = (e: string) => {

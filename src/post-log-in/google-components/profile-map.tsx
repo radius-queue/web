@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import GoogleMapReact from 'google-map-react';
 import GOOGLE_API_KEY from '../../google-key';
+import { Circle } from 'react-bootstrap-icons';
 
 interface Coordinates {
   lat: number,
@@ -18,13 +19,13 @@ const Map = ({center, radius, buildingLocation} : MapProps) => {
   const [currentRadius, setRadius] = useState<number>(radius);
 
   const renderMarker = (map: any) => {
-    const marker = new google.maps.Marker({
+    new google.maps.Marker({
       position: buildingLocation,
       map,
       title: 'Hello World!',
     });
 
-    const circle = new google.maps.Circle({
+    const circleObject = new google.maps.Circle({
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2,
@@ -37,19 +38,19 @@ const Map = ({center, radius, buildingLocation} : MapProps) => {
       draggable: true,
     });
 
-    google.maps.event.addListener(circle, 'radius_changed', () => {
-      setRadius(circle.getRadius());
+    google.maps.event.addListener(circleObject, 'radius_changed', () => {
+      setRadius(circleObject.getRadius());
     });
 
-    google.maps.event.addListener(circle, 'center_changed', () => {
-      setCenter(circle.getCenter());
+    google.maps.event.addListener(circleObject, 'center_changed', () => {
+      setCenter(circleObject.getCenter());
     });
   };
 
   return (
     <GoogleMapReact
       bootstrapURLKeys={{key: GOOGLE_API_KEY}}
-      defaultCenter={{lng: center.lng(), lat: center.lat()}}
+      center={{lng: center.lng(), lat: center.lat()}}
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}

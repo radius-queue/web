@@ -17,6 +17,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
     city: '', state: '', zip: '', phone: ''});
 
   const [address, setAddress] = useState('');
+  const [center, setCenter] = useState(UW_MAP_PROPS.center);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -80,6 +81,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
               onChange={setAddress}
               isValid={submitted && address.length > 0}
               isInvalid={submitted && address.length === 0}
+              setCenter={setCenter}
             />
             {/* <Form.Row>
               <Col md='auto'>
@@ -146,7 +148,10 @@ const ProfilePage = ({uid}: ProfileProps) => {
         </Card.Body>
       </Card>
       <Card id='map-container'>
-        <Map {...UW_MAP_PROPS}/>
+        <Map center={center} buildingLocation={{
+          lng: center.lng(),
+          lat: center.lat(),
+        }} radius={UW_MAP_PROPS.radius}/>
       </Card>
     </div>
   );
