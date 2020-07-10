@@ -76,8 +76,8 @@ export class BusinessLocation {
        location.name,
        location.address,
        BusinessLocation.hoursFromFirebase(location.hours),
-       [location.coordinates.getLatitude(),
-         location.coordinates.getLongitude()],
+       [location.coordinates.latitude,
+         location.coordinates.longitude],
        location.queues,
        location.geoFenceRadius,
      ];
@@ -122,12 +122,36 @@ export class BusinessLocation {
   static hoursFromFirebase(hours: any): [Date, Date][] {
     const ret: [Date, Date][] = [];
     for (let i = 0; i < DATE_INDEX.size; i++) {
-      const day = hours.get(DATE_INDEX.get(i));
+      const day = hours[(DATE_INDEX.get(i))!];
       ret.push([day[0].toDate(), day[1].toDate()]);
     }
     return ret;
   }
 }
+
+export const businessConverter = {
+  toFirestore: function(b: Business) {
+    return {
+      name: b.name,
+      firstName: b.firstName,
+      lastName: b.lastName,
+      email: b.email,
+      locations: b.locations.map((e) => BusinessLocation.toFirebase(e)),
+      uid: b.uid,
+    };
+  },
+  fromFirestore: function(snapshot: any, options: any) {
+    const data = snapshot.data(options);
+    return new Business(
+        data.name,
+        data.firstName,
+        data.lastName,
+        data.email,
+        '', // uid
+        data.locations.map((e: any) => BusinessLocation.fromFirebase(e)),
+    );
+  },
+};
 
 const DATE_INDEX: Map<number, string> = new Map<number, string>([
   [0, 'Sunday'],
