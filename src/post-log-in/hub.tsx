@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import firebase from 'firebase/app';
 // import './App.css';
 
@@ -29,23 +31,20 @@ export const Hub = ({uid}: HubProps) => {
 
   return (
     <div id="whole-hub">
-      <Navbar bg="primary" variant="dark" id="hub-nav">
-        <Navbar.Brand>Radius</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link as={Link} to={`${url}/profile`}>Profile</Nav.Link>
-          <Nav.Link as={Link} to={`${url}/queue-view`}>Queue</Nav.Link>
-          <Nav.Link as={Link} to={`${url}/stats`}>Stats</Nav.Link>
-        </Nav>
-        <Nav>
-          <Nav.Link as={Link} to={`${url}`}
-            onClick={() => signOut(history)}>Sign out</Nav.Link>
-        </Nav>
-      </Navbar>
+      <Tabs defaultActiveKey='profile' id='hub-tabs'>
+        <Tab eventKey='profile'
+          title={<Link to={`${url}/profile`}>Profile</Link>}
+        />
+        <Tab eventKey='queue'
+          title={<Link to={`${url}/queue-view`}>Queue</Link>}
+        />
+        <Tab eventKey='signout'
+          title={<Link to={`${url}`}
+            onClick={() => signOut(history)}>Sign out</Link>}
+        />
+      </Tabs>
       <div id="hub-content">
         <Switch>
-          <Route exact path={`${path}/stats`}>
-            <StatsPage />
-          </Route>
           <Route exact path={`${path}/queue-view`}>
             <QueueView queue={TEST_QUEUE}/>
           </Route>
