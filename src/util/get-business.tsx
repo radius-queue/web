@@ -1,16 +1,17 @@
-import {Customer, customerConverter} from './customer';
+
 import {firestore} from '../firebase';
+import { Business, businessConverter } from './business';
 
 /**
  * @param uid
  */
-export default async function getCustomer(uid : string) {
-  let ret: Customer | undefined;
-  await firestore.collection('customer').doc(uid)
-      .withConverter(customerConverter)
+export default async function getBusiness(uid : string) {
+  let ret: Business | undefined;
+  await firestore.collection('businesses').doc(uid)
+      .withConverter(businessConverter)
       .get().then(function(doc) {
         if (doc.exists) {
-          const q: Customer | undefined = doc.data();
+          const q: Business | undefined = doc.data();
           ret = q;
         } else {
           console.log('No such document!');
