@@ -43,7 +43,7 @@ const Map = ({center, radius, buildingLocation, setRadius, setCenter} : MapProps
   return (
     <GoogleMapReact
       bootstrapURLKeys={{key: GOOGLE_API_KEY}}
-      center={{lng: center.lng(), lat: center.lat()}}
+      center={{lng: buildingLocation.lng(), lat: buildingLocation.lat()}}
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}

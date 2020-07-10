@@ -17,7 +17,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
     city: '', state: '', zip: '', phone: ''});
 
   const [address, setAddress] = useState('');
-  const [building, setBuilding] = useState(UW_MAP_PROPS.buildingLocation);
+  const [building, setBuilding] = useState<google.maps.LatLng>(UW_MAP_PROPS.buildingLocation);
   const [radius, setRadius] = useState<number>(UW_MAP_PROPS.radius);
   const [center, setCenter] = useState<google.maps.LatLng>(UW_MAP_PROPS.center);
   const [submitted, setSubmitted] = useState<boolean>(false);
@@ -83,7 +83,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
               onChange={setAddress}
               isValid={submitted && address.length > 0}
               isInvalid={submitted && address.length === 0}
-              setCenter={setBuilding}
+              setCenter={(cntr: google.maps.LatLng) => {setCenter(cntr); setBuilding(cntr);}}
             />
             <Form.Group>
               <Form.Label>Radius (m)</Form.Label>
@@ -92,6 +92,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
                 value={Math.round(radius)}
                 readOnly
               />
+              <Form.Text>Edit using the circle on the map.</Form.Text>
             </Form.Group>
             {/* <Form.Row>
               <Col md='auto'>
