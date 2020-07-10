@@ -5,17 +5,18 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './profile.css';
 import Col from 'react-bootstrap/Col';
-import Map from './maps/profile-map';
+import Map from './google-components/profile-map';
+import AddressAutocomplete from './google-components/profile-autocomplete';
 import {UW_MAP_PROPS} from '../util/HardcodedData';
-import './../firebase.ts';
 
 interface ProfileProps {
   uid: string;
 }
 const ProfilePage = ({uid}: ProfileProps) => {
   const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
-    address: '', city: '', state: '', zip: '', phone: ''});
+    city: '', state: '', zip: '', phone: ''});
 
+  const [address, setAddress] = useState('');
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,10 +65,8 @@ const ProfilePage = ({uid}: ProfileProps) => {
                     name="ownerName"
                     placeholder="John Smith"
                     onChange={setFormValues}
-                    isValid={submitted &&
-                      formValues.ownerName.length > 0}
-                    isInvalid={submitted &&
-                      formValues.ownerName.length === 0}
+                    isValid={submitted && formValues.ownerName.length > 0}
+                    isInvalid={submitted && formValues.ownerName.length === 0}
                     value={formValues.ownerName}
                   />
                   <Form.Control.Feedback type='invalid'>
@@ -77,25 +76,11 @@ const ProfilePage = ({uid}: ProfileProps) => {
                 </Form.Group>
               </Col>
             </Form.Row>
-            <Form.Group controlId="address">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                type="text"
-                name="address"
-                value={formValues.address}
-                placeholder="555 Example Dr."
-                onChange={setFormValues}
-                isInvalid={submitted &&
-                  formValues.address.length === 0}
-                isValid={submitted &&
-                  formValues.address.length > 0}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter a Location Address
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-
+            <AddressAutocomplete
+              onChange={setAddress}
+              isValid={submitted && address.length > 0}
+              isInvalid={submitted && address.length === 0}
+            />
             <Form.Row>
               <Col>
                 <Form.Group controlId="city">
@@ -117,7 +102,6 @@ const ProfilePage = ({uid}: ProfileProps) => {
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Col>
-
               <Col>
                 <Form.Group controlId="state">
                   <Form.Label>State</Form.Label>
