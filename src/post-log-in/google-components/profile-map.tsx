@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import GOOGLE_API_KEY from '../../google-key';
 
@@ -6,12 +6,11 @@ export interface MapProps {
   center: google.maps.LatLng, // coordinates of the center of the circle
   radius: number, // radius of their geofence in meters
   buildingLocation: google.maps.LatLng, // coordinates of business location
+  setRadius: (rad: number) => void,
+  setCenter: (point: google.maps.LatLng) => void,
 }
 
-const Map = ({center, radius, buildingLocation} : MapProps) => {
-  const [currentCenter, setCenter] = useState<google.maps.LatLng>(center);
-  const [currentRadius, setRadius] = useState<number>(radius);
-
+const Map = ({center, radius, buildingLocation, setRadius, setCenter} : MapProps) => {
   const renderMarker = (map: any) => {
     new google.maps.Marker({
       position: buildingLocation,

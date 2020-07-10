@@ -18,6 +18,8 @@ const ProfilePage = ({uid}: ProfileProps) => {
 
   const [address, setAddress] = useState('');
   const [building, setBuilding] = useState(UW_MAP_PROPS.buildingLocation);
+  const [radius, setRadius] = useState<number>(UW_MAP_PROPS.radius);
+  const [center, setCenter] = useState<google.maps.LatLng>(UW_MAP_PROPS.center);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -83,6 +85,14 @@ const ProfilePage = ({uid}: ProfileProps) => {
               isInvalid={submitted && address.length === 0}
               setCenter={setBuilding}
             />
+            <Form.Group>
+              <Form.Label>Radius (m)</Form.Label>
+              <Form.Control
+                type='number'
+                value={Math.round(radius)}
+                readOnly
+              />
+            </Form.Group>
             {/* <Form.Row>
               <Col md='auto'>
                 <Form.Label id="day">Monday</Form.Label>
@@ -148,7 +158,13 @@ const ProfilePage = ({uid}: ProfileProps) => {
         </Card.Body>
       </Card>
       <Card id='map-container'>
-        <Map center={building} buildingLocation={building} radius={UW_MAP_PROPS.radius}/>
+        <Map
+          center={center}
+          buildingLocation={building}
+          setRadius={setRadius}
+          setCenter={setCenter}
+          radius={UW_MAP_PROPS.radius}
+        />
       </Card>
     </div>
   );
