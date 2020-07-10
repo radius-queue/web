@@ -16,6 +16,7 @@ import {
   Link,
   useRouteMatch,
   useHistory,
+  Redirect,
 } from 'react-router-dom';
 
 interface HubProps {
@@ -31,9 +32,9 @@ export const Hub = ({uid}: HubProps) => {
       <Navbar bg="primary" variant="dark" id="hub-nav">
         <Navbar.Brand>Radius</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link as={Link} to={`${url}/stats`}>Stats</Nav.Link>
-          <Nav.Link as={Link} to={`${url}/queue-view`}>Queue</Nav.Link>
           <Nav.Link as={Link} to={`${url}/profile`}>Profile</Nav.Link>
+          <Nav.Link as={Link} to={`${url}/queue-view`}>Queue</Nav.Link>
+          <Nav.Link as={Link} to={`${url}/stats`}>Stats</Nav.Link>
         </Nav>
         <Nav>
           <Nav.Link as={Link} to={`${url}`}
@@ -50,6 +51,10 @@ export const Hub = ({uid}: HubProps) => {
           </Route>
           <Route exact path={`${path}/profile`}>
             <ProfilePage uid={uid}/>
+          </Route>
+          <Redirect exact from={`${path}`} to={`${path}/profile`} />
+          <Route path={`${path}`}>
+            <div>404</div>
           </Route>
         </Switch>
       </div>

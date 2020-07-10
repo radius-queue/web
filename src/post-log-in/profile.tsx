@@ -5,17 +5,18 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './profile.css';
 import Col from 'react-bootstrap/Col';
-import Map from './maps/profile-map';
+import Map from './google-components/profile-map';
+import AddressAutocomplete from './google-components/profile-autocomplete';
 import {UW_MAP_PROPS} from '../util/HardcodedData';
-import './../firebase.ts';
 
 interface ProfileProps {
   uid: string;
 }
 const ProfilePage = ({uid}: ProfileProps) => {
   const [formValues, setFormValues] = useForm({businessName: '', ownerName: '',
-    address: '', city: '', state: '', zip: '', phone: ''});
+    city: '', state: '', zip: '', phone: ''});
 
+  const [address, setAddress] = useState('');
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,10 +65,8 @@ const ProfilePage = ({uid}: ProfileProps) => {
                     name="ownerName"
                     placeholder="John Smith"
                     onChange={setFormValues}
-                    isValid={submitted &&
-                      formValues.ownerName.length > 0}
-                    isInvalid={submitted &&
-                      formValues.ownerName.length === 0}
+                    isValid={submitted && formValues.ownerName.length > 0}
+                    isInvalid={submitted && formValues.ownerName.length === 0}
                     value={formValues.ownerName}
                   />
                   <Form.Control.Feedback type='invalid'>
@@ -77,90 +76,11 @@ const ProfilePage = ({uid}: ProfileProps) => {
                 </Form.Group>
               </Col>
             </Form.Row>
-            <Form.Group controlId="address">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                type="text"
-                name="address"
-                value={formValues.address}
-                placeholder="555 Example Dr."
-                onChange={setFormValues}
-                isInvalid={submitted &&
-                  formValues.address.length === 0}
-                isValid={submitted &&
-                  formValues.address.length > 0}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter a Location Address
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Row>
-              <Col>
-                <Form.Group controlId="city">
-                  <Form.Label>City</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="city"
-                    value={formValues.city}
-                    placeholder="Seattle"
-                    onChange={setFormValues}
-                    isInvalid={submitted &&
-                  formValues.city.length === 0}
-                    isValid={submitted &&
-                  formValues.city.length > 0}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                Please Enter a City
-                  </Form.Control.Feedback>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-
-              <Col>
-                <Form.Group controlId="state">
-                  <Form.Label>State</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="state"
-                    value={formValues.state}
-                    placeholder="WA"
-                    onChange={setFormValues}
-                    isInvalid={submitted &&
-                  formValues.state.length === 0}
-                    isValid={submitted &&
-                  formValues.state.length > 0}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                Please Enter a State
-                  </Form.Control.Feedback>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-
-              <Col>
-                <Form.Group controlId="zip">
-                  <Form.Label>Zip</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="zip"
-                    value={formValues.zip}
-                    placeholder="98195"
-                    onChange={setFormValues}
-                    isInvalid={submitted &&
-                  formValues.zip.length === 0}
-                    isValid={submitted &&
-                  formValues.zip.length > 0}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                Please Enter a Zip Code
-                  </Form.Control.Feedback>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-            </Form.Row>
-
+            <AddressAutocomplete
+              onChange={setAddress}
+              isValid={submitted && address.length > 0}
+              isInvalid={submitted && address.length === 0}
+            />
             {/* <Form.Row>
               <Col md='auto'>
                 <Form.Label id="day">Monday</Form.Label>

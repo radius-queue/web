@@ -1,5 +1,5 @@
 import {Queue, Party} from './queue';
-import {MapProps} from '../post-log-in/maps/profile-map';
+import {MapProps} from '../post-log-in/google-components/profile-map';
 
 const TEST_PARTY : Party[] = [new Party('Russell Wilson', 3, '123-456-789', 20),
   new Party('Serena Williams', 2, '987-654-3210', 45),
