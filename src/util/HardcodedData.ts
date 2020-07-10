@@ -9,9 +9,6 @@ export const TEST_QUEUE : Queue = new Queue('Test', new Date(), '0', TEST_PARTY)
 
 export const UW_MAP_PROPS : MapProps = {
   center: new google.maps.LatLng(47.655548, -122.303200),
-  buildingLocation: {
-    lat: 47.655548,
-    lng: -122.303200,
-  },
+  buildingLocation: new google.maps.LatLng(47.655548, -122.303200),
   radius: 1000,
 };

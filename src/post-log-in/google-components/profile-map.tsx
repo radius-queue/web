@@ -1,17 +1,11 @@
 import React, {useState} from 'react';
 import GoogleMapReact from 'google-map-react';
 import GOOGLE_API_KEY from '../../google-key';
-import { Circle } from 'react-bootstrap-icons';
-
-interface Coordinates {
-  lat: number,
-  lng: number,
-}
 
 export interface MapProps {
   center: google.maps.LatLng, // coordinates of the center of the circle
   radius: number, // radius of their geofence in meters
-  buildingLocation: Coordinates, // coordinates of business location
+  buildingLocation: google.maps.LatLng, // coordinates of business location
 }
 
 const Map = ({center, radius, buildingLocation} : MapProps) => {
@@ -54,6 +48,7 @@ const Map = ({center, radius, buildingLocation} : MapProps) => {
       defaultZoom={15}
       yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}
+      key={buildingLocation.toString()}
     />
   );
 };
