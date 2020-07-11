@@ -14,6 +14,7 @@ import {UW_MAP_PROPS} from '../util/HardcodedData';
 import {
   Prompt,
 } from 'react-router-dom';
+import postBusiness from '../util/post-business';
 
 interface ProfileProps {
   uid: string;
@@ -48,7 +49,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
         firstName: val!.firstName,
         lastName: val!.lastName,
         phone: '',
-        address: val!.locations[0].address,
+        address: '',
       });
       setBuilding(new google.maps.LatLng(val!.locations[0].coordinates[0], val!.locations[0].coordinates[1]));
       setRadius(val!.locations[0].geoFenceRadius);
@@ -70,10 +71,11 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     if (allFieldsCompleted()) {
       setEditing(false);
       enableOtherNavs();
-      // setBusiness(business);
-      /**
-     * TODO: PUSH TO FIREBASE
-     * */
+      const newBusiness = new Business(form.businessName, form.firstName, form.lastName, 'cheah@cheah.com', uid);
+      newBusiness.locations[0].phoneNumber = form.phone;
+      newBusiness.locations[0].address = form.address;
+      setBusiness(newBusiness);
+      postBusiness(newBusiness);
     }
   };
 
