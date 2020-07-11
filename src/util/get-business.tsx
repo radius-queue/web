@@ -1,6 +1,6 @@
 
 import {firestore} from '../firebase';
-import { Business, businessConverter } from './business';
+import {Business, businessConverter} from './business';
 
 /**
  * @param uid

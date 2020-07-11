@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
 
 interface AutocompleteProps {
@@ -6,14 +6,13 @@ interface AutocompleteProps {
   isValid: boolean;
   isInvalid: boolean;
   setCenter: (coords: google.maps.LatLng) => void;
-  editable: boolean
+  editable: boolean,
+  value: string,
 }
 
-export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, editable}: AutocompleteProps) => {
+export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, editable, value}: AutocompleteProps) => {
   let autocompleteObject : google.maps.places.Autocomplete;
-  const [value, setValue] = useState<string>('');
-
-  const afterLoad = () => {
+  const didMount = () => {
     autocompleteObject = new google.maps.places.Autocomplete(
       document.getElementById('autocomplete') as HTMLInputElement,
     );
@@ -25,25 +24,15 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
   const selectValue = (val: string) => {
     const result : google.maps.places.PlaceResult = autocompleteObject.getPlace();
     console.log(result);
-    changeValue(result.formatted_address!);
     onChange(result.formatted_address!);
-    setCenter(result.geometry?.location!);
-  };
-
-  const changeValue = (e: string) => {
-    let newVal: string;
-    if (e.length < value.length) {
-      newVal = '';
-      onChange(newVal);
-    } else {
-      newVal = e;
-    }
-    setValue(newVal);
+    setCenter(result.geometry!.location!);
   };
 
   useEffect(() => {
-    afterLoad();
-  });
+    if (editable) {
+      didMount();
+    }
+  }, []);
 
   return (
     <Form.Group>
@@ -56,7 +45,7 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
         value={value}
         isInvalid={isInvalid}
         isValid={isValid}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeValue(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
         readOnly={!editable}
       />
       <Form.Control.Feedback type='invalid'>

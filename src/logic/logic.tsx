@@ -29,5 +29,10 @@ export const useForm = (initialState: any) => {
         [e.target.name]: e.target.value,
       });
     },
+    (newState: any) => {
+      setState({
+        ...newState,
+      });
+    },
   ];
 };

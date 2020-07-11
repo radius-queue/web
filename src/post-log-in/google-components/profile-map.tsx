@@ -29,6 +29,8 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
       draggable: false,
     });
 
+    map.setMapTypeId('satellite');
+
     if (editable) {
       google.maps.event.addListener(circleObject, 'radius_changed', () => {
         setRadius(circleObject.getRadius());
