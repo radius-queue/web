@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {QueueView} from './queue-view';
 import StatsPage from './stats';
+import {Business} from '../util/business';
 import ProfilePage from './profile';
 import {TEST_QUEUE} from './../util/HardcodedData';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import firebase from 'firebase/app';
@@ -28,6 +27,7 @@ interface HubProps {
 export const Hub = ({uid}: HubProps) => {
   const history = useHistory();
   const {path, url} = useRouteMatch();
+  const [business, setBusiness] = useState<Business | undefined>(undefined);
 
   return (
     <div id="whole-hub">
@@ -49,7 +49,7 @@ export const Hub = ({uid}: HubProps) => {
             <QueueView queue={TEST_QUEUE}/>
           </Route>
           <Route exact path={`${path}/profile`}>
-            <ProfilePage uid={uid}/>
+            <ProfilePage uid={uid} setBusiness={setBusiness}/>
           </Route>
           <Redirect exact from={`${path}`} to={`${path}/profile`} />
           <Route path={`${path}`}>

@@ -14,6 +14,7 @@ import {
   Redirect,
   useLocation,
 } from 'react-router-dom';
+import { Business } from './util/business';
 
 /**
  * Top Level app component
