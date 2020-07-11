@@ -67,9 +67,9 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
-    enableOtherNavs();
     if (allFieldsCompleted()) {
       setEditing(false);
+      enableOtherNavs();
       // setBusiness(business);
       /**
      * TODO: PUSH TO FIREBASE
