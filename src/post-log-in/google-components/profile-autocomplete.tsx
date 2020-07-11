@@ -19,7 +19,7 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
     );
 
     autocompleteObject.setFields(['geometry', 'formatted_address']);
-    autocompleteObject.addListener('place_changed', () => selectValue(value));
+    autocompleteObject.addListener('place_changed', () => selectValue(state));
   };
 
   const changeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -71,9 +71,9 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     if (allFieldsCompleted()) {
       setEditing(false);
       enableOtherNavs();
-      const newBusiness = new Business(form.businessName, form.firstName, form.lastName, 'cheah@cheah.com', uid);
-      newBusiness.locations[0].phoneNumber = form.phone;
-      newBusiness.locations[0].address = form.address;
+      const newBusiness = new Business(form.businessName, form.firstName, form.lastName, 'cheah@cheah.com', 'Cheah');
+      //newBusiness.locations[0].phoneNumber = form.phone;
+      //newBusiness.locations[0].address = form.address;
       setBusiness(newBusiness);
       postBusiness(newBusiness);
     }
