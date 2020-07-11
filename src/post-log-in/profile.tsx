@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import getBusiness from '../util/get-business';
 import {Business} from '../util/business';
-import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -14,8 +13,9 @@ import {UW_MAP_PROPS} from '../util/HardcodedData';
 interface ProfileProps {
   uid: string;
   setBusiness: (b:Business) => void;
+  business: Business;
 }
-const ProfilePage = ({uid, setBusiness}: ProfileProps) => {
+const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const [form, setForm] = useState({businessName: '', firstName: '', lastName: '', phone: '', address: ''});
   const [building, setBuilding] =
     useState<google.maps.LatLng>(UW_MAP_PROPS.buildingLocation);
@@ -23,23 +23,28 @@ const ProfilePage = ({uid, setBusiness}: ProfileProps) => {
   const [editing, setEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const didMount = async () => {
+  const queryForBusiness = async () => {
     const val : Business | undefined = await getBusiness(uid);
-    console.log(val);
-    setForm({
-      businessName: val!.name,
-      firstName: val!.firstName,
-      lastName: val!.lastName,
-      phone: '',
-      address: val!.locations[0].address,
-    });
-    setBuilding(new google.maps.LatLng(val!.locations[0].coordinates[0], val!.locations[0].coordinates[1]));
-    setRadius(val!.locations[0].geoFenceRadius);
-    setBusiness(val!);
+    if (val) {
+      setForm({
+        businessName: val!.name,
+        firstName: val!.firstName,
+        lastName: val!.lastName,
+        phone: '',
+        address: val!.locations[0].address,
+      });
+      setBuilding(new google.maps.LatLng(val!.locations[0].coordinates[0], val!.locations[0].coordinates[1]));
+      setRadius(val!.locations[0].geoFenceRadius);
+      setBusiness(val!);
+    } else {
+      setEditing(true);
+    }
   };
 
   useEffect(() => {
-    didMount();
+    if (!business) {
+      queryForBusiness();
+    }
   }, []);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
