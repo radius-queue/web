@@ -104,7 +104,7 @@ export class BusinessLocation {
       queues: location.queues,
       geoFenceRadius: location.geoFenceRadius,
     };
-  }
+  };
 
   /**
    *

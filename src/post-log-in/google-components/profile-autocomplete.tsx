@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Form from 'react-bootstrap/Form';
 
 interface AutocompleteProps {
@@ -11,6 +11,7 @@ interface AutocompleteProps {
 }
 
 export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, editable, value}: AutocompleteProps) => {
+  const [state, setState] = useState<string>(value);
   let autocompleteObject : google.maps.places.Autocomplete;
   const didMount = () => {
     autocompleteObject = new google.maps.places.Autocomplete(
@@ -21,9 +22,15 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
     autocompleteObject.addListener('place_changed', () => selectValue(value));
   };
 
+  const changeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length < state.length) {
+      onChange('');
+    };
+    setState(e.target.value);
+  };
+
   const selectValue = (val: string) => {
     const result : google.maps.places.PlaceResult = autocompleteObject.getPlace();
-    console.log(result);
     onChange(result.formatted_address!);
     setCenter(result.geometry!.location!);
   };
@@ -42,10 +49,10 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
         name="address"
         id='autocomplete'
         placeholder="555 Example Dr."
-        value={value}
+        value={state}
         isInvalid={isInvalid}
+        onChange={changeAddress}
         isValid={isValid}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
         readOnly={!editable}
       />
       <Form.Control.Feedback type='invalid'>

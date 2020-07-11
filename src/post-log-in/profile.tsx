@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import getBusiness from '../util/get-business';
 import {Business} from '../util/business';
+import GOOGLE_API_KEY from '../google-key';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -17,7 +18,7 @@ import {
 interface ProfileProps {
   uid: string;
   setBusiness: (b:Business) => void;
-  business: Business;
+  business: Business | undefined;
 }
 const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const [form, setForm] = useState({businessName: '', firstName: '', lastName: '', phone: '', address: ''});
@@ -54,6 +55,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
+
     setEditing(false);
 
     /**
