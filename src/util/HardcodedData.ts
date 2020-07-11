@@ -7,6 +7,7 @@ const TEST_PARTY : Party[] = [new Party('Russell Wilson', 3, '123-456-789', 20),
 
 export const TEST_QUEUE : Queue = new Queue('Test', new Date(), '0', TEST_PARTY);
 
+/** global google */
 export const UW_MAP_PROPS = {
   center: new google.maps.LatLng(47.655548, -122.303200),
   buildingLocation: new google.maps.LatLng(47.655548, -122.303200),
