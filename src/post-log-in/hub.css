@@ -22,3 +22,8 @@
 #hub-nav {
   height: 6vh;
 }
+
+.active {
+  pointer-events: none;
+  cursor: default;
+}

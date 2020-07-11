@@ -59,6 +59,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
+    enableOtherNavs();
     if (allFieldsCompleted()) {
       setEditing(false);
       // setBusiness(business);
@@ -184,7 +185,11 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
               />
               {editing && <Form.Text>Edit using the circle on the map.</Form.Text>}
             </Form.Group>
-            {!editing ? <Button variant='warning' key='edit' onClick={() => setEditing(true)}
+            {!editing ? <Button variant='warning' key='edit'
+              onClick={() => {
+                setEditing(true);
+                disableOtherNavs();
+              }}
               style={{width: '100%'}}>Edit Your Info</Button> :
               <Button key='submit' type='submit' style={{width: '100%'}}>
                 Submit Changes
@@ -202,6 +207,20 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
       </Card>
     </div>
   );
+};
+
+const disableOtherNavs = () => {
+  const otherNavs = document.getElementsByClassName('not-profile');
+  for (let i = 0; i < otherNavs.length; i++) {
+    otherNavs[i].classList.add('disabled');
+  }
+};
+
+const enableOtherNavs = () => {
+  const otherNavs = document.getElementsByClassName('not-profile');
+  for (let i = 0; i < otherNavs.length; i++) {
+    otherNavs[i].classList.remove('disabled');
+  }
 };
 
 export default ProfilePage;

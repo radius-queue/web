@@ -34,10 +34,12 @@ export const Hub = ({uid}: HubProps) => {
     <div id="whole-hub">
       <Navbar bg="primary" variant="dark" id='hub-nav'>
         <Nav className='mr-auto'>
-          <Nav.Link id='profile-nav' className='nav-link-item' as={NavLink} to={`${url}/profile`}>
+          <Nav.Link id='profile-nav' className='nav-link-item'
+            as={NavLink} to={`${url}/profile`}>
             Profile
           </Nav.Link>
-          <Nav.Link id='queue-view-nav' className='nav-link-item' as={NavLink} to={`${url}/queue-view`}>
+          <Nav.Link id='queue-view-nav' className='nav-link-item not-profile'
+            as={NavLink} to={`${url}/queue-view`}>
             Queue
           </Nav.Link>
         </Nav>
@@ -53,7 +55,8 @@ export const Hub = ({uid}: HubProps) => {
             <QueueView queue={TEST_QUEUE}/>
           </Route>
           <Route exact path={`${path}/profile`}>
-            <ProfilePage uid={uid} setBusiness={setBusiness} business={business}/>
+            <ProfilePage uid={uid} setBusiness={setBusiness}
+              business={business}/>
           </Route>
           <Redirect exact from={`${path}`} to={`${path}/profile`} />
           <Route path={`${path}`}>
