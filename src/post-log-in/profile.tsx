@@ -20,12 +20,20 @@ interface ProfileProps {
   setBusiness: (b:Business) => void;
   business: Business | undefined;
 }
+
+interface FormState {
+  businessName: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  address: string;
+}
 const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
-  const [form, setForm] = useState({businessName: business ? business.name : '',
+  const [form, setForm] = useState<FormState>({businessName: business ? business.name : '',
     firstName: business ? business.firstName : '',
     lastName: business ? business.lastName : '',
     phone: '',
-    address: ''});
+    address: business ? business.locations[0].address : ''});
   const [building, setBuilding] =
     useState<google.maps.LatLng>(UW_MAP_PROPS.buildingLocation);
   const [radius, setRadius] = useState<number>(0);
@@ -70,8 +78,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
 
   const allFieldsCompleted : () => boolean = () => {
     let result : boolean = true;
-    for (const field of Object.keys(form)) {
-      result = result && field.length > 0;
+    for (const [key, value] of Object.entries(form)) {
+      result = result && value.length > 0;
     }
     return result;
   };
