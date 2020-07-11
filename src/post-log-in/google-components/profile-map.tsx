@@ -3,19 +3,17 @@ import GoogleMapReact from 'google-map-react';
 import GOOGLE_API_KEY from '../../google-key';
 
 export interface MapProps {
-  center: google.maps.LatLng, // coordinates of the center of the circle
   radius: number, // radius of their geofence in meters
   buildingLocation: google.maps.LatLng, // coordinates of business location
   setRadius: (rad: number) => void,
-  setCenter: (point: google.maps.LatLng) => void,
+  editable: boolean,
 }
 
-const Map = ({center, radius, buildingLocation, setRadius, setCenter} : MapProps) => {
+const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
   const renderMarker = (map: any) => {
     new google.maps.Marker({
       position: buildingLocation,
       map,
-      title: 'Hello World!',
     });
 
     const circleObject = new google.maps.Circle({
@@ -25,29 +23,27 @@ const Map = ({center, radius, buildingLocation, setRadius, setCenter} : MapProps
       fillColor: '#FF0000',
       fillOpacity: 0.3,
       map,
-      center: center,
+      center: buildingLocation,
       radius: radius,
-      editable: true,
-      draggable: true,
+      editable: editable,
+      draggable: false,
     });
 
-    google.maps.event.addListener(circleObject, 'radius_changed', () => {
-      setRadius(circleObject.getRadius());
-    });
-
-    google.maps.event.addListener(circleObject, 'center_changed', () => {
-      setCenter(circleObject.getCenter());
-    });
+    if (editable) {
+      google.maps.event.addListener(circleObject, 'radius_changed', () => {
+        setRadius(circleObject.getRadius());
+      });
+    }
   };
 
   return (
     <GoogleMapReact
       bootstrapURLKeys={{key: GOOGLE_API_KEY}}
       center={{lng: buildingLocation.lng(), lat: buildingLocation.lat()}}
-      defaultZoom={15}
+      defaultZoom={17}
       yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}
-      key={buildingLocation.toString()}
+      key={buildingLocation.toString() + `${editable}`}
     />
   );
 };

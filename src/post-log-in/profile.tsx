@@ -19,12 +19,13 @@ const ProfilePage = ({uid}: ProfileProps) => {
   const [address, setAddress] = useState('');
   const [building, setBuilding] = useState<google.maps.LatLng>(UW_MAP_PROPS.buildingLocation);
   const [radius, setRadius] = useState<number>(UW_MAP_PROPS.radius);
-  const [center, setCenter] = useState<google.maps.LatLng>(UW_MAP_PROPS.center);
+  const [editing, setEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
+    setEditing(false);
 
     /**
      * TODO: PUSH TO FIREBASE
@@ -53,6 +54,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
                     isInvalid={submitted &&
                       formValues.businessName.length === 0}
                     placeholder={'My Amazing Business'}
+                    readOnly={!editing}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter a Business Name
@@ -71,6 +73,7 @@ const ProfilePage = ({uid}: ProfileProps) => {
                     isValid={submitted && formValues.ownerName.length > 0}
                     isInvalid={submitted && formValues.ownerName.length === 0}
                     value={formValues.ownerName}
+                    readOnly={!editing}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter an Owner Name
@@ -83,7 +86,8 @@ const ProfilePage = ({uid}: ProfileProps) => {
               onChange={setAddress}
               isValid={submitted && address.length > 0}
               isInvalid={submitted && address.length === 0}
-              setCenter={(cntr: google.maps.LatLng) => {setCenter(cntr); setBuilding(cntr);}}
+              setCenter={setBuilding}
+              editable={editing}
             />
             <Form.Group>
               <Form.Label>Radius (m)</Form.Label>
@@ -146,25 +150,24 @@ const ProfilePage = ({uid}: ProfileProps) => {
                   formValues.phone.length === 0}
                 isValid={submitted &&
                   formValues.phone.length > 0}
+                readOnly={!editing}
               />
               <Form.Control.Feedback type='invalid'>
                 Please Enter A Phone Number
               </Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Button type='submit' style={{width: '100%'}}>
-              Submit Changes
-            </Button>
+            {!editing ? <Button key='edit' onClick={() => setEditing(true)} style={{width: '100%'}}>Edit Your Info</Button> :
+              <Button key='submit' type='submit' style={{width: '100%'}}>Submit Changes</Button>}
           </Form>
         </Card.Body>
       </Card>
       <Card id='map-container'>
         <Map
-          center={center}
           buildingLocation={building}
           setRadius={setRadius}
-          setCenter={setCenter}
-          radius={UW_MAP_PROPS.radius}
+          radius={radius}
+          editable={editing}
         />
       </Card>
     </div>

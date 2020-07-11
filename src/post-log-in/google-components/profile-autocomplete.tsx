@@ -6,9 +6,10 @@ interface AutocompleteProps {
   isValid: boolean;
   isInvalid: boolean;
   setCenter: (coords: google.maps.LatLng) => void;
+  editable: boolean
 }
 
-export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter}: AutocompleteProps) => {
+export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, editable}: AutocompleteProps) => {
   let autocompleteObject : google.maps.places.Autocomplete;
   const [value, setValue] = useState<string>('');
 
@@ -56,6 +57,7 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter}: A
         isInvalid={isInvalid}
         isValid={isValid}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeValue(e.target.value)}
+        readOnly={!editable}
       />
       <Form.Control.Feedback type='invalid'>
         Please Enter a Location Address
