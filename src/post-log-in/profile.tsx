@@ -10,6 +10,10 @@ import Map from './google-components/profile-map';
 import AddressAutocomplete from './google-components/profile-autocomplete';
 import {UW_MAP_PROPS} from '../util/HardcodedData';
 
+import {
+  Prompt,
+} from "react-router-dom";
+
 interface ProfileProps {
   uid: string;
   setBusiness: (b:Business) => void;
@@ -65,6 +69,10 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
         </Card.Title>
         <Card.Body>
           <Form noValidate onSubmit={submitForm}>
+            <Prompt
+              when={editing}
+              message={() => 'You have unsaved changes. Are you sure you want to leave the page?'}
+            />
             <Form.Group controlId="businessName">
               <Form.Label>Business Name</Form.Label>
               <Form.Control

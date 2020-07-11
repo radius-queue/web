@@ -1,23 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {QueueView} from './queue-view';
-import StatsPage from './stats';
 import {Business} from '../util/business';
 import ProfilePage from './profile';
 import {TEST_QUEUE} from './../util/HardcodedData';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
+import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Nav from 'react-bootstrap/Nav';
 import firebase from 'firebase/app';
 // import './App.css';
 
 import {
   Switch,
   Route,
-  Link,
   useRouteMatch,
   useHistory,
   Redirect,
+  NavLink,
 } from 'react-router-dom';
 
 interface HubProps {
@@ -31,18 +32,21 @@ export const Hub = ({uid}: HubProps) => {
 
   return (
     <div id="whole-hub">
-      <Tabs defaultActiveKey='profile' id='hub-tabs'>
-        <Tab eventKey='profile'
-          title={<Link to={`${url}/profile`}>Profile</Link>}
-        />
-        <Tab eventKey='queue'
-          title={<Link to={`${url}/queue-view`}>Queue</Link>}
-        />
-        <Tab eventKey='signout'
-          title={<Link to={`${url}`}
-            onClick={() => signOut(history)}>Sign out</Link>}
-        />
-      </Tabs>
+      <Navbar bg="primary" variant="dark" id='hub-nav'>
+        <Nav className='mr-auto'>
+          <Nav.Link id='profile-nav' className='nav-link-item' as={NavLink} to={`${url}/profile`}>
+            Profile
+          </Nav.Link>
+          <Nav.Link id='queue-view-nav' className='nav-link-item' as={NavLink} to={`${url}/queue-view`}>
+            Queue
+          </Nav.Link>
+        </Nav>
+        <Form inline>
+          <Button id='sign-out-button' onClick={() => signOut(history)}>
+            Sign Out
+          </Button>
+        </Form>
+      </Navbar>
       <div id="hub-content">
         <Switch>
           <Route exact path={`${path}/queue-view`}>

@@ -38,6 +38,7 @@ export class Business {
 export class BusinessLocation {
   name: string;
   address: string;
+  phoneNumber: string;
   hours: [Date, Date][];
   coordinates: number[]; // in decimal degrees (DD).
   queues: string[];
@@ -46,6 +47,7 @@ export class BusinessLocation {
   /**
    * @param {string} name Name of specific location
    * @param {string} address Address of location
+   * @param {string} phoneNumber phone number of the location
    * @param {[Date, Date][]} hours business hours for queue operation as array
    *    of Date object pairs.
    * @param {number[]} coordinates Geographic coordinates of location in
@@ -56,11 +58,12 @@ export class BusinessLocation {
    *    (in meters) that a customer is allowed to enter queue, Default value
    *    of -1
    */
-  constructor(name: string, address: string, hours: [Date, Date][],
+  constructor(name: string, address: string, phoneNumber: string, hours: [Date, Date][],
       coordinates: number[], queues: string[] = [],
       geoFenceRadius: number = -1) {
     this.name = name;
     this.address = address;
+    this.phoneNumber = phoneNumber;
     this.hours = hours;
     this.coordinates = coordinates;
     this.queues = queues;
@@ -71,10 +74,11 @@ export class BusinessLocation {
   * @param party
   */
   static fromFirebase(location: any): BusinessLocation {
-    const locPrams : [string, string, [Date, Date][], number[],
+    const locPrams : [string, string, string, [Date, Date][], number[],
      string[], number] = [
        location.name,
        location.address,
+       location.phoneNumber,
        BusinessLocation.hoursFromFirebase(location.hours),
        [location.coordinates.latitude,
          location.coordinates.longitude],
@@ -91,6 +95,7 @@ export class BusinessLocation {
     return {
       name: location.name,
       address: location.address,
+      phoneNumber: location.phoneNumber,
       hours: BusinessLocation.hoursToFirebase(location.hours), // need fixing
       coordinates: new firebase.firestore.GeoPoint(
           location.coordinates[0],

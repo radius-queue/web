@@ -3,7 +3,7 @@ import {queueConverter, Queue} from './queue';
 
 /**
  *
- * @param q
+ * @param {Queue} q Queue object to be updated on the database
  */
 export default function postQueue(q : Queue) {
   firestore.collection('queues').doc(q.uid)
