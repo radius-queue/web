@@ -1,24 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {QueueView} from './queue-view';
-import StatsPage from './stats';
 import ProfilePage from './profile';
 import {TEST_QUEUE} from './../util/HardcodedData';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
 import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
 import firebase from 'firebase/app';
 // import './App.css';
 
 import {
   Switch,
   Route,
-  Link,
   useRouteMatch,
   useHistory,
   Redirect,
+  Link,
 } from 'react-router-dom';
 
 interface HubProps {
@@ -31,18 +30,21 @@ export const Hub = ({uid}: HubProps) => {
 
   return (
     <div id="whole-hub">
-      <Tabs defaultActiveKey='profile' id='hub-tabs'>
-        <Tab eventKey='profile'
-          title={<Link to={`${url}/profile`}>Profile</Link>}
-        />
-        <Tab eventKey='queue'
-          title={<Link to={`${url}/queue-view`}>Queue</Link>}
-        />
-        <Tab eventKey='signout'
-          title={<Link to={`${url}`}
-            onClick={() => signOut(history)}>Sign out</Link>}
-        />
-      </Tabs>
+      <Navbar bg="primary" variant="dark" id='hub-nav'>
+        <Nav className='mr-auto' defaultActiveKey='profile'>
+          <Nav.Link eventKey={'profile'} as={Link} to={`${url}/profile`}>
+            Profile
+          </Nav.Link>
+          <Nav.Link eventKey={'queue'} as={Link} to={`${url}/queue-view`}>
+            Queue
+          </Nav.Link>
+        </Nav>
+        <Form inline>
+          <Button id='sign-out-button' onClick={() => signOut(history)}>
+            Sign Out
+          </Button>
+        </Form>
+      </Navbar>
       <div id="hub-content">
         <Switch>
           <Route exact path={`${path}/queue-view`}>

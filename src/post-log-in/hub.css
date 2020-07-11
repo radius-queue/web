@@ -1,5 +1,13 @@
 #hub-content {
-  height: 94%;
+  height: 94vh;
+}
+
+#sign-out-button {
+  height: 5vh;
+  top: 0.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #whole-hub {
