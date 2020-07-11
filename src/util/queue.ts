@@ -7,18 +7,22 @@ export class Queue {
   parties: Party[]; // where parties[0] is the front of the line
   end: Date;
   uid : string;
+  open: boolean;
 
   /**
    * @param {string} name Name of Queue
    * @param {Date} end End time
    * @param {string} uid Uid of Queue
+   * @param {boolean} open true if queue is open
    * @param {Party[]} parties Optional field for initializing current queue,
    *    Default value is set to empty array
    */
-  constructor(name: string, end: Date, uid: string, parties?: Party[]) {
+  constructor(name: string, end: Date, uid: string, open: boolean,
+      parties?: Party[]) {
     this.name = name;
     this.parties = parties ? parties :[];
     this.end = end;
+    this.open = open;
     this.uid = uid;
   }
 
@@ -99,6 +103,7 @@ export const queueConverter = {
       name: q.name,
       parties: q.parties.map((e) => Party.toFirebase(e)),
       end: firebase.firestore.Timestamp.fromDate(q.end!),
+      open: q.open,
     };
   },
   fromFirestore: function(snapshot: any, options: any) {
@@ -108,6 +113,7 @@ export const queueConverter = {
         data.name,
         data.end.toDate(),
         '',
+        data.open,
         data.parties.map((party: any)=> Party.fromFirebase(party)),
     );
   },
