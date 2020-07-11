@@ -18,7 +18,7 @@ import {
   useRouteMatch,
   useHistory,
   Redirect,
-  Link,
+  NavLink,
 } from 'react-router-dom';
 
 interface HubProps {
@@ -30,18 +30,14 @@ export const Hub = ({uid}: HubProps) => {
   const {path, url} = useRouteMatch();
   const [business, setBusiness] = useState<Business | undefined>(undefined);
 
-  useEffect(() => {
-    setActive();
-  });
-
   return (
     <div id="whole-hub">
       <Navbar bg="primary" variant="dark" id='hub-nav'>
         <Nav className='mr-auto'>
-          <Nav.Link id='profile-nav' className='nav-link-item' as={Link} to={`${url}/profile`}>
+          <Nav.Link id='profile-nav' className='nav-link-item' as={NavLink} to={`${url}/profile`}>
             Profile
           </Nav.Link>
-          <Nav.Link id='queue-view-nav' className='nav-link-item' as={Link} to={`${url}/queue-view`}>
+          <Nav.Link id='queue-view-nav' className='nav-link-item' as={NavLink} to={`${url}/queue-view`}>
             Queue
           </Nav.Link>
         </Nav>
@@ -68,25 +64,6 @@ export const Hub = ({uid}: HubProps) => {
     </div>
   );
 };
-
-/**
- * Sets the correct nav bar item to be highlighted.
- */
-function setActive() {
-  const splitUrl: string[] = document.location.toString().split('/');
-  const curPage: string = splitUrl[splitUrl.length - 1];
-
-  const allItems = document.getElementsByClassName('nav-link-item');
-  let i;
-  for (i = 0; i < allItems.length; i++) {
-    allItems[i].classList.remove('active');
-  }
-
-  const curElement = document.getElementById(curPage + '-nav');
-  if (curElement) {
-    curElement.classList.add('active');
-  }
-}
 
 /**
  * Signs the current user out and redirects to log in page.
