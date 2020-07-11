@@ -13,7 +13,7 @@ import {UW_MAP_PROPS} from '../util/HardcodedData';
 
 import {
   Prompt,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 interface ProfileProps {
   uid: string;
@@ -21,7 +21,11 @@ interface ProfileProps {
   business: Business | undefined;
 }
 const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
-  const [form, setForm] = useState({businessName: '', firstName: '', lastName: '', phone: '', address: ''});
+  const [form, setForm] = useState({businessName: business ? business.name : '',
+    firstName: business ? business.firstName : '',
+    lastName: business ? business.lastName : '',
+    phone: '',
+    address: ''});
   const [building, setBuilding] =
     useState<google.maps.LatLng>(UW_MAP_PROPS.buildingLocation);
   const [radius, setRadius] = useState<number>(0);
@@ -55,12 +59,21 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
-
-    setEditing(false);
-
-    /**
+    if (allFieldsCompleted()) {
+      setEditing(false);
+      // setBusiness(business);
+      /**
      * TODO: PUSH TO FIREBASE
      * */
+    }
+  };
+
+  const allFieldsCompleted : () => boolean = () => {
+    let result : boolean = true;
+    for (const field of Object.keys(form)) {
+      result = result && field.length > 0;
+    }
+    return result;
   };
 
   return (
@@ -171,7 +184,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
               />
               {editing && <Form.Text>Edit using the circle on the map.</Form.Text>}
             </Form.Group>
-            {!editing ? <Button key='edit' onClick={() => setEditing(true)}
+            {!editing ? <Button variant='warning' key='edit' onClick={() => setEditing(true)}
               style={{width: '100%'}}>Edit Your Info</Button> :
               <Button key='submit' type='submit' style={{width: '100%'}}>
                 Submit Changes
