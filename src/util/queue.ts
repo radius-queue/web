@@ -108,7 +108,6 @@ export const queueConverter = {
   },
   fromFirestore: function(snapshot: any, options: any) {
     const data = snapshot.data(options);
-    console.log(data);
     return new Queue(
         data.name,
         data.end.toDate(),

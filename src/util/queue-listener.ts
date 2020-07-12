@@ -1,5 +1,5 @@
 import {firestore} from '../firebase';
-import { queueConverter, Queue } from './queue';
+import {queueConverter, Queue} from './queue';
 
 /**
  *
@@ -13,11 +13,13 @@ export class QueueListener {
    * @param kickback
    */
   constructor(uid: string, kickback: (q: any) => void) {
+    console.log('here');
     this.listener = firestore.collection('queues').doc(uid)
         .withConverter(queueConverter)
         .onSnapshot(function(doc) {
           if (doc.exists) {
-            kickback(doc);
+            // kickback(doc);
+            console.log(doc.data());
           } else {
             console.log('No such document!');
           }
@@ -30,6 +32,7 @@ export class QueueListener {
    *
    */
   free(): void {
+    console.log('free');
     this.listener();
   }
 }

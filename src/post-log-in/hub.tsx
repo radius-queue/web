@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import firebase from 'firebase/app';
 import {Queue} from '../util/queue';
+import {auth} from '../firebase';
 // import './App.css';
 
 import {
@@ -24,27 +25,23 @@ import {
 import getBusiness from '../util/get-business';
 import getQueue from '../util/get-queue';
 
-interface HubProps {
-  uid: string,
-}
-
-export const Hub = ({uid}: HubProps) => {
+export const Hub = () => {
   const history = useHistory();
   const {path, url} = useRouteMatch();
   const [business, setBusiness] = useState<Business | undefined>(undefined);
   const [queue, setQueue] = useState<Queue| undefined>(undefined);
 
   const queryForBusiness = async () => {
-    const val : Business | undefined = await getBusiness(uid);
+    const val : Business | undefined = await getBusiness(auth.currentUser!.uid);
     if (val) {
       setBusiness(val!);
     }
   };
 
   const queryForQueue = async () => {
-    if (business && business!.locations[0].queues.length > 0) {
+    if (business) {
       const val : Queue | undefined = await getQueue(
-          business!.locations[0].queues[0]!);
+          business!.locations[0].queues[0]);
       if (val) {
         setQueue(val!);
       }
@@ -55,10 +52,15 @@ export const Hub = ({uid}: HubProps) => {
     if (!business) {
       queryForBusiness();
     }
+  }, []);
+
+
+  useEffect(() => {
     if (!queue) {
       queryForQueue();
     }
-  }, []);
+  }, [business]);
+
   return (
     <div id="whole-hub">
       <Navbar bg="primary" variant="dark" id='hub-nav'>
@@ -76,6 +78,12 @@ export const Hub = ({uid}: HubProps) => {
           <Button id='sign-out-button' onClick={() => signOut(history)}>
             Sign Out
           </Button>
+          <Button id='sign-out-button' onClick={() => {
+            console.log('business:' + business +'\n');
+            console.log('queue:' + queue +'\n');
+          }}>
+            asd
+          </Button>
         </Form>
       </Navbar>
       <div id="hub-content">
@@ -84,7 +92,7 @@ export const Hub = ({uid}: HubProps) => {
             <QueueView queue={queue!} setQueue={setQueue}/>
           </Route>
           <Route exact path={`${path}/profile`}>
-            <ProfilePage uid={uid} setBusiness={setBusiness}
+            <ProfilePage uid={auth.currentUser!.uid} setBusiness={setBusiness}
               business={business}/>
           </Route>
           <Redirect exact from={`${path}`} to={`${path}/profile`} />

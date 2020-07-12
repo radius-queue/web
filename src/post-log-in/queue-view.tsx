@@ -143,13 +143,16 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [party, setParty] = useState<Party | undefined>(queue.parties[0]);
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [listener, setListener] = useState<QueueListener>(
-      new QueueListener(queue.uid, setQueue));
+  const [listener, setListener] = useState<QueueListener | undefined>(undefined);
 
   useEffect(()=> {
+    setListener(new QueueListener(queue.uid, setQ));
     return ()=> {
-      listener.free();
-    }
+      if (listener) {
+        listener!.free();
+      }
+      setQueue(stateQ);
+    };
   }, []);
   const submit = (party: Party) => {
     const list: Party[] = stateQ.parties.slice();
