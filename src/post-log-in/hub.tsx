@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import firebase from 'firebase/app';
+import {Queue} from '../util/queue';
 // import './App.css';
 
 import {
@@ -20,6 +21,8 @@ import {
   Redirect,
   NavLink,
 } from 'react-router-dom';
+import getBusiness from '../util/get-business';
+import getQueue from '../util/get-queue';
 
 interface HubProps {
   uid: string,
@@ -29,7 +32,33 @@ export const Hub = ({uid}: HubProps) => {
   const history = useHistory();
   const {path, url} = useRouteMatch();
   const [business, setBusiness] = useState<Business | undefined>(undefined);
+  const [queue, setQueue] = useState<Queue| undefined>(undefined);
 
+  const queryForBusiness = async () => {
+    const val : Business | undefined = await getBusiness(uid);
+    if (val) {
+      setBusiness(val!);
+    }
+  };
+
+  const queryForQueue = async () => {
+    if (business && business!.locations[0].queues.length > 0) {
+      const val : Queue | undefined = await getQueue(
+          business!.locations[0].queues[0]!);
+      if (val) {
+        setQueue(val!);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!business) {
+      queryForBusiness();
+    }
+    if (!queue) {
+      queryForQueue();
+    }
+  }, []);
   return (
     <div id="whole-hub">
       <Navbar bg="primary" variant="dark" id='hub-nav'>
@@ -52,7 +81,7 @@ export const Hub = ({uid}: HubProps) => {
       <div id="hub-content">
         <Switch>
           <Route exact path={`${path}/queue-view`}>
-            <QueueView queue={TEST_QUEUE}/>
+            <QueueView queue={queue!} setQueue={setQueue}/>
           </Route>
           <Route exact path={`${path}/profile`}>
             <ProfilePage uid={uid} setBusiness={setBusiness}
@@ -77,5 +106,6 @@ function signOut(history: any) {
     history.push('/');
   }).catch(function(error) {
     // An error happened.
+    console.log('Error signing out:', error);
   });
 }

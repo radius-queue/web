@@ -4,7 +4,7 @@ import { queueConverter, Queue } from './queue';
 /**
  *
  */
-export class queueListener {
+export class QueueListener {
   listener: () => void;
 
   /**

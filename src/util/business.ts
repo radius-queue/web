@@ -142,7 +142,6 @@ export const businessConverter = {
       lastName: b.lastName,
       email: b.email,
       locations: b.locations.map((e) => BusinessLocation.toFirebase(e)),
-      uid: b.uid,
     };
   },
   fromFirestore: function(snapshot: any, options: any) {

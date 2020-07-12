@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Queue, Party} from '../util/queue';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
@@ -11,6 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
 import {AddCustomerModal, DeleteCustomerModal} from './queue-modals';
 import './queue-view.css';
+import { QueueListener } from '../util/queue-listener';
 
 interface CardProps {
   party: Party | undefined
@@ -133,15 +134,23 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
 };
 
 interface ViewProps {
-  queue: Queue
+  queue: Queue,
+  setQueue: (q :Queue) => void,
 }
 
-export const QueueView = ({queue} : ViewProps) => {
+export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
   const [party, setParty] = useState<Party | undefined>(queue.parties[0]);
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const [listener, setListener] = useState<QueueListener>(
+      new QueueListener(queue.uid, setQueue));
 
+  useEffect(()=> {
+    return ()=> {
+      listener.free();
+    }
+  }, []);
   const submit = (party: Party) => {
     const list: Party[] = stateQ.parties.slice();
 
