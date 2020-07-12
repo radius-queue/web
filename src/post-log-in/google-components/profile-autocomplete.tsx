@@ -12,6 +12,11 @@ interface AutocompleteProps {
 
 export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, editable, value}: AutocompleteProps) => {
   const [state, setState] = useState<string>(value);
+
+  useEffect(() => {
+    setState(value);
+  }, [value]);
+
   let autocompleteObject : google.maps.places.Autocomplete;
   const didMount = () => {
     autocompleteObject = new google.maps.places.Autocomplete(
@@ -32,6 +37,7 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
   const selectValue = (val: string) => {
     const result : google.maps.places.PlaceResult = autocompleteObject.getPlace();
     onChange(result.formatted_address!);
+    setState(result.formatted_address!);
     setCenter(result.geometry!.location!);
   };
 
@@ -58,7 +64,6 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
       <Form.Control.Feedback type='invalid'>
         Please Enter a Location Address
       </Form.Control.Feedback>
-      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
     </Form.Group>
   );
 };

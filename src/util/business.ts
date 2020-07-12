@@ -79,7 +79,7 @@ export class BusinessLocation {
        location.name,
        location.address,
        location.phoneNumber,
-       BusinessLocation.hoursFromFirebase(location.hours),
+       [], //BusinessLocation.hoursFromFirebase(location.hours),
        [location.coordinates.latitude,
          location.coordinates.longitude],
        location.queues,
@@ -112,7 +112,7 @@ export class BusinessLocation {
    */
   static hoursToFirebase(hours: [Date, Date][]): any {
     const ret: {[id:string]: [Date, Date]} = {};
-    for (let i = 0; i < DATE_INDEX.size; i++) {
+    for (let i = 0; i < hours.length; i++) {
       const day = hours[i];
       const dayName: string = DATE_INDEX.get(i)!;
       ret[dayName] = [day[0], day[1]];

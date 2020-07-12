@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import firebase from 'firebase/app';
+import {auth} from '../firebase';
 // import './App.css';
 
 import {
@@ -21,11 +22,7 @@ import {
   NavLink,
 } from 'react-router-dom';
 
-interface HubProps {
-  uid: string,
-}
-
-export const Hub = ({uid}: HubProps) => {
+export const Hub = () => {
   const history = useHistory();
   const {path, url} = useRouteMatch();
   const [business, setBusiness] = useState<Business | undefined>(undefined);
@@ -55,7 +52,7 @@ export const Hub = ({uid}: HubProps) => {
             <QueueView queue={TEST_QUEUE}/>
           </Route>
           <Route exact path={`${path}/profile`}>
-            <ProfilePage uid={uid} setBusiness={setBusiness}
+            <ProfilePage uid={auth.currentUser!.uid} setBusiness={setBusiness}
               business={business}/>
           </Route>
           <Redirect exact from={`${path}`} to={`${path}/profile`} />

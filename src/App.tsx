@@ -14,7 +14,6 @@ import {
   Redirect,
   useLocation,
 } from 'react-router-dom';
-import { Business } from './util/business';
 
 /**
  * Top Level app component
@@ -39,7 +38,7 @@ function App() {
           <RegistrationPage />
         </Route>
         <PrivateRoute path="/post-log-in/hub" isLoading={isLoading}>
-          <Hub uid={'GoodFoods'}/>
+          <Hub />
         </PrivateRoute>
         <Route exact path="/pre-log-in/log-in">
           <BusinessLogInPage />

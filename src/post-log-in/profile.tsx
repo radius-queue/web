@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import getBusiness from '../util/get-business';
-import {Business} from '../util/business';
-import GOOGLE_API_KEY from '../google-key';
+import {Business, BusinessLocation} from '../util/business';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -10,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Map from './google-components/profile-map';
 import AddressAutocomplete from './google-components/profile-autocomplete';
 import {UW_MAP_PROPS} from '../util/HardcodedData';
+import {auth} from '../firebase';
 
 import {
   Prompt,
@@ -33,11 +33,12 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const [form, setForm] = useState<FormState>({businessName: business ? business.name : '',
     firstName: business ? business.firstName : '',
     lastName: business ? business.lastName : '',
-    phone: '',
+    phone: business ? business.locations[0].phoneNumber : '',
     address: business ? business.locations[0].address : ''});
+    console.log(business);
   const [building, setBuilding] =
-    useState<google.maps.LatLng>(UW_MAP_PROPS.buildingLocation);
-  const [radius, setRadius] = useState<number>(0);
+    useState<google.maps.LatLng>(business ? new google.maps.LatLng(business.locations[0].coordinates[0], business.locations[0].coordinates[1]) : UW_MAP_PROPS.buildingLocation);
+  const [radius, setRadius] = useState<number>(business ? business.locations[0].geoFenceRadius : 50);
   const [editing, setEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
@@ -48,8 +49,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
         businessName: val!.name,
         firstName: val!.firstName,
         lastName: val!.lastName,
-        phone: '',
-        address: '',
+        phone: val.locations[0].phoneNumber,
+        address: val.locations[0].address,
       });
       setBuilding(new google.maps.LatLng(val!.locations[0].coordinates[0], val!.locations[0].coordinates[1]));
       setRadius(val!.locations[0].geoFenceRadius);
@@ -71,9 +72,17 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     if (allFieldsCompleted()) {
       setEditing(false);
       enableOtherNavs();
-      const newBusiness = new Business(form.businessName, form.firstName, form.lastName, 'cheah@cheah.com', 'Cheah');
-      //newBusiness.locations[0].phoneNumber = form.phone;
-      //newBusiness.locations[0].address = form.address;
+      const locationParams : [string, string, string, [Date, Date][], number[], string[], number] = [
+        form.businessName,
+        form.address,
+        form.phone,
+        [],
+        [building.lat(), building.lng()],
+        ['sample-queue-1'],
+        radius,
+      ];
+      const newLocation : BusinessLocation[] = [new BusinessLocation(...locationParams)];
+      const newBusiness = new Business(form.businessName, form.firstName, form.lastName, auth.currentUser!.email!, uid, newLocation);
       setBusiness(newBusiness);
       postBusiness(newBusiness);
     }
@@ -116,7 +125,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
               <Form.Control.Feedback type='invalid'>
                 Please Enter a Business Name
               </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              
             </Form.Group>
             <Form.Row>
               <Col>
@@ -135,7 +144,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
                   <Form.Control.Feedback type='invalid'>
                     Please Enter an First Name
                   </Form.Control.Feedback>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  
                 </Form.Group>
               </Col>
               <Col>
@@ -154,7 +163,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
                   <Form.Control.Feedback type='invalid'>
                     Please Enter a Last Name
                   </Form.Control.Feedback>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  
                 </Form.Group>
               </Col>
             </Form.Row>
@@ -175,7 +184,6 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
               <Form.Control.Feedback type='invalid'>
                 Please Enter A Phone Number
               </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <AddressAutocomplete
               onChange={(s: string) => setForm({...form, address: s})}
