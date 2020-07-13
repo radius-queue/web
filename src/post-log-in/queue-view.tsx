@@ -179,8 +179,9 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
       <Card id='control-group-card'>
         <Card.Body id='control-group-container'>
           <div id='control-button-group'>
-            <Button id='control-button'>Open Queue</Button>
-            <Button id='control-button'>Close Queue</Button>
+            <Button className='control-button'>Open Queue</Button>
+            <Button className='control-button'>Close Queue</Button>
+            <Button className='control-button'>Clear Queue</Button>
           </div>
           <Form.Group style={{textAlign: 'center'}}>
             <Form.Control
