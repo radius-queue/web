@@ -8,7 +8,7 @@ import './profile.css';
 import Col from 'react-bootstrap/Col';
 import Map from './google-components/profile-map';
 import AddressAutocomplete from './google-components/profile-autocomplete';
-import {UW_MAP_PROPS} from '../util/HardcodedData';
+import LoadingProfile from './profile-loading';
 import {auth} from '../firebase';
 
 import {
@@ -19,7 +19,7 @@ import postBusiness from '../util/post-business';
 interface ProfileProps {
   uid: string;
   setBusiness: (b:Business) => void;
-  business: Business | undefined;
+  business: Business | undefined | null;
 }
 
 interface FormState {
@@ -30,40 +30,39 @@ interface FormState {
   address: string;
 }
 const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
-  const [form, setForm] = useState<FormState>({businessName: business ? business.name : '',
-    firstName: business ? business.firstName : '',
-    lastName: business ? business.lastName : '',
-    phone: business ? business.locations[0].phoneNumber : '',
-    address: business ? business.locations[0].address : ''});
-  const [building, setBuilding] =
-    useState<google.maps.LatLng | undefined>(business ? new google.maps.LatLng(business.locations[0].coordinates[0], business.locations[0].coordinates[1]) : undefined);
-  const [radius, setRadius] = useState<number>(business ? business.locations[0].geoFenceRadius : 50);
+  const initialState : FormState = {businessName: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
+    address: '',
+  };
+
+  const [form, setForm] = useState<FormState>(initialState);
+  const [isBusinessLoading, setBusinessLoading] = useState<boolean>(true);
+  const [building, setBuilding] = useState<google.maps.LatLng | undefined>(undefined);
+  const [radius, setRadius] = useState<number>(50);
   const [editing, setEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const queryForBusiness = async () => {
-    const val : Business | undefined = await getBusiness(uid);
-    if (val) {
-      setForm({
-        businessName: val!.name,
-        firstName: val!.firstName,
-        lastName: val!.lastName,
-        phone: val.locations[0].phoneNumber,
-        address: val.locations[0].address,
-      });
-      setBuilding(new google.maps.LatLng(val!.locations[0].coordinates[0], val!.locations[0].coordinates[1]));
-      setRadius(val!.locations[0].geoFenceRadius);
-      setBusiness(val!);
-    } else {
-      setEditing(true);
-    }
-  };
-
   useEffect(() => {
-    if (!business) {
-      queryForBusiness();
+    if (business !== null) {
+      setBusinessLoading(false);
+      if (business) {
+        setForm({
+          businessName: business.name,
+          firstName: business.firstName,
+          lastName: business.lastName,
+          phone: business.locations[0].phoneNumber,
+          address: business.locations[0].address,
+        });
+        setBuilding(new google.maps.LatLng(business.locations[0].coordinates[0], business.locations[0].coordinates[1]));
+        setRadius(business.locations[0].geoFenceRadius);
+        setBusiness(business);
+      } else if (business === undefined) {
+        setEditing(true);
+      }
     }
-  }, []);
+  }, [business]);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,6 +95,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   };
 
   return (
+    isBusinessLoading ? <LoadingProfile/> :
     <div>
       <Card id="profile-container">
         <Card.Title className="form-header-profile">

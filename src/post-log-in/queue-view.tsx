@@ -12,7 +12,8 @@ import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
 import {AddCustomerModal, DeleteCustomerModal} from './queue-modals';
 import postQueue from '../util/post-queue';
 import './queue-view.css';
-import { QueueListener } from '../util/queue-listener';
+import {QueueListener} from '../util/queue-listener';
+
 
 interface CardProps {
   party: Party | undefined
@@ -72,7 +73,9 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
       list[index + offset] = list[index];
       list[index] = target;
 
-      setQueue(new Queue(queue.name, queue.end, queue.uid, queue.open, list));
+      const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, queue.open, list);
+      setQueue(newQ);
+      postQueue(newQ);
     }
   };
 
@@ -134,6 +137,29 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
   );
 };
 
+const QueueControls = () => {
+  return (
+    <Card id='control-group-card'>
+      <Card.Body id='control-group-container'>
+        <div id='control-button-group'>
+          <Button id='control-button'>Open Queue</Button>
+          <Button id='control-button'>Close Queue</Button>
+          <Button className='control-button'>Clear Queue</Button>
+        </div>
+        <Form.Group style={{textAlign: 'center'}}>
+          <Form.Control
+            as='textarea'
+            placeholder='Type a Message'
+            rows={3}
+            id='messanger'
+          />
+          <Button id='control-message-button'>Send Message to All</Button>
+        </Form.Group>
+      </Card.Body>
+    </Card>
+  );
+};
+
 interface ViewProps {
   queue: Queue,
   setQueue: (q :Queue) => void,
@@ -141,7 +167,7 @@ interface ViewProps {
 
 export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
-  const [party, setParty] = useState<Party | undefined>(queue.parties[0]);
+  const [party, setParty] = useState<Party>(queue.parties[0]);
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [listener, setListener] = useState<QueueListener | undefined>(undefined);
@@ -170,30 +196,13 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
 
     const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQ);
-    postQueue(newQ);
     setParty(list[0]);
+    postQueue(newQ);
   };
 
   return (
     <Container>
-      <Card id='control-group-card'>
-        <Card.Body id='control-group-container'>
-          <div id='control-button-group'>
-            <Button className='control-button'>Open Queue</Button>
-            <Button className='control-button'>Close Queue</Button>
-            <Button className='control-button'>Clear Queue</Button>
-          </div>
-          <Form.Group style={{textAlign: 'center'}}>
-            <Form.Control
-              as='textarea'
-              placeholder='Type a Message'
-              rows={3}
-              id='messanger'
-            />
-            <Button id='control-message-button'>Send Message to All</Button>
-          </Form.Group>
-        </Card.Body>
-      </Card>
+      <QueueControls />
       <QueueList queue={stateQ}
         showParty={setParty}
         setQueue={setQ}

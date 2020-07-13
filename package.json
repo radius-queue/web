@@ -26,6 +26,7 @@
     "react-dom": "^16.13.1",
     "react-google-places-autocomplete": "^2.1.0",
     "react-load-script": "0.0.6",
+    "react-loading-skeleton": "^2.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-select-us-states": "file:node_modules/react-select-us-states",
