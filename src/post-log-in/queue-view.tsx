@@ -72,7 +72,9 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
       list[index + offset] = list[index];
       list[index] = target;
 
-      setQueue(new Queue(queue.name, queue.end, queue.uid, queue.open, list));
+      const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, queue.open, list);
+      setQueue(newQ);
+      postQueue(newQ);
     }
   };
 
