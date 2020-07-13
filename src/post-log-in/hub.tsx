@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {QueueView} from './queue-view';
+import QueueTab from './queue-wrapper';
 import {Business} from '../util/business';
 import ProfilePage from './profile';
 import {TEST_QUEUE} from './../util/HardcodedData';
@@ -28,14 +28,12 @@ import getQueue from '../util/get-queue';
 export const Hub = () => {
   const history = useHistory();
   const {path, url} = useRouteMatch();
-  const [business, setBusiness] = useState<Business | undefined>(undefined);
+  const [business, setBusiness] = useState<Business | undefined | null>(null);
   const [queue, setQueue] = useState<Queue| undefined>(undefined);
 
   const queryForBusiness = async () => {
     const val : Business | undefined = await getBusiness(auth.currentUser!.uid);
-    if (val) {
-      setBusiness(val!);
-    }
+    setBusiness(val);
   };
 
   const queryForQueue = async () => {
@@ -89,7 +87,7 @@ export const Hub = () => {
       <div id="hub-content">
         <Switch>
           <Route exact path={`${path}/queue-view`}>
-            <QueueView queue={queue!} setQueue={setQueue}/>
+            <QueueTab business={business} queue={queue} setQueue={setQueue}/>
           </Route>
           <Route exact path={`${path}/profile`}>
             <ProfilePage uid={auth.currentUser!.uid} setBusiness={setBusiness}
