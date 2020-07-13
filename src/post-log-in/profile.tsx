@@ -35,9 +35,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     lastName: business ? business.lastName : '',
     phone: business ? business.locations[0].phoneNumber : '',
     address: business ? business.locations[0].address : ''});
-    console.log(business);
   const [building, setBuilding] =
-    useState<google.maps.LatLng>(business ? new google.maps.LatLng(business.locations[0].coordinates[0], business.locations[0].coordinates[1]) : UW_MAP_PROPS.buildingLocation);
+    useState<google.maps.LatLng | undefined>(business ? new google.maps.LatLng(business.locations[0].coordinates[0], business.locations[0].coordinates[1]) : undefined);
   const [radius, setRadius] = useState<number>(business ? business.locations[0].geoFenceRadius : 50);
   const [editing, setEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
@@ -77,8 +76,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
         form.address,
         form.phone,
         [],
-        [building.lat(), building.lng()],
-        ['sample-queue-1'],
+        [building!.lat(), building!.lng()],
+        ['sample-queue1'],
         radius,
       ];
       const newLocation : BusinessLocation[] = [new BusinessLocation(...locationParams)];
@@ -125,7 +124,6 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
               <Form.Control.Feedback type='invalid'>
                 Please Enter a Business Name
               </Form.Control.Feedback>
-              
             </Form.Group>
             <Form.Row>
               <Col>
@@ -144,7 +142,6 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
                   <Form.Control.Feedback type='invalid'>
                     Please Enter an First Name
                   </Form.Control.Feedback>
-                  
                 </Form.Group>
               </Col>
               <Col>
@@ -163,7 +160,6 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
                   <Form.Control.Feedback type='invalid'>
                     Please Enter a Last Name
                   </Form.Control.Feedback>
-                  
                 </Form.Group>
               </Col>
             </Form.Row>

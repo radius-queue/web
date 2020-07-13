@@ -18,8 +18,9 @@ export class QueueListener {
         .withConverter(queueConverter)
         .onSnapshot(function(doc) {
           if (doc.exists) {
-            // kickback(doc);
-            console.log(doc.data());
+            const queue: Queue = doc.data()!;
+            queue.uid = uid;
+            kickback(queue);
           } else {
             console.log('No such document!');
           }

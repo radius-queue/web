@@ -4,7 +4,7 @@ import GOOGLE_API_KEY from '../../google-key';
 
 export interface MapProps {
   radius: number, // radius of their geofence in meters
-  buildingLocation: google.maps.LatLng, // coordinates of business location
+  buildingLocation: google.maps.LatLng | undefined, // coordinates of business location
   setRadius: (rad: number) => void,
   editable: boolean,
 }
@@ -39,14 +39,18 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
   };
 
   return (
-    <GoogleMapReact
-      bootstrapURLKeys={{key: GOOGLE_API_KEY}}
-      center={{lng: buildingLocation.lng(), lat: buildingLocation.lat()}}
-      defaultZoom={17}
-      yesIWantToUseGoogleMapApiInternals
-      onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}
-      key={buildingLocation.toString() + `${editable}`}
-    />
+    buildingLocation ?
+      <GoogleMapReact
+        bootstrapURLKeys={{key: GOOGLE_API_KEY}}
+        center={{lng: buildingLocation!.lng(), lat: buildingLocation!.lat()}}
+        defaultZoom={17}
+        yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}
+        key={buildingLocation.toString() + `${editable}`}
+      /> :
+      (<div style={{width: '100%', height: '100%'}}>
+        Enter An Address To See Your Location on the Map.
+      </div>)
   );
 };
 

@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
 import {AddCustomerModal, DeleteCustomerModal} from './queue-modals';
+import postQueue from '../util/post-queue';
 import './queue-view.css';
 import { QueueListener } from '../util/queue-listener';
 
@@ -146,7 +147,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [listener, setListener] = useState<QueueListener | undefined>(undefined);
 
   useEffect(()=> {
-    setListener(new QueueListener(queue.uid, setQ));
+    setListener(new QueueListener(queue.uid, (newQ: Queue) => setQ(newQ)));
     return ()=> {
       if (listener) {
         listener!.free();
@@ -154,18 +155,22 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
       setQueue(stateQ);
     };
   }, []);
+
   const submit = (party: Party) => {
-    const list: Party[] = stateQ.parties.slice();
+    const list: Party[] = stateQ!.parties.slice();
 
     list.push(party);
-
-    setQ(new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list));
+    const newQueue : Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
+    setQ(newQueue);
+    postQueue(newQueue);
   };
 
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
 
-    setQ(new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list));
+    const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
+    setQ(newQ);
+    postQueue(newQ);
     setParty(list[0]);
   };
 
