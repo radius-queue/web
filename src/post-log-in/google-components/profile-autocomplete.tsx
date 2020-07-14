@@ -37,6 +37,8 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
   const selectValue = (val: string) => {
     const result : google.maps.places.PlaceResult = autocompleteObject.getPlace();
     onChange(result.formatted_address!);
+    setState(result.formatted_address!);
+    setCenter(result.geometry!.location!);
   };
 
   useEffect(() => {

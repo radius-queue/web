@@ -29,7 +29,6 @@ interface FormState {
   firstName: string;
   lastName: string;
   phone: string;
-  address: string;
 }
 
 const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
@@ -37,10 +36,10 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     firstName: '',
     lastName: '',
     phone: '',
-    address: '',
   };
 
   const [form, setForm] = useState<FormState>(initialState);
+  const [address, setAddress] = useState<string>('');
   const [isBusinessLoading, setBusinessLoading] = useState<boolean>(true);
   const [building, setBuilding] = useState<google.maps.LatLng | undefined>(undefined);
   const [radius, setRadius] = useState<number>(50);
@@ -56,8 +55,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
           firstName: business.firstName,
           lastName: business.lastName,
           phone: business.locations[0].phoneNumber,
-          address: business.locations[0].address,
         });
+        setAddress(business.locations[0].address);
         setBuilding(new google.maps.LatLng(business.locations[0].coordinates[0], business.locations[0].coordinates[1]));
         setRadius(business.locations[0].geoFenceRadius);
         setBusiness(business);
@@ -83,7 +82,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
       const newQueue : Queue[] = [new Queue(...queueParams)];
       const locationParams : [string, string, string, [Date, Date][], number[], string[], number] = [
         form.businessName,
-        form.address,
+        address,
         form.phone,
         [],
         [building!.lat(), building!.lng()],
@@ -103,7 +102,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     for (const [key, value] of Object.entries(form)) {
       result = result && value.length > 0;
     }
-    return result;
+    return result && address.length > 0;
   };
 
   return (
@@ -194,13 +193,13 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
               </Form.Control.Feedback>
             </Form.Group>
             <AddressAutocomplete
-              onChange={(s: string) => setForm({...form, address: s})}
-              isValid={submitted && form.address.length > 0}
-              isInvalid={submitted && form.address.length === 0}
+              onChange={(s: string) => setAddress(s)}
+              isValid={submitted && address.length > 0}
+              isInvalid={submitted && address.length === 0}
               setCenter={setBuilding}
               editable={editing}
               key={`${editing}`}
-              value={form.address}
+              value={address}
             />
             <Form.Group>
               <Form.Label>Radius (m)</Form.Label>
