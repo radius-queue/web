@@ -6,6 +6,8 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
@@ -18,7 +20,6 @@ import {QueueListener} from '../util/queue-listener';
 interface CardProps {
   party: Party | undefined
 }
-
 
 const UserCard = ({party} : CardProps) => {
   const [message, setMessage] = useState('');
@@ -53,6 +54,7 @@ const UserCard = ({party} : CardProps) => {
 UserCard.propTypes = {
   party: PropTypes.element,
 };
+
 interface ListProps {
   queue: Queue,
   currentParty: Party | undefined,
@@ -137,14 +139,53 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
   );
 };
 
-const QueueControls = () => {
+/**
+ * Sets the 'open' field of the given queue to true.
+ * @param {Queue} queue The queue to be opened.
+ */
+const openQueue = (queue: Queue) => {
+  queue.open = true;
+  postQueue(queue);
+};
+
+/**
+ * Sets the 'open' field of the given queue to false.
+ * @param {Queue} queue The queue to be opened.
+ */
+const closeQueue = (queue: Queue) => {
+  queue.open = false;
+  postQueue(queue);
+};
+
+const QueueControls = (queueInfo: QueueControlsProps) => {
+  const selectedOpenClosed: string = queueInfo.queue.open ? 'open' : 'closed';
   return (
     <Card id='control-group-card'>
-      <Card.Body id='control-group-container'>
+      <Card.Body >
         <div id='control-button-group'>
-          <Button id='control-button'>Open Queue</Button>
-          <Button id='control-button'>Close Queue</Button>
-          <Button className='control-button'>Clear Queue</Button>
+          <ToggleButtonGroup
+            name='open-close'
+            type='radio'
+            defaultValue={selectedOpenClosed}
+            id = 'open-close-buttons'
+          >
+            <ToggleButton
+              value='open'
+              onChange={() => openQueue(queueInfo.queue)}
+            >
+              Open Queue
+            </ToggleButton>
+            <ToggleButton
+              value='closed'
+              onChange={() => closeQueue(queueInfo.queue)}
+            >
+              Close Queue
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          <Button id='clear-button' variant='danger'>
+            Clear Queue
+          </Button>
         </div>
         <Form.Group style={{textAlign: 'center'}}>
           <Form.Control
@@ -165,6 +206,10 @@ interface ViewProps {
   setQueue: (q :Queue) => void,
 }
 
+interface QueueControlsProps {
+  queue: Queue,
+}
+
 export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
   const [party, setParty] = useState<Party>(queue.parties[0]);
@@ -174,6 +219,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
 
   useEffect(()=> {
     setListener(new QueueListener(queue.uid, (newQ: Queue) => setQ(newQ)));
+    queue.open ? openQueue(queue) : closeQueue(queue);
     return ()=> {
       if (listener) {
         listener!.free();
@@ -202,7 +248,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
 
   return (
     <Container>
-      <QueueControls />
+      <QueueControls queue={queue} />
       <QueueList queue={stateQ}
         showParty={setParty}
         setQueue={setQ}
