@@ -11,17 +11,21 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
-import {AddCustomerModal, DeleteCustomerModal, ClearModal} from './queue-modals';
+import {AddCustomerModal, DeleteCustomerModal} from './queue-modals';
 import postQueue from '../util/post-queue';
 import './queue-view.css';
 import {QueueListener} from '../util/queue-listener';
 
-
-interface CardProps {
-  party: Party | undefined
+const timeDiffInMinutes = (t1: Date, t2: Date) => {
+  return Math.round((t1.getTime() - t2.getTime()) / 60000);
 }
 
-const UserCard = ({party} : CardProps) => {
+interface CardProps {
+  party: Party | undefined,
+  time: Date,
+}
+
+const UserCard = ({party, time} : CardProps) => {
   const [message, setMessage] = useState('');
 
   return (
@@ -31,6 +35,7 @@ const UserCard = ({party} : CardProps) => {
         <Card.Title as='h1'>{party.name}</Card.Title>
         <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
         <Card.Text>Estimated Wait Time: {party.quote} minutes</Card.Text>
+        <Card.Text>Time in Line: {timeDiffInMinutes(time, party.checkIn)} minutes</Card.Text>
         <Card.Text>Size: {party.size}</Card.Text>
         <div id='centered-container'>
           <Button style={{margin: '10px'}}>Send Ready Notification</Button>
@@ -62,11 +67,12 @@ interface ListProps {
   showParty: (party: Party) => void,
   setQueue: (queue: Queue) => void,
   showAddModal: () => void,
-  showDeleteModal: () => void
+  showDeleteModal: () => void,
+  time: Date,
 }
 
-const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
-  showDeleteModal} : ListProps) => {
+const QueueList = ({queue, currentParty, time, showParty, setQueue,
+  showAddModal, showDeleteModal} : ListProps) => {
   const moveOne = (index : number, offset: number) => {
     if (index + offset >= 0 && index + offset < queue.parties.length) {
       const list : Party[] = queue.parties.slice();
@@ -87,7 +93,7 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
       <Card.Header>
         <Row>
           <Col md={1}>#</Col>
-          <Col md={4}>Name</Col>
+          <Col md={3}>Name</Col>
           <Col md={2}>Party Size</Col>
           <Col md={2}>Time in Line</Col>
           <Col md={3}>Actions</Col>
@@ -104,9 +110,9 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
           >
             <Row>
               <Col md={1}>{idx + 1}</Col>
-              <Col md={4}>{person.name}</Col>
+              <Col md={3}>{person.name}</Col>
               <Col md={2}>{person.size}</Col>
-              <Col md={2}>{person.quote}</Col>
+              <Col md={2}>{timeDiffInMinutes(time, person.checkIn)} minutes</Col>
               <Col md={3}>
                 <Button
                   style={{margin: '3px'}}
@@ -143,23 +149,25 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
 /**
  * Sets the 'open' field of the given queue to true.
  * @param {Queue} queue The queue to be opened.
- * @param {(Queue) => void} callBack the function that
+ * @param {(Queue)} callBack the function that
  * sets the top level queue
  */
-const openQueue = (queue: Queue, callBack: (q: Queue) => void) => {
-  queue.open = true;
-  callBack(queue);
-  postQueue(queue);
+const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
+  const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, true, queue.parties);
+  console.log(queue.parties);
+  setQueue(newQ);
+  postQueue(newQ);
 };
 
 /**
  * Sets the 'open' field of the given queue to false.
  * @param {Queue} queue The queue to be opened.
  */
-const closeQueue = (queue: Queue, callBack: (q: Queue) => void) => {
-  queue.open = false;
-  callBack(queue);
-  postQueue(queue);
+const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
+  const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, false, queue.parties);
+  console.log(queue.parties);
+  setQueue(newQ);
+  postQueue(newQ);
 };
 
 const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
@@ -219,19 +227,21 @@ interface ViewProps {
 
 export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
-  const [party, setParty] = useState<Party | undefined>(stateQ.parties.length ? queue.parties[0] : undefined);
+  const [party, setParty] = useState<Party | undefined>(stateQ.parties[0]);
+  const [time, setTime] = useState<Date>(new Date());
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [listener, setListener] = useState<QueueListener | undefined>(undefined);
 
   useEffect(()=> {
     setListener(new QueueListener(queue.uid, (newQ: Queue) => setQ(newQ)));
-
-    return ()=> {
+    const interval = setInterval(() => setTime(new Date()), 60000);
+    return () => {
       if (listener) {
         listener!.free();
       }
       setQueue(stateQ);
+      clearInterval(interval);
     };
   }, []);
 
@@ -241,7 +251,6 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
     list.push(party);
     const newQueue : Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQueue);
-    setQueue(newQueue);
     postQueue(newQueue);
   };
 
@@ -250,7 +259,6 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
 
     const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQ);
-    setQueue(newQ);
     setParty(list[0]);
     postQueue(newQ);
   };
@@ -258,7 +266,6 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const clearQueue = () => {
     const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
     setQ(newQ);
-    setQueue(newQ);
     setParty(undefined);
     postQueue(newQ);
   };
@@ -266,9 +273,9 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   return (
     <Container>
       <QueueControls
-        queue={queue}
+        queue={stateQ}
         clear={clearQueue}
-        setQueue={(q: Queue) => {setQ(q); setQueue(q);}}
+        setQueue={(q: Queue) => setQ(q)}
       />
       <QueueList queue={stateQ}
         showParty={setParty}
@@ -276,8 +283,9 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         showAddModal={() => setAddModal(true)}
         showDeleteModal={() => setDeleteModal(true)}
         currentParty={party}
+        time={time}
       />
-      <UserCard party={party}/>
+      <UserCard party={party} time={time}/>
       <AddCustomerModal
         show={addModal}
         close={() => setAddModal(false)}
