@@ -13,14 +13,21 @@
 }
 
 #control-button-group {
+  display: flex;
+  justify-content: space-evenly;
   text-align: center;
   width: 100%;
 }
 
-#control-button {
+#clear-button {
   margin-bottom: 10px;
   margin-right: 10px;
-  width: 45%;
+  width: 30%;
+}
+
+#open-close-buttons {
+  margin-bottom: 10px;
+  width: 60%;
 }
 
 #control-message-button {
