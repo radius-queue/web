@@ -9,11 +9,10 @@ interface ModalProps {
   show: boolean,
   mainAction: (p: Party) => void,
   party ?: Party | undefined,
-  open ?: boolean,
   close: () => void,
 }
 
-export const AddCustomerModal = ({show, close, open, mainAction} : ModalProps) => {
+export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [name, setName] = useState('');
   const [size, setSize] = useState('');
   const [phoneNumber, setNumber] = useState('');
@@ -43,7 +42,7 @@ export const AddCustomerModal = ({show, close, open, mainAction} : ModalProps) =
     onHide();
   };
 
-  return (open ? <Modal show={show} onHide={onHide}>
+  return (<Modal show={show} onHide={onHide}>
     <Modal.Header>
       <Modal.Title>Add a Party</Modal.Title>
     </Modal.Header>
@@ -107,16 +106,7 @@ export const AddCustomerModal = ({show, close, open, mainAction} : ModalProps) =
         <Button type='submit'>Add Party</Button>
       </Modal.Footer>
     </Form>
-  </Modal> :
-    <Modal show={show} onHide={close}>
-      <Modal.Header>
-        <Modal.Title>
-        The queue is closed. Please open the queue to add a new party.
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Footer>
-      </Modal.Footer>
-    </Modal>);
+  </Modal>);
 };
 
 export const DeleteCustomerModal = ({show, close, party, mainAction}
