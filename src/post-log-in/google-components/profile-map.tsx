@@ -1,6 +1,8 @@
 import React from 'react';
+import Card from 'react-bootstrap/Card';
 import GoogleMapReact from 'google-map-react';
 import GOOGLE_API_KEY from '../../google-key';
+import PropTypes from 'prop-types';
 
 export interface MapProps {
   radius: number, // radius of their geofence in meters
@@ -38,6 +40,7 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
     }
   };
 
+
   return (
     buildingLocation ?
       <GoogleMapReact
@@ -48,9 +51,12 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
         onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}
         key={buildingLocation.toString() + `${editable}`}
       /> :
-      (<div style={{width: '100%', height: '100%'}}>
-        Enter An Address To See Your Location on the Map.
-      </div>)
+      (<Card.Body id='loading-profile-container'>
+        <Card.Title id='loading-profile-title'>
+          Welcome to Radius, a map of your business location will appear upon entering your address.
+        </Card.Title>
+        <img id='loading-profile-logo' src='../../images/radius-logo.PNG' alt='Radius Logo' />
+      </Card.Body>)
   );
 };
 

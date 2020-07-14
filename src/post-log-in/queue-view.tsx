@@ -6,10 +6,12 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
-import {AddCustomerModal, DeleteCustomerModal} from './queue-modals';
+import {AddCustomerModal, DeleteCustomerModal, ClearModal} from './queue-modals';
 import postQueue from '../util/post-queue';
 import './queue-view.css';
 import {QueueListener} from '../util/queue-listener';
@@ -19,12 +21,12 @@ interface CardProps {
   party: Party | undefined
 }
 
-
 const UserCard = ({party} : CardProps) => {
   const [message, setMessage] = useState('');
 
-  return !party ? <div></div> : (
+  return (
     <Card id='party-card'>
+      {!party ? <img style={{width: '100%', height: 'auto'}} src='../images/radius-logo.PNG' alt='Radius Logo'></img> :
       <Card.Body>
         <Card.Title as='h1'>{party.name}</Card.Title>
         <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
@@ -45,7 +47,7 @@ const UserCard = ({party} : CardProps) => {
           />
           <Button style={{width: '100%'}}>Send Custom Message</Button>
         </Form.Group>
-      </Card.Body>
+      </Card.Body>}
     </Card>
   );
 };
@@ -53,6 +55,7 @@ const UserCard = ({party} : CardProps) => {
 UserCard.propTypes = {
   party: PropTypes.element,
 };
+
 interface ListProps {
   queue: Queue,
   currentParty: Party | undefined,
@@ -137,14 +140,57 @@ const QueueList = ({queue, currentParty, showParty, setQueue, showAddModal,
   );
 };
 
-const QueueControls = () => {
+/**
+ * Sets the 'open' field of the given queue to true.
+ * @param {Queue} queue The queue to be opened.
+ * @param {(Queue) => void} callBack the function that
+ * sets the top level queue
+ */
+const openQueue = (queue: Queue, callBack: (q: Queue) => void) => {
+  queue.open = true;
+  callBack(queue);
+  postQueue(queue);
+};
+
+/**
+ * Sets the 'open' field of the given queue to false.
+ * @param {Queue} queue The queue to be opened.
+ */
+const closeQueue = (queue: Queue, callBack: (q: Queue) => void) => {
+  queue.open = false;
+  callBack(queue);
+  postQueue(queue);
+};
+
+const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
+  const selectedOpenClosed: string = queue.open ? 'open' : 'closed';
   return (
     <Card id='control-group-card'>
-      <Card.Body id='control-group-container'>
+      <Card.Body >
         <div id='control-button-group'>
-          <Button id='control-button'>Open Queue</Button>
-          <Button id='control-button'>Close Queue</Button>
-          <Button className='control-button'>Clear Queue</Button>
+          <ToggleButtonGroup
+            name='open-close'
+            type='radio'
+            defaultValue={selectedOpenClosed}
+            id = 'open-close-buttons'
+          >
+            <ToggleButton
+              value='open'
+              onChange={() => openQueue(queue, setQueue)}
+            >
+              Open Queue
+            </ToggleButton>
+            <ToggleButton
+              value='closed'
+              onChange={() => closeQueue(queue, setQueue)}
+            >
+              Close Queue
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          <Button id='clear-button' variant='danger' onClick={() => clear()}>
+            Clear Queue
+          </Button>
         </div>
         <Form.Group style={{textAlign: 'center'}}>
           <Form.Control
@@ -160,6 +206,12 @@ const QueueControls = () => {
   );
 };
 
+interface QueueControlsProps {
+  queue: Queue,
+  clear: () => void, // clears the queue
+  setQueue: (q: Queue) => void, //updates the parent state with the passed in Q
+}
+
 interface ViewProps {
   queue: Queue,
   setQueue: (q :Queue) => void,
@@ -167,13 +219,14 @@ interface ViewProps {
 
 export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
-  const [party, setParty] = useState<Party>(queue.parties[0]);
+  const [party, setParty] = useState<Party | undefined>(stateQ.parties.length ? queue.parties[0] : undefined);
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [listener, setListener] = useState<QueueListener | undefined>(undefined);
 
   useEffect(()=> {
     setListener(new QueueListener(queue.uid, (newQ: Queue) => setQ(newQ)));
+
     return ()=> {
       if (listener) {
         listener!.free();
@@ -182,12 +235,13 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
     };
   }, []);
 
-  const submit = (party: Party) => {
+  const addParty = (party: Party) => {
     const list: Party[] = stateQ!.parties.slice();
 
     list.push(party);
     const newQueue : Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQueue);
+    setQueue(newQueue);
     postQueue(newQueue);
   };
 
@@ -196,13 +250,26 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
 
     const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQ);
+    setQueue(newQ);
     setParty(list[0]);
+    postQueue(newQ);
+  };
+
+  const clearQueue = () => {
+    const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
+    setQ(newQ);
+    setQueue(newQ);
+    setParty(undefined);
     postQueue(newQ);
   };
 
   return (
     <Container>
-      <QueueControls />
+      <QueueControls
+        queue={queue}
+        clear={clearQueue}
+        setQueue={(q: Queue) => {setQ(q); setQueue(q);}}
+      />
       <QueueList queue={stateQ}
         showParty={setParty}
         setQueue={setQ}
@@ -210,11 +277,11 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         showDeleteModal={() => setDeleteModal(true)}
         currentParty={party}
       />
-      <UserCard party={party!}/>
+      <UserCard party={party}/>
       <AddCustomerModal
         show={addModal}
         close={() => setAddModal(false)}
-        mainAction={(p : Party) => submit(p)}
+        mainAction={(p : Party) => addParty(p)}
       />
       <DeleteCustomerModal
         show={deleteModal}
