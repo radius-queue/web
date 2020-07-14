@@ -12,7 +12,24 @@
   overflow: scroll;
 }
 
+#centered-container {
+  text-align: center;
+}
+
+#logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+#logo-container {
+  text-align: center;
+  display: block;
+}
+
 #map-container {
+  display: flex;
+  justify-content: space-around;
   position: absolute;
   left: 47vw;
   top: 10vh;

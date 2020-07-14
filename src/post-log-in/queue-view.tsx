@@ -19,7 +19,6 @@ interface CardProps {
   party: Party | undefined
 }
 
-
 const UserCard = ({party} : CardProps) => {
   const [message, setMessage] = useState('');
 
@@ -53,6 +52,7 @@ const UserCard = ({party} : CardProps) => {
 UserCard.propTypes = {
   party: PropTypes.element,
 };
+
 interface ListProps {
   queue: Queue,
   currentParty: Party | undefined,
