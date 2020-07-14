@@ -51,12 +51,11 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
         onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}
         key={buildingLocation.toString() + `${editable}`}
       /> :
-      (<Card.Body id='centered-container'>
-        <Card.Title>
+      (<Card.Body id='loading-profile-container'>
+        <Card.Title id='loading-profile-title'>
           Welcome to Radius, a map of your business location will appear upon entering your address.
         </Card.Title>
-        <img id='logo' src='../../images/radius-logo.PNG' alt='Radius Logo'>
-        </img>
+        <img id='loading-profile-logo' src='../../images/radius-logo.PNG' alt='Radius Logo' />
       </Card.Body>)
   );
 };

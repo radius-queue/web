@@ -16,10 +16,30 @@
   text-align: center;
 }
 
-#logo {
-  width: 100%;
+#loading-profile-container {
+  width: 45vw;
+  height: 84vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+#loading-profile-title {
+  text-align: center;
+  font-size: 100%;
+  max-width: 90%;
+}
+
+#loading-profile-logo {
+  width: auto;
   height: auto;
-  object-fit: contain;
+  max-width: 90%;
+  max-height: 55%;
+}
+
+#loading-profile-p {
+  font-size: 3vmin;
 }
 
 #logo-container {
