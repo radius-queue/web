@@ -24,8 +24,9 @@ interface CardProps {
 const UserCard = ({party} : CardProps) => {
   const [message, setMessage] = useState('');
 
-  return !party ? <div></div> : (
+  return (
     <Card id='party-card'>
+      {!party ? <img style={{width: '100%', height: 'auto'}} src='../images/radius-logo.PNG' alt='Radius Logo'></img> :
       <Card.Body>
         <Card.Title as='h1'>{party.name}</Card.Title>
         <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
@@ -46,7 +47,7 @@ const UserCard = ({party} : CardProps) => {
           />
           <Button style={{width: '100%'}}>Send Custom Message</Button>
         </Form.Group>
-      </Card.Body>
+      </Card.Body>}
     </Card>
   );
 };
@@ -213,7 +214,7 @@ interface QueueControlsProps {
 
 export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
-  const [party, setParty] = useState<Party>(queue.parties[0]);
+  const [party, setParty] = useState<Party | undefined>(stateQ.parties.length ? queue.parties[0] : undefined);
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [clearModal, setClearModal] = useState<boolean>(false);
@@ -230,7 +231,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
     };
   }, []);
 
-  const submit = (party: Party) => {
+  const addParty = (party: Party) => {
     const list: Party[] = stateQ!.parties.slice();
 
     list.push(party);
@@ -251,6 +252,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const clearQueue = () => {
     const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
     setQ(newQ);
+    setParty(undefined);
     postQueue(newQ);
   };
 
@@ -264,11 +266,12 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         showDeleteModal={() => setDeleteModal(true)}
         currentParty={party}
       />
-      <UserCard party={party!}/>
+      <UserCard party={party}/>
       <AddCustomerModal
         show={addModal}
+        open={stateQ.open}
         close={() => setAddModal(false)}
-        mainAction={(p : Party) => submit(p)}
+        mainAction={(p : Party) => addParty(p)}
       />
       <DeleteCustomerModal
         show={deleteModal}

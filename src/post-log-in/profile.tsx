@@ -15,7 +15,7 @@ import {
   Prompt,
 } from 'react-router-dom';
 import postBusiness from '../util/post-business';
-import { Party, Queue } from '../util/queue';
+import {Party, Queue} from '../util/queue';
 import postQueue from '../util/post-queue';
 
 interface ProfileProps {
@@ -31,6 +31,7 @@ interface FormState {
   phone: string;
   address: string;
 }
+
 const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const initialState : FormState = {businessName: '',
     firstName: '',

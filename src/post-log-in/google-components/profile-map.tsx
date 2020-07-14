@@ -52,8 +52,11 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
         key={buildingLocation.toString() + `${editable}`}
       /> :
       (<Card.Body id='centered-container'>
-        <Card.Title>Welcome to Radius, a map of your business location will appear upon entering your address.</Card.Title>
-        <img id='logo' src='../../images/radius-logo.PNG' alt='Radius Logo'></img>
+        <Card.Title>
+          Welcome to Radius, a map of your business location will appear upon entering your address.
+        </Card.Title>
+        <img id='logo' src='../../images/radius-logo.PNG' alt='Radius Logo'>
+        </img>
       </Card.Body>)
   );
 };
