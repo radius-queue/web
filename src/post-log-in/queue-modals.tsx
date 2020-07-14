@@ -131,3 +131,29 @@ export const DeleteCustomerModal = ({show, close, party, mainAction}
     </Modal>
   );
 };
+
+interface ClearProps {
+  clear: () => void;
+  show: boolean;
+  close: () => void;
+}
+
+export const ClearModal = ({clear, show, close} : ClearProps) => {
+  const onClear = () => {
+    clear();
+    close();
+  };
+
+  return (
+    <Modal show={show} onHide={close}>
+      <Modal.Header>
+        <Modal.Title>
+          Are you sure you want to clear the queue?
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Footer>
+        <Button onClick={onClear} variant='danger'>Clear Queue</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}

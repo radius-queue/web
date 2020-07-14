@@ -11,7 +11,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
-import {AddCustomerModal, DeleteCustomerModal} from './queue-modals';
+import {AddCustomerModal, DeleteCustomerModal, ClearModal} from './queue-modals';
 import postQueue from '../util/post-queue';
 import './queue-view.css';
 import {QueueListener} from '../util/queue-listener';
@@ -183,7 +183,7 @@ const QueueControls = (queueInfo: QueueControlsProps) => {
             </ToggleButton>
           </ToggleButtonGroup>
 
-          <Button id='clear-button' variant='danger'>
+          <Button id='clear-button' variant='danger' onClick={() => queueInfo.showClear()}>
             Clear Queue
           </Button>
         </div>
@@ -208,6 +208,7 @@ interface ViewProps {
 
 interface QueueControlsProps {
   queue: Queue,
+  showClear: () => void,
 }
 
 export const QueueView = ({queue, setQueue} : ViewProps) => {
@@ -215,6 +216,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [party, setParty] = useState<Party>(queue.parties[0]);
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const [clearModal, setClearModal] = useState<boolean>(false);
   const [listener, setListener] = useState<QueueListener | undefined>(undefined);
 
   useEffect(()=> {
@@ -246,9 +248,15 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
     postQueue(newQ);
   };
 
+  const clearQueue = () => {
+    const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
+    setQ(newQ);
+    postQueue(newQ);
+  };
+
   return (
     <Container>
-      <QueueControls queue={queue} />
+      <QueueControls queue={queue} showClear={() => setClearModal(true)}/>
       <QueueList queue={stateQ}
         showParty={setParty}
         setQueue={setQ}
@@ -267,6 +275,11 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         close={() => setDeleteModal(false)}
         mainAction={(p: Party) => removeParty(p)}
         party={party!}
+      />
+      <ClearModal
+        show={clearModal}
+        close={() => setClearModal(false)}
+        clear={clearQueue}
       />
     </Container>
   );
