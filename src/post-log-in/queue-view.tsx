@@ -225,3 +225,37 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
     </Container>
   );
 };
+
+interface URLParamProps {
+  queue: Queue,
+  party: Party | undefined,
+}
+export const QueueURLParamViewer = ({queue, party} : URLParamProps) => {
+  return (
+    <Card id='queue-card'>
+      <Card.Header>
+        <Row>
+          <Col md={1}>#</Col>
+          <Col md={4}>Name</Col>
+          <Col md={2}>Party Size</Col>
+          <Col md={2}>Time in Line</Col>
+        </Row>
+      </Card.Header>
+      <ListGroup id='queue' variant="flush">
+        {queue.parties.map((person: Party, idx: number) =>
+          (<ListGroup.Item
+            className="queue-entry"
+            key={idx}
+            active={person === party}
+          >
+            <Row>
+              <Col md={1}>{idx + 1}</Col>
+              <Col md={4}>{person.name}</Col>
+              <Col md={2}>{person.size}</Col>
+              <Col md={2}>{person.quote}</Col>
+            </Row>
+          </ListGroup.Item>))}
+      </ListGroup>
+    </Card>
+  );
+};
