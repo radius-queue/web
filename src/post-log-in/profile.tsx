@@ -15,6 +15,8 @@ import {
   Prompt,
 } from 'react-router-dom';
 import postBusiness from '../util/post-business';
+import { Party, Queue } from '../util/queue';
+import postQueue from '../util/post-queue';
 
 interface ProfileProps {
   uid: string;
@@ -70,18 +72,27 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     if (allFieldsCompleted()) {
       setEditing(false);
       enableOtherNavs();
+      const queueParams : [string, Date, string, boolean, Party[]] = [
+        form.businessName,
+        new Date('2020-08-30'),
+        uid,
+        false,
+        [],
+      ];
+      const newQueue : Queue[] = [new Queue(...queueParams)];
       const locationParams : [string, string, string, [Date, Date][], number[], string[], number] = [
         form.businessName,
         form.address,
         form.phone,
         [],
         [building!.lat(), building!.lng()],
-        ['sample-queue1'],
+        [newQueue[0].uid],
         radius,
       ];
       const newLocation : BusinessLocation[] = [new BusinessLocation(...locationParams)];
       const newBusiness = new Business(form.businessName, form.firstName, form.lastName, auth.currentUser!.email!, uid, newLocation);
       setBusiness(newBusiness);
+      postQueue(newQueue[0]);
       postBusiness(newBusiness);
     }
   };
