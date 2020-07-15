@@ -16,6 +16,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [name, setName] = useState('');
   const [size, setSize] = useState('');
   const [phoneNumber, setNumber] = useState('');
+  const [quote, setQuote] = useState('');
   const [validated, setValidated] = useState(false);
 
   const clearState = () => {
@@ -36,7 +37,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
       setValidated(true);
       return;
     }
-    const party : Party = new Party(name, parseInt(size), phoneNumber, 50);
+    const party : Party = new Party(name, parseInt(size), phoneNumber, parseInt(quote));
 
     mainAction(party);
     onHide();
@@ -98,6 +99,24 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
             />
             <Form.Control.Feedback type='invalid'>
               Please Enter a Valid Group Size
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+      </Form.Row>
+      <Form.Row>
+        <Col>
+          <Form.Group>
+            <Form.Label>Time Quote (minutes)</Form.Label>
+            <Form.Control
+              placeholder='45'
+              type='number'
+              onChange={(e) => setQuote(e.target.value)}
+              name='quote'
+              max={600}
+              required
+            />
+            <Form.Control.Feedback type='invalid'>
+              Please Enter a Quoted Wait Time
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
