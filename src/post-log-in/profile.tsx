@@ -66,6 +66,27 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     }
   }, [business]);
 
+  /**
+   * Cancels the current profile edits by changing all edited
+   * form fields back to their current state in the database.
+   * Turns off editing state.
+   */
+  const cancelEdits = () => {
+    setEditing(false);
+    enableOtherNavs();
+    setForm({
+      businessName: business!.name,
+      firstName: business!.firstName,
+      lastName: business!.lastName,
+      phone: business!.locations[0].phoneNumber,
+    });
+    setAddress(business!.locations[0].address);
+    setBuilding(new google.maps.LatLng(business!.locations[0].coordinates[0],
+      business!.locations[0].coordinates[1]));
+    setRadius(business!.locations[0].geoFenceRadius);
+    setBusiness(business!);
+  };
+
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
@@ -208,7 +229,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
                 value={Math.round(radius)}
                 readOnly
               />
-              {editing && <Form.Text>Edit using the circle on the map.</Form.Text>}
+              {editing &&
+                <Form.Text>Edit using the circle on the map.</Form.Text>}
             </Form.Group>
             {!editing ? <Button variant='warning' key='edit'
               onClick={() => {
@@ -216,9 +238,37 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
                 disableOtherNavs();
               }}
               style={{width: '100%'}}>Edit Your Info</Button> :
-              <Button key='submit' type='submit' style={{width: '100%'}}>
-                Submit Changes
-              </Button>}
+                business ? (
+                  <div id='editing-buttons'>
+                    <Button
+                      key='cancel'
+                      className='editing-button'
+                      variant='danger'
+                      onClick={() => cancelEdits()}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      key='submit'
+                      type='submit'
+                      className='editing-button'
+                      variant='success'
+                    >
+                      Submit Changes
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    key='submit'
+                    type='submit'
+                    className='editing-button'
+                    variant='success'
+                    style={{width: '100%'}}
+                  >
+                    Submit Business Profile
+                  </Button>
+                )
+            }
           </Form>
         </Card.Body>
       </Card>
