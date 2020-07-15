@@ -53,7 +53,7 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
       /> :
       (<Card.Body id='loading-profile-container'>
         <Card.Title id='loading-profile-title'>
-          Welcome to Radius, a map of your business location will appear upon entering your address.
+          Welcome to Radius! A map of your business location will appear here upon entering your business address.
         </Card.Title>
         <img id='loading-profile-logo' src='../../images/radius-logo.PNG' alt='Radius Logo' />
       </Card.Body>)

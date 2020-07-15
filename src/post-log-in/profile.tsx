@@ -110,7 +110,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     <div>
       <Card id="profile-container">
         <Card.Title className="form-header-profile">
-          My Profile
+          Business Profile
         </Card.Title>
         <Card.Body>
           <Form noValidate onSubmit={submitForm}>
