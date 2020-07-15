@@ -102,11 +102,11 @@ const QueueList = ({queue, currentParty, time, showParty, setQueue,
       <ListGroup id='queue' variant="flush">
         {queue.parties.map((person: Party, idx: number) =>
           (<ListGroup.Item
-            className="queue-entry"
-            key={idx}
+            className={(currentParty && currentParty.phoneNumber === person.phoneNumber) ?
+              'queue-entry highlighted' :
+              'queue-entry'}
+            key={person.phoneNumber}
             onClick={() => showParty(person)}
-            active={person === currentParty}
-            action
           >
             <Row>
               <Col md={1}>{idx + 1}</Col>
@@ -227,7 +227,7 @@ interface ViewProps {
 
 export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
-  const [party, setParty] = useState<Party | undefined>(stateQ.parties[0]);
+  const [party, setParty] = useState<Party | undefined>(undefined);
   const [time, setTime] = useState<Date>(new Date());
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);

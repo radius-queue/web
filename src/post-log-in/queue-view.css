@@ -96,7 +96,8 @@
   margin: 3px;
 }
 
-.list-group-item.active {
+.highlighted {
   background-color: #4a9bf3 !important;
   border-color: #4a9bf3 !important;
+  color: #fafafa !important;
 }
