@@ -30,7 +30,7 @@ const UserCard = ({party, time} : CardProps) => {
 
   return (
     <Card id='party-card'>
-      {!party ? <img style={{width: '100%', height: 'auto'}} src='../images/radius-logo.PNG' alt='Radius Logo'></img> :
+      {!party ? <img style={{width: '100%', height: 'auto'}} src='../../images/radius-logo.PNG' alt='Radius Logo'></img> :
       <Card.Body>
         <Card.Title as='h1'>{party.name}</Card.Title>
         <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
@@ -319,17 +319,18 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
 
 interface URLParamProps {
   queue: Queue,
-  party: Party | undefined,
+  phoneNum: string,
+  time: Date,
 }
-export const QueueURLParamViewer = ({queue, party} : URLParamProps) => {
+export const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps) => {
   return (
     <Card id='queue-card'>
       <Card.Header>
         <Row>
           <Col md={1}>#</Col>
-          <Col md={4}>Name</Col>
-          <Col md={2}>Party Size</Col>
-          <Col md={2}>Time in Line</Col>
+          <Col md={5}>Name</Col>
+          <Col md={3}>Party Size</Col>
+          <Col md={3}>Time in Line</Col>
         </Row>
       </Card.Header>
       <ListGroup id='queue' variant="flush">
@@ -337,13 +338,13 @@ export const QueueURLParamViewer = ({queue, party} : URLParamProps) => {
           (<ListGroup.Item
             className="queue-entry"
             key={idx}
-            active={person === party}
+            active={person.phoneNumber === phoneNum}
           >
             <Row>
               <Col md={1}>{idx + 1}</Col>
-              <Col md={4}>{person.name}</Col>
-              <Col md={2}>{person.size}</Col>
-              <Col md={2}>{person.quote}</Col>
+              <Col md={5}>{person.name}</Col>
+              <Col md={3}>{person.size}</Col>
+              <Col md={3}>{timeDiffInMinutes(time, person.checkIn)} minutes</Col>
             </Row>
           </ListGroup.Item>))}
       </ListGroup>

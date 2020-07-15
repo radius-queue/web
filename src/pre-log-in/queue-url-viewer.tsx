@@ -3,48 +3,53 @@ import {Queue, Party} from '../util/queue';
 import getQueue from '../util/get-queue';
 import React from 'react';
 import { QueueURLParamViewer } from '../post-log-in/queue-view';
+import { QueueListener } from '../util/queue-listener';
 
 
 const QueueURLViewer = () => {
   const [isQueueLoading, setQueueLoading] = useState<boolean>(true);
-  let queue : Queue | undefined = undefined;
-  let party : Party | undefined = undefined;
-  let phoneNumber : string = '';
-  let queueUid : string = '';
+  const [queue, setQueue] = useState<Queue | undefined>(undefined);
+  const [phoneNum, setPhoneNum] = useState<string>('');
+  const [time, setTime] = useState<Date>(new Date());
+  const [listener, setListener] = useState<QueueListener | undefined>(undefined);
 
   useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 60000);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     if (!urlParams.has('queue') || !urlParams.has('phoneNumber')) {
       window.location.href = '/404';
     } else {
-      queueUid = urlParams.get('queue')!;
-      phoneNumber = urlParams.get('phoneNumber')!;
-      queryForQueue();
+      const uid : string = urlParams.get('queue')!;
+      setPhoneNum(urlParams.get('phoneNumber')!);
+      queryForQueue(uid);
+      setListener(new QueueListener(uid, (newQ: Queue) => setQueue(newQ)));
     }
+    return () => {
+      if (listener) {
+        listener!.free();
+      }
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {
-    setQueueLoading(false);
     if (queue) {
-      queue.parties.map((p: Party) =>{
-        if (p.phoneNumber == phoneNumber) {
-          party = p;
-        }
-      });
-      if (party) {
-        console.log('error in getting current party based on phoneNumber');
-      }
+      setQueueLoading(false);
     }
   }, [queue]);
 
-  const queryForQueue = async () => {
-    queue = await getQueue(queueUid);
+  const queryForQueue = async (uid: string) => {
+    const val : Queue | undefined = await getQueue(uid);
+    setQueue(val);
   };
 
   return (isQueueLoading) ?
     <div>loading</div> :
-    <QueueURLParamViewer queue={queue!} party={party}/>;
+    <QueueURLParamViewer queue={queue!} phoneNum={phoneNum} time={time}/>;
 };
+
+// Example:
+// http://localhost:3000/url-based-queue/?queue=sample-queue1&phoneNumber=1
 
 export default QueueURLViewer;
