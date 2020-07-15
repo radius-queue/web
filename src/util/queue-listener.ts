@@ -13,7 +13,6 @@ export class QueueListener {
    * @param {function} kickback function to deal with update
    */
   constructor(uid: string, kickback: (q: any) => void) {
-    console.log('here');
     this.listener = firestore.collection('queues').doc(uid)
         .withConverter(queueConverter)
         .onSnapshot(function(doc) {
