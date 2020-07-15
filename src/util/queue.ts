@@ -96,7 +96,6 @@ export class Party {
 
 export const Q_COLUMNS : string[] = ['#', 'Name', 'Party Size', 'Quoted Time'];
 
-// ** TODO: impliment uid once database up
 export const queueConverter = {
   toFirestore: function(q: Queue) {
     return {
