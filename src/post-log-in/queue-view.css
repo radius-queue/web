@@ -43,16 +43,6 @@
   background-color: #dadada !important;
 }
 
-#default-container {
-  border: 2pt solid #007bff;
-  position: absolute;
-  text-align: center;
-  left: 4vw;
-  width: 90vw;
-  bottom: 4vh;
-  top: 6.5vh;
-}
-
 #queue-card {
   text-align: center;
   border: 2pt solid #007bff;
