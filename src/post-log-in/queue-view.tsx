@@ -79,15 +79,15 @@ UserCard.propTypes = {
 
 interface ListProps {
   queue: Queue,
-  currentParty: Party | undefined,
-  showParty: (party: Party) => void,
+  currentPartyInfo: [Party, number] | undefined,
+  showParty: (party: [Party, number]) => void,
   setQueue: (queue: Queue) => void,
   showAddModal: () => void,
   showDeleteModal: () => void,
   time: Date,
 }
 
-const QueueList = ({queue, currentParty, time, showParty, setQueue,
+const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
   showAddModal, showDeleteModal} : ListProps) => {
   const moveOne = (index : number, offset: number) => {
     if (index + offset >= 0 && index + offset < queue.parties.length) {
@@ -99,6 +99,9 @@ const QueueList = ({queue, currentParty, time, showParty, setQueue,
       list[index] = target;
 
       const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, queue.open, list);
+      if (currentPartyInfo && currentPartyInfo[1] === index) {
+        showParty([currentPartyInfo[0], currentPartyInfo[1] + offset]);
+      }
       setQueue(newQ);
       postQueue(newQ);
     }
@@ -119,11 +122,11 @@ const QueueList = ({queue, currentParty, time, showParty, setQueue,
         {queue.parties.map((person: Party, idx: number) =>
           (<ListGroup.Item
             className={
-              (currentParty && currentParty.phoneNumber === person.phoneNumber)?
-                ('queue-entry highlighted') : ('queue-entry')
+              (currentPartyInfo && currentPartyInfo[1] === idx) ?
+                              ('queue-entry highlighted') : ('queue-entry')
             }
-            key={person.phoneNumber}
-            onClick={() => showParty(person)}
+            key={idx}
+            onClick={() => showParty([person, idx])}
           >
             <Row>
               <Col md={1}>
@@ -252,7 +255,7 @@ interface ViewProps {
 
 export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
-  const [party, setParty] = useState<Party | undefined>(undefined);
+  const [party, setParty] = useState<[Party, number] | undefined>(undefined);
   const [time, setTime] = useState<Date>(new Date());
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
@@ -271,7 +274,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         return false;
       };
 
-      if (party && !contains(party)) {
+      if (party && !contains(party[0])) {
         setParty(undefined);
       }
     }));
@@ -300,7 +303,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
 
     const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQ);
-    setParty(list[0]);
+    setParty(undefined);
     postQueue(newQ);
   };
 
@@ -323,10 +326,10 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         setQueue={setQ}
         showAddModal={() => setAddModal(true)}
         showDeleteModal={() => setDeleteModal(true)}
-        currentParty={party}
+        currentPartyInfo={party}
         time={time}
       />
-      <UserCard party={party} time={time}/>
+      <UserCard party={party ? party[0] : party} time={time}/>
       <AddCustomerModal
         show={addModal}
         close={() => setAddModal(false)}
@@ -336,7 +339,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         show={deleteModal}
         close={() => setDeleteModal(false)}
         mainAction={(p: Party) => removeParty(p)}
-        party={party!}
+        party={party ? party[0] : party}
       />
     </Container>
   );
