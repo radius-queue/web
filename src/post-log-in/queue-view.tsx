@@ -182,7 +182,6 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
  */
 const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
   const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, true, queue.parties);
-  console.log(queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };
@@ -193,7 +192,6 @@ const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
  */
 const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
   const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, false, queue.parties);
-  console.log(queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };

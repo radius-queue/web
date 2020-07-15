@@ -70,8 +70,12 @@ export class BusinessLocation {
     this.geoFenceRadius = geoFenceRadius;
   }
 
+  /* Firebase helper methods */
+
   /**
-  * @param party
+  * Convert location object from firebase to js object
+  * @param {object} location firebase location object
+  * @return {BusinessLocation} equivalent js object
   */
   static fromFirebase(location: any): BusinessLocation {
     const locPrams : [string, string, string, [Date, Date][], number[],
@@ -89,7 +93,9 @@ export class BusinessLocation {
   }
 
   /**
-  * @param party
+  *
+  * @param {BusinessLocation} location js object
+  * @return {object} equivalent firebase location object
   */
   static toFirebase(location: BusinessLocation): any {
     return {
