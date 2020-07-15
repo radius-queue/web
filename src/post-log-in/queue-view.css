@@ -9,7 +9,7 @@
 }
 
 #add-customer-button {
-  margin: 5px; 
+  margin: 5px;
 }
 
 #control-button-group {
@@ -98,4 +98,8 @@
   max-width: 90%;
   max-height: 90%;
   margin: auto;
+}
+
+.list-group-item {
+  padding-right: 0 !important;
 }

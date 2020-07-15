@@ -115,7 +115,7 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
           <Col md={3}>Name</Col>
           <Col md={2}>Party Size</Col>
           <Col md={2}>Time in Line</Col>
-          <Col md={3}>Actions</Col>
+          <Col md={4}>Actions</Col>
         </Row>
       </Card.Header>
       <ListGroup id='queue' variant="flush">
@@ -141,7 +141,7 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
               <Col md={2}>
                 {timeDiffInMinutes(time, person.checkIn)} minutes
               </Col>
-              <Col md={3}>
+              <Col md={4}>
                 <Button
                   style={{margin: '3px'}}
                   onClick={() => moveOne(idx, -1)}
