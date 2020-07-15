@@ -303,10 +303,10 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
 
 interface URLParamProps {
   queue: Queue,
-  party: Party | undefined,
+  phoneNum: string,
+  time: Date,
 }
-export const QueueURLParamViewer = ({queue, party} : URLParamProps) => {
-  console.log(party);
+export const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps) => {
   return (
     <Card id='queue-card'>
       <Card.Header>
@@ -322,13 +322,13 @@ export const QueueURLParamViewer = ({queue, party} : URLParamProps) => {
           (<ListGroup.Item
             className="queue-entry"
             key={idx}
-            active={person === party}
+            active={person.phoneNumber === phoneNum}
           >
             <Row>
               <Col md={1}>{idx + 1}</Col>
               <Col md={5}>{person.name}</Col>
               <Col md={3}>{person.size}</Col>
-              <Col md={3}>{person.quote}</Col>
+              <Col md={3}>{timeDiffInMinutes(time, person.checkIn)} minutes</Col>
             </Row>
           </ListGroup.Item>))}
       </ListGroup>
