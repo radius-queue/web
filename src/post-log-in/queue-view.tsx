@@ -30,29 +30,44 @@ const UserCard = ({party, time} : CardProps) => {
 
   return (
     <Card id='party-card'>
-      {!party ? <img style={{width: '80%', height: 'auto', alignSelf: 'center'}} src='../../images/radius-logo.PNG' alt='Radius Logo'></img> :
-      <Card.Body>
-        <Card.Title as='h1'>{party.name}</Card.Title>
-        <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
-        <Card.Text>Estimated Wait Time: {party.quote} minutes</Card.Text>
-        <Card.Text>Time in Line: {timeDiffInMinutes(time, party.checkIn)} minutes</Card.Text>
-        <Card.Text>Size: {party.size}</Card.Text>
-        <div id='centered-container'>
-          <Button style={{margin: '10px'}}>Send Ready Notification</Button>
-          <Button style={{margin: '10px'}}>Send 5 Min. Notification</Button>
-        </div>
-        <Form.Group>
-          <Form.Control
-            as='textarea'
-            placeholder='Type a Message'
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setMessage(e.target.value)}
-            value={message}
-            rows={3}
-          />
-          <Button style={{width: '100%'}}>Send Custom Message</Button>
-        </Form.Group>
-      </Card.Body>}
+      {!party ? (
+        <img
+          style={{width: '80%', height: 'auto', margin: 'auto'}}
+          src='../../images/radius-logo.PNG'
+          alt='Radius Logo'
+        />
+      ) : (
+        <Card.Body>
+          <Card.Title as='h1'>{party.name}</Card.Title>
+          <Card.Text>
+            Phone Number: {party.phoneNumber}
+          </Card.Text>
+          <Card.Text>
+            Estimated Wait Time: {party.quote} minutes
+          </Card.Text>
+          <Card.Text>
+            Time in Line: {timeDiffInMinutes(time, party.checkIn)} minutes
+          </Card.Text>
+          <Card.Text>
+            Size: {party.size}
+          </Card.Text>
+          <div id='centered-container'>
+            <Button style={{margin: '10px'}}>Send Ready Notification</Button>
+            <Button style={{margin: '10px'}}>Send 5 Min. Notification</Button>
+          </div>
+          <Form.Group>
+            <Form.Control
+              as='textarea'
+              placeholder='Type a Message'
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setMessage(e.target.value)}
+              value={message}
+              rows={3}
+            />
+            <Button style={{width: '100%'}}>Send Custom Message</Button>
+          </Form.Group>
+        </Card.Body>
+      )}
     </Card>
   );
 };
@@ -102,17 +117,26 @@ const QueueList = ({queue, currentParty, time, showParty, setQueue,
       <ListGroup id='queue' variant="flush">
         {queue.parties.map((person: Party, idx: number) =>
           (<ListGroup.Item
-            className={(currentParty && currentParty.phoneNumber === person.phoneNumber) ?
-              'queue-entry highlighted' :
-              'queue-entry'}
+            className={
+              (currentParty && currentParty.phoneNumber === person.phoneNumber)?
+                ('queue-entry highlighted') : ('queue-entry')
+            }
             key={person.phoneNumber}
             onClick={() => showParty(person)}
           >
             <Row>
-              <Col md={1}>{idx + 1}</Col>
-              <Col md={3}>{person.name}</Col>
-              <Col md={2}>{person.size}</Col>
-              <Col md={2}>{timeDiffInMinutes(time, person.checkIn)} minutes</Col>
+              <Col md={1}>
+                {idx + 1}
+              </Col>
+              <Col md={3}>
+                {person.name}
+              </Col>
+              <Col md={2}>
+                {person.size}
+              </Col>
+              <Col md={2}>
+                {timeDiffInMinutes(time, person.checkIn)} minutes
+              </Col>
               <Col md={3}>
                 <Button
                   style={{margin: '3px'}}
@@ -217,7 +241,7 @@ const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
 interface QueueControlsProps {
   queue: Queue,
   clear: () => void, // clears the queue
-  setQueue: (q: Queue) => void, //updates the parent state with the passed in Q
+  setQueue: (q: Queue) => void, // updates the parent state with the passed in Q
 }
 
 interface ViewProps {
