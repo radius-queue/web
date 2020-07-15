@@ -2,7 +2,8 @@ import {Queue, queueConverter} from './queue';
 import {firestore} from '../firebase';
 
 /**
- * @param uid
+ * Get Queue from database based on uid
+ * @param {string} uid queue uid
  */
 export default async function getQueue(uid : string) {
   let ret: Queue | undefined;

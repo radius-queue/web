@@ -3,7 +3,8 @@ import {firestore} from '../firebase';
 import {Business, businessConverter} from './business';
 
 /**
- * @param uid
+ * Get Business from database based on uid
+ * @param {string} uid business uid
  */
 export default async function getBusiness(uid : string) {
   let ret: Business | undefined;

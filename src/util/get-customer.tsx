@@ -2,7 +2,8 @@ import {Customer, customerConverter} from './customer';
 import {firestore} from '../firebase';
 
 /**
- * @param uid
+ * Get Customer from database based on uid
+ * @param {string} uid customer uid
  */
 export default async function getCustomer(uid : string) {
   let ret: Customer | undefined;
