@@ -54,8 +54,8 @@ const DefaultQueuePage = () => {
     <Container>
       <Card id='default-container'>
         <Card.Text>
-          You haven't inputted your business yet, please do that before
-          working with a queue.
+          You haven't filled out your business profile yet. Please enter your
+          business information in the "Profile" tab before using a Radius queue.
         </Card.Text>
       </Card>
     </Container>

@@ -30,7 +30,7 @@ const UserCard = ({party, time} : CardProps) => {
 
   return (
     <Card id='party-card'>
-      {!party ? <img style={{width: '100%', height: 'auto'}} src='../images/radius-logo.PNG' alt='Radius Logo'></img> :
+      {!party ? <img style={{width: '100%', height: 'auto'}} src='../../images/radius-logo.PNG' alt='Radius Logo'></img> :
       <Card.Body>
         <Card.Title as='h1'>{party.name}</Card.Title>
         <Card.Text>Phone Number: {party.phoneNumber}</Card.Text>
