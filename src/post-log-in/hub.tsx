@@ -34,11 +34,19 @@ export const Hub = () => {
   const [business, setBusiness] = useState<Business | undefined | null>(null);
   const [queue, setQueue] = useState<Queue| undefined>(undefined);
 
+  /**
+   * Retrieves the user's business info and sets the business for the page.
+   */
   const queryForBusiness = async () => {
     const val : Business | undefined = await getBusiness(auth.currentUser!.uid);
     setBusiness(val);
   };
 
+  /**
+   * Retrieves the queue for the business and sets the page's queue.
+   * Currently retrieves the business' FIRST queue. If multiple queue
+   * functionality is added modification will be necessary.
+   */
   const queryForQueue = async () => {
     if (business) {
       const val : Queue | undefined = await getQueue(

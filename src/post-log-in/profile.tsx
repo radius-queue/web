@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import getBusiness from '../util/get-business';
 import {Business, BusinessLocation} from '../util/business';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';

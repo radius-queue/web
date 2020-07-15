@@ -2,7 +2,6 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import GoogleMapReact from 'google-map-react';
 import GOOGLE_API_KEY from '../../google-key';
-import PropTypes from 'prop-types';
 
 export interface MapProps {
   radius: number, // radius of their geofence in meters
