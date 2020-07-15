@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import QueueTab from './queue-wrapper';
 import {Business} from '../util/business';
 import ProfilePage from './profile';
-import {TEST_QUEUE} from './../util/HardcodedData';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
 import Navbar from 'react-bootstrap/Navbar';
@@ -12,7 +11,6 @@ import Nav from 'react-bootstrap/Nav';
 import firebase from 'firebase/app';
 import {Queue} from '../util/queue';
 import {auth} from '../firebase';
-// import './App.css';
 
 import {
   Switch,
@@ -25,6 +23,11 @@ import {
 import getBusiness from '../util/get-business';
 import getQueue from '../util/get-queue';
 
+/**
+ * Presents the nav bar with links to the hub pages.
+ * Retrieves the user's business and queue for presenting on those pages.
+ * @return {jsx} Hub page.
+ */
 export const Hub = () => {
   const history = useHistory();
   const {path, url} = useRouteMatch();
