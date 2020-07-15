@@ -101,3 +101,11 @@
   border-color: #4a9bf3 !important;
   color: #fafafa !important;
 }
+
+#no-party-selected-logo {
+  width: auto;
+  height: auto;
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+}
