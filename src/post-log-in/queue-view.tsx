@@ -234,8 +234,24 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [listener, setListener] = useState<QueueListener | undefined>(undefined);
 
   useEffect(()=> {
-    setListener(new QueueListener(queue.uid, (newQ: Queue) => setQ(newQ)));
+    setListener(new QueueListener(queue.uid, (newQ: Queue) => {
+      setQ(newQ);
+
+      const contains = (party: Party) => {
+        for (const p of newQ.parties) {
+          if (p.phoneNumber === party.phoneNumber) {
+            return true;
+          }
+        }
+        return false;
+      };
+
+      if (party && !contains(party)) {
+        setParty(undefined);
+      }
+    }));
     const interval = setInterval(() => setTime(new Date()), 60000);
+
     return () => {
       if (listener) {
         listener!.free();
