@@ -1,0 +1,38 @@
+#no-business-info-title {
+  text-align: center;
+  font-size: 150%;
+}
+
+#no-business-info-text {
+  margin: auto;
+  font-size: 90%;
+  width: 80%;
+}
+
+#no-business-info-logo {
+  width: auto;
+  height: auto;
+  max-width: 90%;
+  max-height: 55%;
+}
+
+#default-container {
+  border: 2pt solid #007bff;
+  position: absolute;
+  text-align: center;
+  left: 4vw;
+  width: 90vw;
+  bottom: 4vh;
+  top: 6.5vh;
+}
+
+#no-business-info-body {
+  width: 90vw;
+  left: 4vw;
+  bottom: 4vh;
+  top: 6.5vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+}

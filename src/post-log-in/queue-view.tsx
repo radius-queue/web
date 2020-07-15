@@ -32,7 +32,7 @@ const UserCard = ({party, time} : CardProps) => {
     <Card id='party-card'>
       {!party ? (
         <img
-          style={{width: '80%', height: 'auto', margin: 'auto'}}
+          id='no-party-selected-logo'
           src='../../images/radius-logo.PNG'
           alt='Radius Logo'
         />
