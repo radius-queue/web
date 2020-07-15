@@ -23,7 +23,7 @@ export default async function getQueue(uid : string) {
   if (ret) {
     ret.uid = uid;
   }
-  console.log(ret);
+
   return ret;
 }
 

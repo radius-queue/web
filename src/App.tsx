@@ -14,6 +14,7 @@ import {
   Redirect,
   useLocation,
 } from 'react-router-dom';
+import QueueURLViewer from './pre-log-in/queue-url-viewer';
 
 /**
  * Top Level app component
@@ -42,6 +43,9 @@ function App() {
         </PrivateRoute>
         <Route exact path="/pre-log-in/log-in">
           <BusinessLogInPage />
+        </Route>
+        <Route exact path="/url-based-queue">
+          <QueueURLViewer/>
         </Route>
         <Route exact path="/" render={() =>
           <div>
