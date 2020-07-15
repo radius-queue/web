@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+// eslint-disable-next-line no-unused-vars
 import {Queue, Party} from '../util/queue';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
@@ -17,7 +18,7 @@ import './queue-view.css';
 import {QueueListener} from '../util/queue-listener';
 
 const timeDiffInMinutes = (t1: Date, t2: Date) => {
-  const result : number = Math.round((t1.getTime() - t2.getTime()) / 60000)
+  const result : number = Math.round((t1.getTime() - t2.getTime()) / 60000);
   return result === -1 ? 0 : result;
 };
 
@@ -98,7 +99,8 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
       list[index + offset] = list[index];
       list[index] = target;
 
-      const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, queue.open, list);
+      const newQ : Queue =
+        new Queue(queue.name, queue.end, queue.uid, queue.open, list);
       if (currentPartyInfo && currentPartyInfo[1] === index) {
         showParty([currentPartyInfo[0], currentPartyInfo[1] + offset]);
       }
@@ -177,11 +179,12 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
 /**
  * Sets the 'open' field of the given queue to true.
  * @param {Queue} queue The queue to be opened.
- * @param {(Queue)} callBack the function that
+ * @param {function(Queue)} setQueue the function that
  * sets the top level queue
  */
 const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
-  const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, true, queue.parties);
+  const newQ : Queue =
+    new Queue(queue.name, queue.end, queue.uid, true, queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };
@@ -189,9 +192,11 @@ const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
 /**
  * Sets the 'open' field of the given queue to false.
  * @param {Queue} queue The queue to be opened.
+ * @param {function(Queue)} setQueue
  */
 const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
-  const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, false, queue.parties);
+  const newQ : Queue =
+    new Queue(queue.name, queue.end, queue.uid, false, queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };
@@ -257,7 +262,8 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [time, setTime] = useState<Date>(new Date());
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [listener, setListener] = useState<QueueListener | undefined>(undefined);
+  const [listener, setListener] =
+    useState<QueueListener | undefined>(undefined);
 
   useEffect(()=> {
     setListener(new QueueListener(queue.uid, (newQ: Queue) => {
@@ -291,7 +297,8 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
     const list: Party[] = stateQ!.parties.slice();
 
     list.push(party);
-    const newQueue : Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
+    const newQueue : Queue =
+      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQueue);
     postQueue(newQueue);
   };
@@ -299,14 +306,16 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
 
-    const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
+    const newQ: Queue =
+      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQ);
     setParty(undefined);
     postQueue(newQ);
   };
 
   const clearQueue = () => {
-    const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
+    const newQ: Queue =
+      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
     setQ(newQ);
     setParty(undefined);
     postQueue(newQ);
@@ -348,7 +357,7 @@ interface URLParamProps {
   phoneNum: string,
   time: Date,
 }
-export const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps) => {
+export const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps)=> {
   return (
     <Card id='queue-card'>
       <Card.Header>
@@ -367,10 +376,18 @@ export const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps) => 
             active={person.phoneNumber === phoneNum}
           >
             <Row>
-              <Col md={1}>{idx + 1}</Col>
-              <Col md={5}>{person.name}</Col>
-              <Col md={3}>{person.size}</Col>
-              <Col md={3}>{timeDiffInMinutes(time, person.checkIn)} minutes</Col>
+              <Col md={1}>
+                {idx + 1}
+              </Col>
+              <Col md={5}>
+                {person.name}
+              </Col>
+              <Col md={3}>
+                {person.size}
+              </Col>
+              <Col md={3}>
+                {timeDiffInMinutes(time, person.checkIn)} minutes
+              </Col>
             </Row>
           </ListGroup.Item>))}
       </ListGroup>
