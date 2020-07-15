@@ -17,7 +17,8 @@ import './queue-view.css';
 import {QueueListener} from '../util/queue-listener';
 
 const timeDiffInMinutes = (t1: Date, t2: Date) => {
-  return Math.round((t1.getTime() - t2.getTime()) / 60000);
+  const result : number = Math.round((t1.getTime() - t2.getTime()) / 60000)
+  return result === -1 ? 0 : result;
 };
 
 interface CardProps {
