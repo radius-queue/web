@@ -306,14 +306,15 @@ interface URLParamProps {
   party: Party | undefined,
 }
 export const QueueURLParamViewer = ({queue, party} : URLParamProps) => {
+  console.log(party);
   return (
     <Card id='queue-card'>
       <Card.Header>
         <Row>
           <Col md={1}>#</Col>
-          <Col md={4}>Name</Col>
-          <Col md={2}>Party Size</Col>
-          <Col md={2}>Time in Line</Col>
+          <Col md={5}>Name</Col>
+          <Col md={3}>Party Size</Col>
+          <Col md={3}>Time in Line</Col>
         </Row>
       </Card.Header>
       <ListGroup id='queue' variant="flush">
@@ -325,9 +326,9 @@ export const QueueURLParamViewer = ({queue, party} : URLParamProps) => {
           >
             <Row>
               <Col md={1}>{idx + 1}</Col>
-              <Col md={4}>{person.name}</Col>
-              <Col md={2}>{person.size}</Col>
-              <Col md={2}>{person.quote}</Col>
+              <Col md={5}>{person.name}</Col>
+              <Col md={3}>{person.size}</Col>
+              <Col md={3}>{person.quote}</Col>
             </Row>
           </ListGroup.Item>))}
       </ListGroup>
