@@ -76,12 +76,6 @@ export const Hub = () => {
           <Button id='sign-out-button' onClick={() => signOut(history)}>
             Sign Out
           </Button>
-          <Button id='sign-out-button' onClick={() => {
-            console.log('business:' + business +'\n');
-            console.log('queue:' + queue +'\n');
-          }}>
-            asd
-          </Button>
         </Form>
       </Navbar>
       <div id="hub-content">
