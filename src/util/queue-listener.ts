@@ -2,15 +2,15 @@ import {firestore} from '../firebase';
 import {queueConverter, Queue} from './queue';
 
 /**
- *
+ * Realtime listener for queues
  */
 export class QueueListener {
   listener: () => void;
 
   /**
-   *
-   * @param uid
-   * @param kickback
+   * Create a listener with given uid. Triggers kickback upon recieving update
+   * @param {string} uid uid of desired queue
+   * @param {function} kickback function to deal with update
    */
   constructor(uid: string, kickback: (q: any) => void) {
     console.log('here');
@@ -30,7 +30,7 @@ export class QueueListener {
   }
 
   /**
-   *
+   * frees listener to reduce server traffic
    */
   free(): void {
     console.log('free');
