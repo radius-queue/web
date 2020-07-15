@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import BusinessLogInPage from './pre-log-in/log-in';
 import RegistrationPage from './pre-log-in/register';
+import LandingPage from './pre-log-in/landing-page';
 import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -47,11 +48,9 @@ function App() {
         <Route exact path="/url-based-queue">
           <QueueURLViewer/>
         </Route>
-        <Route exact path="/" render={() =>
-          <div>
-            <Link to="/pre-log-in/register">Register</Link>
-            <Link to="/post-log-in/hub">Log In</Link>
-          </div>} />
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
         <Route path="/" render={() => <div>404</div>} />
       </Switch>
     </Router>

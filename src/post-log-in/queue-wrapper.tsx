@@ -53,10 +53,13 @@ const DefaultQueuePage = () => {
   return (
     <Container>
       <Card id='default-container'>
-        <Card.Text>
-          You haven't filled out your business profile yet. Please enter your
-          business information in the "Profile" tab before using a Radius queue.
-        </Card.Text>
+        <Card.Body>
+          <Card.Text>
+            You haven't filled out your business profile yet. Please enter your
+            business information in the "Profile" tab before using a Radius queue.
+          </Card.Text>
+          <img style={{width: '80%', height: 'auto', alignSelf: 'center'}} src='../../images/radius-logo.PNG' alt='Radius Logo'></img>
+        </Card.Body>
       </Card>
     </Container>
   );
@@ -86,6 +89,7 @@ const QueueTab = ({business, queue, setQueue}: QueueTabProps) => {
       setBusinessLoading(false);
       if (business === undefined) {
         setDefault(true);
+        setQueueLoading(false);
       }
     }
   }, [business]);

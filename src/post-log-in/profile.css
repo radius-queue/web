@@ -85,4 +85,11 @@
     float: left;
 }
 
+#editing-buttons {
+  display: flex;
+  justify-content: space-between;
+}
 
+.editing-button {
+  width: 48%;
+}
