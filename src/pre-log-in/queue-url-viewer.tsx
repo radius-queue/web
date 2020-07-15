@@ -1,17 +1,23 @@
 import {useEffect, useState} from 'react';
-import {Queue, Party} from '../util/queue';
+import {Queue} from '../util/queue';
 import getQueue from '../util/get-queue';
 import React from 'react';
-import { QueueURLParamViewer } from '../post-log-in/queue-view';
-import { QueueListener } from '../util/queue-listener';
+import {QueueURLParamViewer} from '../post-log-in/queue-view';
+import {QueueListener} from '../util/queue-listener';
 
-
+/**
+ * Renderer for customer queue view based on Url
+ * Url format:
+ * .../url-based-queue/?queue={QUEUE_UID}&phoneNumber={PARTY_PHONE_NUMBER}
+ * @return {Element} Rendered Queue
+ */
 const QueueURLViewer = () => {
   const [isQueueLoading, setQueueLoading] = useState<boolean>(true);
   const [queue, setQueue] = useState<Queue | undefined>(undefined);
   const [phoneNum, setPhoneNum] = useState<string>('');
   const [time, setTime] = useState<Date>(new Date());
-  const [listener, setListener] = useState<QueueListener | undefined>(undefined);
+  const [listener, setListener] =
+    useState<QueueListener | undefined>(undefined);
 
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 60000);
