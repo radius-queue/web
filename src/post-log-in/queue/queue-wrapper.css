@@ -28,7 +28,7 @@
   width: 70vw;
   bottom: 14vh;
   top: 16.5vh;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 #no-business-info-body {
@@ -41,5 +41,5 @@
   flex-direction: column;
   justify-content: space-around;
   flex-flow: column;
-  overflow: scroll;
+  overflow-y: scroll;
 }

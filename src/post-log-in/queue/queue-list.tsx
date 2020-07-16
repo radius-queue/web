@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button';
+import './queue-list.css';
 
 
 interface ListProps {
@@ -54,9 +55,9 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
         <Row>
           <Col md={1}>#</Col>
           <Col md={3}>Name</Col>
-          <Col md={2}>Party Size</Col>
-          <Col md={2}>Time in Line</Col>
-          <Col md={4}>Actions</Col>
+          <Col md={2}>Party</Col>
+          <Col md={3}>Waiting</Col>
+          <Col md={3}>Actions</Col>
         </Row>
       </Card.Header>
       <ListGroup id='queue' variant="flush">
@@ -79,24 +80,24 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
               <Col md={2}>
                 {person.size}
               </Col>
-              <Col md={2}>
+              <Col md={3}>
                 {timeDiffInMinutes(time, person.checkIn)} minutes
               </Col>
-              <Col md={4}>
+              <Col md={3}>
                 <Button
-                  style={{margin: '3px'}}
+                  className='queue-list-buttons'
                   onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => moveOne(e, idx, -1)}
                 >
                   <CaretUpFill />
                 </Button>
                 <Button
-                  style={{margin: '3px'}}
+                  className='queue-list-buttons'
                   onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => moveOne(e, idx, 1)}
                 >
                   <CaretDownFill />
                 </Button>
                 <Button
-                  style={{margin: '3px'}}
+                  className='queue-list-buttons'
                   onClick={showDeleteModal}
                 >
                   <TrashFill />
