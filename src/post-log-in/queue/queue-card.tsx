@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {Party} from '../../util/queue';
 import {timeDiffInMinutes} from '../../logic/logic';
+import {parsePhoneNum} from '../../util/util-functions';
 
 interface CardProps {
   party: Party | undefined,
@@ -31,7 +32,7 @@ const UserCard = ({party, time} : CardProps) => {
         <Card.Body>
           <Card.Title as='h1'>{party.name}</Card.Title>
           <Card.Text>
-            Phone Number: {party.phoneNumber}
+            Phone Number: {parsePhoneNum(party.phoneNumber)}
           </Card.Text>
           <Card.Text>
             Estimated Wait Time: {party.quote} minutes
