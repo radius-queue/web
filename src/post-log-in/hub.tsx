@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import QueueTab from './queue-wrapper';
+import QueueTab from './queue/queue-wrapper';
 // eslint-disable-next-line no-unused-vars
 import {Business} from '../util/business';
 import ProfilePage from './profile';
@@ -98,7 +98,7 @@ export const Hub = () => {
           </Route>
           <Route exact path={`${path}/profile`}>
             <ProfilePage uid={auth.currentUser!.uid} setBusiness={setBusiness}
-              business={business}/>
+              business={business} setQueue={setQueue}/>
           </Route>
           <Redirect exact from={`${path}`} to={`${path}/profile`} />
           <Route path={`${path}`}>

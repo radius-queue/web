@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import Form from 'react-bootstrap/Form';
 
 interface AutocompleteProps {
@@ -10,22 +10,14 @@ interface AutocompleteProps {
   value: string,
 }
 
-export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, editable, value}: AutocompleteProps) => {
+export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter,
+  editable, value}: AutocompleteProps) => {
   const [state, setState] = useState<string>(value);
+  const autocompleteObject = useRef<google.maps.places.Autocomplete | undefined>(undefined);
 
   useEffect(() => {
     setState(value);
   }, [value]);
-
-  let autocompleteObject : google.maps.places.Autocomplete;
-  const didMount = () => {
-    autocompleteObject = new google.maps.places.Autocomplete(
-      document.getElementById('autocomplete') as HTMLInputElement,
-    );
-
-    autocompleteObject.setFields(['geometry', 'formatted_address']);
-    autocompleteObject.addListener('place_changed', () => selectValue(state));
-  };
 
   const changeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < state.length) {
@@ -34,18 +26,24 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
     setState(e.target.value);
   };
 
+  useEffect(() => {
+    if (editable) {
+      autocompleteObject.current = new google.maps.places.Autocomplete(
+        document.getElementById('autocomplete') as HTMLInputElement,
+      );
+
+      autocompleteObject.current.setFields(['geometry', 'formatted_address']);
+      autocompleteObject.current.addListener('place_changed', () => selectValue(state));
+    }
+  }, []);
+
   const selectValue = (val: string) => {
-    const result : google.maps.places.PlaceResult = autocompleteObject.getPlace();
+    const result : google.maps.places.PlaceResult =
+      autocompleteObject.current!.getPlace();
     onChange(result.formatted_address!);
     setState(result.formatted_address!);
     setCenter(result.geometry!.location!);
   };
-
-  useEffect(() => {
-    if (editable) {
-      didMount();
-    }
-  }, [didMount]);
 
   return (
     <Form.Group>

@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import {Party} from '../util/queue';
+import {Party} from '../../util/queue';
 import PropTypes from 'prop-types';
 
 interface ModalProps {
@@ -154,10 +154,10 @@ export const DeleteCustomerModal = ({show, close, party, mainAction}
 };
 
 DeleteCustomerModal.propTypes = {
-  show: PropTypes.element,
-  close: PropTypes.element,
-  party: PropTypes.element,
-  mainAction: PropTypes.element,
+  show: PropTypes.bool,
+  close: PropTypes.func,
+  party: PropTypes.object,
+  mainAction: PropTypes.func,
 };
 
 interface ClearProps {

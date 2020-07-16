@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {Queue} from '../util/queue';
 import getQueue from '../util/get-queue';
 import React from 'react';
-import {QueueURLParamViewer} from '../post-log-in/queue-view';
+import QueueURLParamViewer from '../post-log-in/queue/queue-url-param';
 import {QueueListener} from '../util/queue-listener';
 
 /**
