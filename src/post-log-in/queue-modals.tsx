@@ -14,14 +14,14 @@ interface ModalProps {
 
 export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [name, setName] = useState('');
-  const [size, setSize] = useState('');
+  const [size, setSize] = useState(0);
   const [phoneNumber, setNumber] = useState('');
-  const [quote, setQuote] = useState('');
+  const [quote, setQuote] = useState(0);
   const [validated, setValidated] = useState(false);
 
   const clearState = () => {
     setName('');
-    setSize('');
+    setSize(0);
     setNumber('');
   };
 
@@ -31,16 +31,28 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
     setValidated(false);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!e.currentTarget.checkValidity()) {
-      setValidated(true);
-      return;
-    }
-    const party : Party = new Party(name, parseInt(size), phoneNumber, parseInt(quote));
+  /**
+   *
+   */
+  function checkValid() {
+    return (phoneNumber.length == 10);
+  }
 
-    mainAction(party);
-    onHide();
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(phoneNumber);
+    console.log(phoneNumber.length);
+    e.preventDefault();
+    if (e.currentTarget.checkValidity() === false) {
+      e.stopPropagation();
+    }
+
+    if (checkValid()) {
+      const party : Party = new Party(name, size, phoneNumber, quote);
+
+      mainAction(party);
+      onHide();
+    }
+    setValidated(true);
   };
 
   return (<Modal show={show} onHide={onHide}>
@@ -50,7 +62,6 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
     <Form
       style={{margin: '2%'}}
       onSubmit={onSubmit}
-      validated={validated}
       noValidate
     >
       <Form.Row>
@@ -59,6 +70,8 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
             <Form.Label>Party Name</Form.Label>
             <Form.Control
               placeholder='Michael Jordan'
+              isValid={validated && name.length > 0}
+              isInvalid={validated && name.length === 0}
               type='text'
               onChange={(e) => setName(e.target.value)}
               name='name'
@@ -73,14 +86,16 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
           <Form.Group>
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
-              placeholder='555-555-5555'
+              placeholder='(555)555-5555'
               type='text'
+              isValid={validated && phoneNumber.length === 10}
+              isInvalid={validated && phoneNumber.length !== 10}
               onChange={(e) => setNumber(e.target.value)}
               name='phoneNumber'
               required
             />
             <Form.Control.Feedback type='invalid'>
-              Please Enter a Phone Number
+              Please Enter a 10 digit Phone Number
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -92,7 +107,9 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
             <Form.Control
               placeholder='2'
               type='number'
-              onChange={(e) => setSize(e.target.value)}
+              isValid={validated && size > 0}
+              isInvalid={validated && size <= 0}
+              onChange={(e) => setSize(parseInt(e.target.value))}
               name='size'
               max={100}
               required
@@ -110,10 +127,9 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
             <Form.Control
               placeholder='45'
               type='number'
-              onChange={(e) => setQuote(e.target.value)}
+              onChange={(e) => setQuote(parseInt(e.target.value))}
               name='quote'
               max={600}
-              required
             />
             <Form.Control.Feedback type='invalid'>
               Please Enter a Quoted Wait Time
@@ -173,4 +189,4 @@ export const ClearModal = ({clear, show, close} : ClearProps) => {
       </Modal.Footer>
     </Modal>
   );
-}
+};
