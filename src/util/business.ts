@@ -39,7 +39,7 @@ export class BusinessLocation {
   name: string;
   address: string;
   phoneNumber: string;
-  hours: [Date, Date][];
+  hours: [Date | null, Date | null][];
   coordinates: number[]; // in decimal degrees (DD).
   queues: string[];
   geoFenceRadius: number; // in meters
@@ -48,7 +48,7 @@ export class BusinessLocation {
    * @param {string} name Name of specific location
    * @param {string} address Address of location
    * @param {string} phoneNumber phone number of the location
-   * @param {[Date, Date][]} hours business hours for queue operation as array
+   * @param {[Date | null, Date | null][]} hours business hours for queue operation as array
    *    of Date object pairs.
    * @param {number[]} coordinates Geographic coordinates of location in
    *    decimal degrees (DD). ex: [41.40338, 2.17403] lat, long
@@ -58,7 +58,7 @@ export class BusinessLocation {
    *    (in meters) that a customer is allowed to enter queue, Default value
    *    of -1
    */
-  constructor(name: string, address: string, phoneNumber: string, hours: [Date, Date][],
+  constructor(name: string, address: string, phoneNumber: string, hours: [Date | null, Date | null][],
       coordinates: number[], queues: string[] = [],
       geoFenceRadius: number = -1) {
     this.name = name;
@@ -78,12 +78,12 @@ export class BusinessLocation {
   * @return {BusinessLocation} equivalent js object
   */
   static fromFirebase(location: any): BusinessLocation {
-    const locPrams : [string, string, string, [Date, Date][], number[],
+    const locPrams : [string, string, string, [Date | null, Date | null][], number[],
      string[], number] = [
        location.name,
        location.address,
        location.phoneNumber,
-       [], //BusinessLocation.hoursFromFirebase(location.hours),
+       BusinessLocation.hoursFromFirebase(location.hours),
        [location.coordinates.latitude,
          location.coordinates.longitude],
        location.queues,
@@ -116,25 +116,25 @@ export class BusinessLocation {
    *
    * @param hours
    */
-  static hoursToFirebase(hours: [Date, Date][]): any {
-    const ret: {[id:string]: [Date, Date]} = {};
-    for (let i = 0; i < hours.length; i++) {
+  static hoursToFirebase(hours: [Date | null, Date | null][]): any {
+    const ret: {[id:string]: [Date | null, Date | null]} = {};
+    for (let i = 0; i < DATE_INDEX.size; i++) {
       const day = hours[i];
       const dayName: string = DATE_INDEX.get(i)!;
-      ret[dayName] = [day[0], day[1]];
+      ret[dayName] = [day[0] ? day[0] : null, day[1] ? day[1] : null];
     }
     return ret;
   }
 
   /**
    *
-   * @param hours
+   * @param hour
    */
-  static hoursFromFirebase(hours: any): [Date, Date][] {
-    const ret: [Date, Date][] = [];
+  static hoursFromFirebase(hours: any): [Date | null, Date | null][] {
+    const ret: [Date | null, Date | null][] = [];
     for (let i = 0; i < DATE_INDEX.size; i++) {
       const day = hours[(DATE_INDEX.get(i))!];
-      ret.push([day[0].toDate(), day[1].toDate()]);
+      ret.push([!day[0] ? null : day[0].toDate(), !day[1] ? null : day[1].toDate()]);
     }
     return ret;
   }
@@ -163,6 +163,24 @@ export const businessConverter = {
   },
 };
 
+export function getHoursArray(input: [string, string][]) {
+  const result : [Date | null, Date | null][] = [];
+  for (const pair of input) {
+    if (pair[0] && pair[1]) {
+      const openParts : string[] = pair[0].split(':');
+      const closeParts : string[] = pair[1].split(':');
+
+      const openDate = new Date(2020, 0, 1, parseInt(openParts[0]), parseInt(openParts[1]));
+      const closeDate = new Date(2020, 0, 1, parseInt(closeParts[0]), parseInt(closeParts[1]));
+
+      result.push([openDate, closeDate]);
+    } else {
+      result.push([null, null]);
+    }
+  }
+  return result;
+}
+
 const DATE_INDEX: Map<number, string> = new Map<number, string>([
   [0, 'Sunday'],
   [1, 'Monday'],
@@ -173,3 +191,12 @@ const DATE_INDEX: Map<number, string> = new Map<number, string>([
   [6, 'Saturday'],
 ]);
 
+export const DAYS : string[] = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Business, BusinessLocation} from '../util/business';
+import {Business, BusinessLocation, getHoursArray} from '../util/business';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -10,10 +10,11 @@ import AddressAutocomplete from './google-components/profile-autocomplete';
 import LoadingProfile from './profile-loading';
 import {auth} from '../firebase';
 import PropTypes from 'prop-types';
-
+import {DAYS} from '../util/business';
 import {Prompt} from 'react-router-dom';
 import postBusiness from '../util/post-business';
 import {Queue, Party} from '../util/queue';
+import ProfileHours from './profile-hours';
 import postQueue from '../util/post-queue';
 
 interface ProfileProps {
@@ -37,7 +38,8 @@ interface FormState {
  * @return {jsx} The LoadingProfile or the user's profile Card.
  */
 const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
-  const initialState : FormState = {businessName: '',
+  const initialState : FormState = {
+    businessName: '',
     firstName: '',
     lastName: '',
     phone: '',
@@ -51,6 +53,8 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
   const [radius, setRadius] = useState<number>(50);
   const [editing, setEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [openState, setOpenState] = useState<boolean[]>(DAYS.map(() => false));
+  const [hours, setHours] = useState<[string, string][]>(DAYS.map(() => ['', '']));
 
   useEffect(() => {
     if (business !== null) {
@@ -62,6 +66,16 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
           lastName: business.lastName,
           phone: business.locations[0].phoneNumber,
         });
+        if (business.locations[0].hours.length !== 0) {
+          setOpenState(business.locations[0].hours.map((val: [Date | null, Date | null]) => val[0] !== null));
+          setHours(business.locations[0].hours.map((val: [Date | null, Date | null]) => {
+            if (val[0] && val[1]) {
+              return [val[0].toTimeString().slice(0, 8), val[1].toTimeString().slice(0, 8)];
+            } else {
+              return ['', ''];
+            }
+          }));
+        }
         setAddress(business.locations[0].address);
         setBuilding(new google.maps.LatLng(business.locations[0].coordinates[0],
             business.locations[0].coordinates[1]));
@@ -106,13 +120,15 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
     if (allFieldsCompleted()) {
       setEditing(false);
       enableOtherNavs();
+      const locationHours : [Date | null, Date | null][] = getHoursArray(hours);
+      console.log(hours);
       const locationParams :
-        [string, string, string, [Date, Date][], number[], string[], number] =
+        [string, string, string, [Date | null, Date | null][], number[], string[], number] =
       [
         form.businessName,
         address,
         form.phone,
-        [],
+        locationHours,
         [building!.lat(), building!.lng()],
         [uid],
         radius,
@@ -144,11 +160,15 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
    * @return {boolean} true if form is complete, false otherwise.
    */
   const allFieldsCompleted : () => boolean = () => {
-    let result : boolean = true;
     for (const [, value] of Object.entries(form)) {
-      result = result && value.length > 0;
+      if (value.length === 0) return false;
     }
-    return result && address.length > 0;
+    for (let i = 0; i < hours.length; i++) {
+      if (openState[i] && (hours[i][0].length === 0 || hours[i][1].length === 0)) {
+        return false;
+      }
+    }
+    return address.length > 0;
   };
 
   return (
@@ -252,6 +272,14 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
               editable={editing}
               key={`${editing}`}
               value={address}
+            />
+            <ProfileHours
+              values={hours}
+              setValues={setHours}
+              openState={openState}
+              setOpenState={setOpenState}
+              submitted={submitted}
+              editable={editing}
             />
             <Form.Group>
               <Form.Label>Radius (m)</Form.Label>

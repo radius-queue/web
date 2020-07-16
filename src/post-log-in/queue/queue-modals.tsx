@@ -36,7 +36,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
    *
    */
   function checkValid() {
-    return (phoneNumber.length == 10);
+    return (phoneNumber.length === 10);
   }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

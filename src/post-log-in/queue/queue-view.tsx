@@ -49,7 +49,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
       clearInterval(interval);
       console.log(currentQRef.current);
     };
-  }, []);
+  }, [setQueue, queue.uid]);
 
   useEffect(() => {
     currentQRef.current = stateQ;

@@ -6,7 +6,6 @@ import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import {auth} from './firebase';
-
 import {
   BrowserRouter as Router,
   Switch,

@@ -11,7 +11,7 @@ const LoadingProfile = () => {
   return (
     <div>
       <Card id='profile-container'>
-        <Card.Body style={{marginLeft: '5%'}}>
+        <Card.Body>
           <Card.Title>
             <Skeleton count={1} width={450} height={30}/>
           </Card.Title>
