@@ -1,0 +1,15 @@
+.queue-list-buttons {
+  display: flex;
+  padding: 3px 8px !important;
+  margin: 2px !important;
+}
+
+.col-md-3 {
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+
+.col-md-2 {
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}

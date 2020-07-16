@@ -19,9 +19,9 @@ const QueueLoadingPage = () => {
         <Card.Header>
           <Row>
             <Col md={1}>#</Col>
-            <Col md={4}>Name</Col>
-            <Col md={2}>Party Size</Col>
-            <Col md={2}>Time in Line</Col>
+            <Col md={3}>Name</Col>
+            <Col md={2}>Party</Col>
+            <Col md={3}>Waiting</Col>
             <Col md={3}>Actions</Col>
           </Row>
         </Card.Header>
