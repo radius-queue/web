@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import {Party} from '../util/queue';
+import PropTypes from 'prop-types';
 
 interface ModalProps {
   show: boolean,
@@ -37,7 +38,8 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
       setValidated(true);
       return;
     }
-    const party : Party = new Party(name, parseInt(size), phoneNumber, parseInt(quote));
+    const party : Party =
+      new Party(name, parseInt(size), phoneNumber, parseInt(quote));
 
     mainAction(party);
     onHide();
@@ -143,10 +145,19 @@ export const DeleteCustomerModal = ({show, close, party, mainAction}
         </Modal.Title>
       </Modal.Header>
       <Modal.Footer>
-        <Button onClick={onDelete} variant='danger'>Remove {party!.name}</Button>
+        <Button onClick={onDelete} variant='danger'>
+          Remove {party!.name}
+        </Button>
       </Modal.Footer>
     </Modal>
   );
+};
+
+DeleteCustomerModal.propTypes = {
+  show: PropTypes.element,
+  close: PropTypes.element,
+  party: PropTypes.element,
+  mainAction: PropTypes.element,
 };
 
 interface ClearProps {
@@ -173,4 +184,4 @@ export const ClearModal = ({clear, show, close} : ClearProps) => {
       </Modal.Footer>
     </Modal>
   );
-}
+};
