@@ -11,18 +11,16 @@ import LoadingProfile from './profile-loading';
 import {auth} from '../firebase';
 import PropTypes from 'prop-types';
 
-import {
-  Prompt,
-} from 'react-router-dom';
+import {Prompt} from 'react-router-dom';
 import postBusiness from '../util/post-business';
-// eslint-disable-next-line no-unused-vars
-import {Party, Queue} from '../util/queue';
+import {Queue, Party} from '../util/queue';
 import postQueue from '../util/post-queue';
 
 interface ProfileProps {
   uid: string;
   setBusiness: (b:Business) => void;
   business: Business | undefined | null;
+  setQueue: (q: Queue) => void;
 }
 
 interface FormState {
@@ -38,7 +36,7 @@ interface FormState {
  * and access to editing their business.
  * @return {jsx} The LoadingProfile or the user's profile Card.
  */
-const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
+const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
   const initialState : FormState = {businessName: '',
     firstName: '',
     lastName: '',
@@ -73,7 +71,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
         setEditing(true);
       }
     }
-  }, [business]);
+  }, [business, setBusiness]);
 
   /**
    * Cancels the current profile edits by changing all edited
@@ -134,6 +132,7 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
           [],
         ];
         const newQueue : Queue[] = [new Queue(...queueParams)];
+        setQueue(newQueue[0]);
         postQueue(newQueue[0]);
       }
       postBusiness(newBusiness);
@@ -317,9 +316,10 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
 };
 
 ProfilePage.propTypes = {
-  uid: PropTypes.element,
-  setBusiness: PropTypes.element,
-  business: PropTypes.element,
+  uid: PropTypes.string,
+  setBusiness: PropTypes.func,
+  business: PropTypes.object,
+  setQueue: PropTypes.func,
 };
 
 /**

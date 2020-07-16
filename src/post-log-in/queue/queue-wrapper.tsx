@@ -4,14 +4,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Skeleton from 'react-loading-skeleton';
-// eslint-disable-next-line no-unused-vars
-import {Business} from '../util/business';
-// eslint-disable-next-line no-unused-vars
-import {Queue} from '../util/queue';
+import {Business} from '../../util/business';
+import {Queue} from '../../util/queue';
 import './queue-view.css';
 import './queue-wrapper.css';
 import ListGroup from 'react-bootstrap/ListGroup';
-import {QueueView} from './queue-view';
+import QueueView from './queue-view';
 import PropTypes from 'prop-types';
 
 const QueueLoadingPage = () => {
@@ -97,14 +95,6 @@ const QueueTab = ({business, queue, setQueue}: QueueTabProps) => {
   const [isDefault, setDefault] = useState<boolean>(false);
 
   useEffect(() => {
-    if (business === undefined) {
-      setDefault(true);
-      setBusinessLoading(false);
-      setQueueLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
     if (business !== null) {
       setBusinessLoading(false);
       if (business === undefined) {
@@ -128,9 +118,9 @@ const QueueTab = ({business, queue, setQueue}: QueueTabProps) => {
 };
 
 QueueTab.propTypes = {
-  business: PropTypes.element,
-  queue: PropTypes.element,
-  setQueue: PropTypes.element,
+  business: PropTypes.object,
+  queue: PropTypes.object,
+  setQueue: PropTypes.func,
 };
 
 export default QueueTab;

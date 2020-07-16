@@ -36,3 +36,14 @@ export const useForm = (initialState: any) => {
     },
   ];
 };
+
+/**
+* Calculates the time difference in minutes betweeen two Date objects.
+* @param {Date} t1 The most current time.
+* @param {Date} t2 The oldest time.
+* @return {boolean} the time difference in minutes
+*/
+export const timeDiffInMinutes = (t1: Date, t2: Date) => {
+  const result : number = Math.round((t1.getTime() - t2.getTime()) / 60000);
+  return result === -1 ? 0 : result;
+};

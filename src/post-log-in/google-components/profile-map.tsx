@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 import GoogleMapReact from 'google-map-react';
 import GOOGLE_API_KEY from '../../google-key';
 import PropTypes from 'prop-types';
-import { UW_MAP_PROPS } from '../../util/HardcodedData';
 
 export interface MapProps {
   // radius of their geofence in meters
@@ -77,10 +76,10 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
 };
 
 Map.propTypes = {
-  radius: PropTypes.element,
-  buildingLocation: PropTypes.element,
-  setRadius: PropTypes.element,
-  editable: PropTypes.element,
+  radius: PropTypes.number,
+  buildingLocation: PropTypes.object,
+  setRadius: PropTypes.func,
+  editable: PropTypes.bool,
 };
 
 export default Map;
