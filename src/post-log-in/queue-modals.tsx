@@ -28,8 +28,8 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
 
   const onHide = () => {
     clearState();
-    close();
     setValidated(false);
+    close();
   };
 
   /**
@@ -88,11 +88,12 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               placeholder='(555)555-5555'
-              type='text'
+              type='number'
               isValid={validated && phoneNumber.length === 10}
               isInvalid={validated && phoneNumber.length !== 10}
-              onChange={(e) => setNumber(e.target.value)}
+              onChange={(e) => setNumber('' + e.target.value)}
               name='phoneNumber'
+              value={phoneNumber === '' ? '' :parseInt(phoneNumber)}
               required
             />
             <Form.Control.Feedback type='invalid'>

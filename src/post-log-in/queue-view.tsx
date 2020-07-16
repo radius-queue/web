@@ -16,6 +16,7 @@ import {AddCustomerModal, DeleteCustomerModal, ClearModal} from './queue-modals'
 import postQueue from '../util/post-queue';
 import './queue-view.css';
 import {QueueListener} from '../util/queue-listener';
+import { parsePhoneNum } from '../util/util-functions';
 
 /**
  * Calculates the time difference in minutes betweeen two Date objects.
@@ -53,7 +54,7 @@ const UserCard = ({party, time} : CardProps) => {
         <Card.Body>
           <Card.Title as='h1'>{party.name}</Card.Title>
           <Card.Text>
-            Phone Number: {party.phoneNumber}
+            Phone Number: {parsePhoneNum(party.phoneNumber)}
           </Card.Text>
           <Card.Text>
             Estimated Wait Time: {party.quote} minutes
@@ -320,7 +321,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
       setQueue(stateQ);
       clearInterval(interval);
     };
-  }, [stateQ, party, queue, setQueue]);
+  }, []);
 
   /**
    * Adds the given party at the bottom of the current queue.
