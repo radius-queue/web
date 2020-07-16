@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -19,6 +19,10 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [phoneNumber, setNumber] = useState('');
   const [quote, setQuote] = useState(0);
   const [validated, setValidated] = useState(false);
+
+  useEffect(() => {
+    setValidated(!show);
+  }, [show]);
 
   const clearState = () => {
     setName('');
