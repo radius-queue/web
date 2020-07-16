@@ -28,7 +28,6 @@ function App() {
     const unsub: firebase.Unsubscribe = auth.onAuthStateChanged((newUser) => {
       setIsLoading(false);
     });
-
     return unsub;
   }, []);
 

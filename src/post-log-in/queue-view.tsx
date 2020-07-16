@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+// eslint-disable-next-line no-unused-vars
 import {Queue, Party} from '../util/queue';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
@@ -16,8 +17,14 @@ import postQueue from '../util/post-queue';
 import './queue-view.css';
 import {QueueListener} from '../util/queue-listener';
 
+/**
+ * Calculates the time difference in minutes betweeen two Date objects.
+ * @param {Date} t1 The most current time.
+ * @param {Date} t2 The oldest time.
+ * @return {boolean} the time difference in minutes
+ */
 const timeDiffInMinutes = (t1: Date, t2: Date) => {
-  const result : number = Math.round((t1.getTime() - t2.getTime()) / 60000)
+  const result : number = Math.round((t1.getTime() - t2.getTime()) / 60000);
   return result === -1 ? 0 : result;
 };
 
@@ -26,6 +33,11 @@ interface CardProps {
   time: Date,
 }
 
+/**
+ * A Card filled with the info of the given user.
+ * @param {CardProps} CardProps The user's info to be displayed.
+ * @return {jsx} A React Bootstrap Card filled with user info.
+ */
 const UserCard = ({party, time} : CardProps) => {
   const [message, setMessage] = useState('');
 
@@ -87,6 +99,12 @@ interface ListProps {
   time: Date,
 }
 
+/**
+ * A Card displaying the given queue with add/remove/swap functionality.
+ * @param {ListProps} ListProps The properties of the queue to be displayed.
+ * @return {jsx} A React Bootstrap Card filled with the given queue info
+ * and functionality.
+ */
 const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
   showAddModal, showDeleteModal} : ListProps) => {
   const moveOne = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index : number, offset: number) => {
@@ -178,12 +196,12 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
 /**
  * Sets the 'open' field of the given queue to true.
  * @param {Queue} queue The queue to be opened.
- * @param {(Queue)} callBack the function that
+ * @param {function(Queue)} setQueue the function that
  * sets the top level queue
  */
 const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
-  const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, true, queue.parties);
-  console.log(queue.parties);
+  const newQ : Queue =
+    new Queue(queue.name, queue.end, queue.uid, true, queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };
@@ -191,14 +209,24 @@ const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
 /**
  * Sets the 'open' field of the given queue to false.
  * @param {Queue} queue The queue to be opened.
+ * @param {function(Queue)} setQueue
  */
 const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
-  const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, false, queue.parties);
-  console.log(queue.parties);
+  const newQ : Queue =
+    new Queue(queue.name, queue.end, queue.uid, false, queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };
 
+/**
+ * A Card displaying the queue controls: Open/Close/Clear queue and
+ * send message to all in queue.
+ * TODO: implement send message to all in queue.
+ * @param {QueueControlsProps} QueueControlsProps The current queue on
+ * the page and access to functions to set it and clear it.
+ * @return {jsx} A React Bootstrap Card filled with the controls for the
+ * displayed queue.
+ */
 const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
   const selectedOpenClosed: string = queue.open ? 'open' : 'closed';
   return (
@@ -254,6 +282,12 @@ interface ViewProps {
   setQueue: (q :Queue) => void,
 }
 
+/**
+ * The container for all queue Cards and Modals.
+ * @param {ViewProps} ViewProps The given queue with access to editing.
+ * @return {jsx} A React Boostrap container containing every Card and Modal
+ * on the queue-view page.
+ */
 export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
   const [party, setParty] = useState<[Party, number] | undefined>(undefined);
@@ -265,7 +299,6 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   useEffect(()=> {
     const listener = new QueueListener(stateQ.uid, (newQ: Queue) => {
       setQ(newQ);
-
       const contains = (party: Party) => {
         for (const p of newQ.parties) {
           if (p.phoneNumber === party.phoneNumber) {
@@ -274,14 +307,12 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         }
         return false;
       };
-
       if (party && !contains(party[0])) {
         setParty(undefined);
       }
     });
 
     const interval = setInterval(() => setTime(new Date()), 60000);
-
     return () => {
       if (listener) {
         listener!.free();
@@ -291,26 +322,38 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
     };
   }, [stateQ, party, queue, setQueue]);
 
+  /**
+   * Adds the given party at the bottom of the current queue.
+   * @param {Party} party The party to be added to the queue.
+   */
   const addParty = (party: Party) => {
     const list: Party[] = stateQ!.parties.slice();
-
     list.push(party);
-    const newQueue : Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
+    const newQueue : Queue =
+      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQueue);
     postQueue(newQueue);
   };
 
+  /**
+   * Removes the given party from the current queue.
+   * @param {Party} party The party to be removed from the queue.
+   */
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
-
-    const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
+    const newQ: Queue =
+      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
     setQ(newQ);
     setParty(undefined);
     postQueue(newQ);
   };
 
+  /**
+   * Clears all parties from the current queue.
+   */
   const clearQueue = () => {
-    const newQ: Queue = new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
+    const newQ: Queue =
+      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
     setQ(newQ);
     setParty(undefined);
     postQueue(newQ);
@@ -348,7 +391,6 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         close={() => setClearModal(false)}
         clear={clearQueue}
       />
-
     </Container>
   );
 };
@@ -358,7 +400,7 @@ interface URLParamProps {
   phoneNum: string,
   time: Date,
 }
-export const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps) => {
+export const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps)=> {
   return (
     <Card id='queue-card'>
       <Card.Header>
@@ -377,10 +419,18 @@ export const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps) => 
             active={person.phoneNumber === phoneNum}
           >
             <Row>
-              <Col md={1}>{idx + 1}</Col>
-              <Col md={5}>{person.name}</Col>
-              <Col md={3}>{person.size}</Col>
-              <Col md={3}>{timeDiffInMinutes(time, person.checkIn)} minutes</Col>
+              <Col md={1}>
+                {idx + 1}
+              </Col>
+              <Col md={5}>
+                {person.name}
+              </Col>
+              <Col md={3}>
+                {person.size}
+              </Col>
+              <Col md={3}>
+                {timeDiffInMinutes(time, person.checkIn)} minutes
+              </Col>
             </Row>
           </ListGroup.Item>))}
       </ListGroup>

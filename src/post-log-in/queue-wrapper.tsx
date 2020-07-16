@@ -4,12 +4,15 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Skeleton from 'react-loading-skeleton';
+// eslint-disable-next-line no-unused-vars
 import {Business} from '../util/business';
+// eslint-disable-next-line no-unused-vars
 import {Queue} from '../util/queue';
 import './queue-view.css';
 import './queue-wrapper.css';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {QueueView} from './queue-view';
+import PropTypes from 'prop-types';
 
 const QueueLoadingPage = () => {
   return (
@@ -25,9 +28,10 @@ const QueueLoadingPage = () => {
           </Row>
         </Card.Header>
         <ListGroup id='queue' variant='flush'>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((val) => (<ListGroup.Item key={val} className='queue-entry'>
-            <Skeleton />
-          </ListGroup.Item>))}
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((val) =>
+            (<ListGroup.Item key={val} className='queue-entry'>
+              <Skeleton />
+            </ListGroup.Item>))}
         </ListGroup>
       </Card>
       <Card id='control-group-card'>
@@ -50,17 +54,23 @@ const QueueLoadingPage = () => {
   );
 };
 
+/**
+ * The Queue Page displayed when the user hasn't filled out business
+ * info yet.
+ * @return {jsx} React Boostrap Container with the Queue Page to be
+ * displayed in an absence of business data.
+ */
 const DefaultQueuePage = () => {
   return (
     <Container>
       <Card id='default-container'>
         <Card.Body id='no-business-info-body'>
           <Card.Title id='no-business-info-title'>
-            You haven't filled out your business profile yet. You
+            You haven&apos;t filled out your business profile yet. You
             must do this before you can use a Radius queue.
           </Card.Title>
           <Card.Text id='no-business-info-text'>
-            To fill out your business profile, click the "Profile"
+            To fill out your business profile, click the &quot;Profile&quot;
             tab in the navigation bar. From there you can enter your
             business information.
           </Card.Text>
@@ -115,6 +125,12 @@ const QueueTab = ({business, queue, setQueue}: QueueTabProps) => {
     isDefault ?
     <DefaultQueuePage/> :
     <QueueView queue={queue!} setQueue={setQueue}/>;
+};
+
+QueueTab.propTypes = {
+  business: PropTypes.element,
+  queue: PropTypes.element,
+  setQueue: PropTypes.element,
 };
 
 export default QueueTab;

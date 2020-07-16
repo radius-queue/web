@@ -9,11 +9,13 @@ import Map from './google-components/profile-map';
 import AddressAutocomplete from './google-components/profile-autocomplete';
 import LoadingProfile from './profile-loading';
 import {auth} from '../firebase';
+import PropTypes from 'prop-types';
 
 import {
   Prompt,
 } from 'react-router-dom';
 import postBusiness from '../util/post-business';
+// eslint-disable-next-line no-unused-vars
 import {Party, Queue} from '../util/queue';
 import postQueue from '../util/post-queue';
 
@@ -30,6 +32,12 @@ interface FormState {
   phone: string;
 }
 
+/**
+ * The entirety of the profile page for the current user.
+ * @param {ProfileProps} ProfileProps The current user's uid, business
+ * and access to editing their business.
+ * @return {jsx} The LoadingProfile or the user's profile Card.
+ */
 const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const initialState : FormState = {businessName: '',
     firstName: '',
@@ -40,7 +48,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   const [form, setForm] = useState<FormState>(initialState);
   const [address, setAddress] = useState<string>('');
   const [isBusinessLoading, setBusinessLoading] = useState<boolean>(true);
-  const [building, setBuilding] = useState<google.maps.LatLng | undefined>(undefined);
+  const [building, setBuilding] =
+    useState<google.maps.LatLng | undefined>(undefined);
   const [radius, setRadius] = useState<number>(50);
   const [editing, setEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
@@ -56,7 +65,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
           phone: business.locations[0].phoneNumber,
         });
         setAddress(business.locations[0].address);
-        setBuilding(new google.maps.LatLng(business.locations[0].coordinates[0], business.locations[0].coordinates[1]));
+        setBuilding(new google.maps.LatLng(business.locations[0].coordinates[0],
+            business.locations[0].coordinates[1]));
         setRadius(business.locations[0].geoFenceRadius);
         setBusiness(business);
       } else if (business === undefined) {
@@ -86,13 +96,21 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     setBusiness(business!);
   };
 
+  /**
+   * Updates the user's profile in the database upon submission of the
+   * profile form.
+   * @param {React.FormEvent<HTMLFormElement>} e The values in
+   * the form when it was submitted.
+   */
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
     if (allFieldsCompleted()) {
       setEditing(false);
       enableOtherNavs();
-      const locationParams : [string, string, string, [Date, Date][], number[], string[], number] = [
+      const locationParams :
+        [string, string, string, [Date, Date][], number[], string[], number] =
+      [
         form.businessName,
         address,
         form.phone,
@@ -101,8 +119,11 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
         [uid],
         radius,
       ];
-      const newLocation : BusinessLocation[] = [new BusinessLocation(...locationParams)];
-      const newBusiness = new Business(form.businessName, form.firstName, form.lastName, auth.currentUser!.email!, uid, newLocation);
+      const newLocation : BusinessLocation[] =
+        [new BusinessLocation(...locationParams)];
+      const newBusiness =
+        new Business(form.businessName, form.firstName, form.lastName,
+          auth.currentUser!.email!, uid, newLocation);
       setBusiness(newBusiness);
       if (!business) {
         const queueParams : [string, Date, string, boolean, Party[]] = [
@@ -119,9 +140,13 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
     }
   };
 
+  /**
+   * Checks if the form has all of its fields filled out.
+   * @return {boolean} true if form is complete, false otherwise.
+   */
   const allFieldsCompleted : () => boolean = () => {
     let result : boolean = true;
-    for (const [key, value] of Object.entries(form)) {
+    for (const [, value] of Object.entries(form)) {
       result = result && value.length > 0;
     }
     return result && address.length > 0;
@@ -138,14 +163,18 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
           <Form noValidate onSubmit={submitForm}>
             <Prompt
               when={editing}
-              message={() => 'You have unsaved changes. Are you sure you want to leave the page?'}
+              message={() =>
+                'You have unsaved changes.' +
+                ' Are you sure you want to leave the page?'
+              }
             />
             <Form.Group controlId="businessName">
               <Form.Label>Business Name</Form.Label>
               <Form.Control
                 type="text"
                 name="businessName"
-                onChange={(e) => setForm({...form, businessName: e.target.value})}
+                onChange={(e) =>
+                  setForm({...form, businessName: e.target.value})}
                 value={form.businessName}
                 isValid={submitted &&
                   form.businessName.length > 0}
@@ -166,7 +195,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
                     type="text"
                     name="firstName"
                     placeholder="John"
-                    onChange={(e) => setForm({...form, firstName: e.target.value})}
+                    onChange={(e) =>
+                      setForm({...form, firstName: e.target.value})}
                     isValid={submitted && form.firstName.length > 0}
                     isInvalid={submitted && form.firstName.length === 0}
                     value={form.firstName}
@@ -184,7 +214,8 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
                     type="text"
                     name="lastName"
                     placeholder="Smith"
-                    onChange={(e) => setForm({...form, lastName: e.target.value})}
+                    onChange={(e) =>
+                      setForm({...form, lastName: e.target.value})}
                     isValid={submitted && form.lastName.length > 0}
                     isInvalid={submitted && form.lastName.length === 0}
                     value={form.lastName}
@@ -285,6 +316,16 @@ const ProfilePage = ({uid, setBusiness, business}: ProfileProps) => {
   );
 };
 
+ProfilePage.propTypes = {
+  uid: PropTypes.element,
+  setBusiness: PropTypes.element,
+  business: PropTypes.element,
+};
+
+/**
+ * Called when user is on 'profile' tab and begins editing their
+ * profile. Disables other nav bar links so they cannot leave the page.
+ */
 const disableOtherNavs = () => {
   const otherNavs = document.getElementsByClassName('not-profile');
   for (let i = 0; i < otherNavs.length; i++) {
@@ -292,6 +333,10 @@ const disableOtherNavs = () => {
   }
 };
 
+/**
+ * Called when user is on 'profile' tab and finishes editing their
+ * profile. Enables other nav bar links so they can leave the page again.
+ */
 const enableOtherNavs = () => {
   const otherNavs = document.getElementsByClassName('not-profile');
   for (let i = 0; i < otherNavs.length; i++) {
