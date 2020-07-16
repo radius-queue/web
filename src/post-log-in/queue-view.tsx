@@ -11,7 +11,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {CaretUpFill, CaretDownFill, TrashFill} from 'react-bootstrap-icons';
-import {AddCustomerModal, DeleteCustomerModal} from './queue-modals';
+import {AddCustomerModal, DeleteCustomerModal, ClearModal} from './queue-modals';
 import postQueue from '../util/post-queue';
 import './queue-view.css';
 import {QueueListener} from '../util/queue-listener';
@@ -89,7 +89,8 @@ interface ListProps {
 
 const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
   showAddModal, showDeleteModal} : ListProps) => {
-  const moveOne = (index : number, offset: number) => {
+  const moveOne = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index : number, offset: number) => {
+    e.stopPropagation();
     if (index + offset >= 0 && index + offset < queue.parties.length) {
       const list : Party[] = queue.parties.slice();
 
@@ -99,7 +100,7 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
       list[index] = target;
 
       const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, queue.open, list);
-      if (currentPartyInfo && currentPartyInfo[1] === index) {
+      if (currentPartyInfo) {
         showParty([currentPartyInfo[0], currentPartyInfo[1] + offset]);
       }
       setQueue(newQ);
@@ -144,13 +145,13 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
               <Col md={4}>
                 <Button
                   style={{margin: '3px'}}
-                  onClick={() => moveOne(idx, -1)}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => moveOne(e, idx, -1)}
                 >
                   <CaretUpFill />
                 </Button>
                 <Button
                   style={{margin: '3px'}}
-                  onClick={() => moveOne(idx, 1)}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => moveOne(e, idx, 1)}
                 >
                   <CaretDownFill />
                 </Button>
@@ -259,10 +260,10 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
   const [time, setTime] = useState<Date>(new Date());
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [listener, setListener] = useState<QueueListener | undefined>(undefined);
+  const [clearModal, setClearModal] = useState<boolean>(false);
 
   useEffect(()=> {
-    setListener(new QueueListener(queue.uid, (newQ: Queue) => {
+    const listener = new QueueListener(stateQ.uid, (newQ: Queue) => {
       setQ(newQ);
 
       const contains = (party: Party) => {
@@ -277,7 +278,8 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
       if (party && !contains(party[0])) {
         setParty(undefined);
       }
-    }));
+    });
+
     const interval = setInterval(() => setTime(new Date()), 60000);
 
     return () => {
@@ -287,7 +289,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
       setQueue(stateQ);
       clearInterval(interval);
     };
-  }, []);
+  }, [stateQ, party, queue, setQueue]);
 
   const addParty = (party: Party) => {
     const list: Party[] = stateQ!.parties.slice();
@@ -318,7 +320,7 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
     <Container>
       <QueueControls
         queue={stateQ}
-        clear={clearQueue}
+        clear={() => setClearModal(true)}
         setQueue={(q: Queue) => setQ(q)}
       />
       <QueueList queue={stateQ}
@@ -341,6 +343,12 @@ export const QueueView = ({queue, setQueue} : ViewProps) => {
         mainAction={(p: Party) => removeParty(p)}
         party={party ? party[0] : party}
       />
+      <ClearModal
+        show={clearModal}
+        close={() => setClearModal(false)}
+        clear={clearQueue}
+      />
+
     </Container>
   );
 };
