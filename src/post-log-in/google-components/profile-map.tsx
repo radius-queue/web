@@ -3,14 +3,24 @@ import Card from 'react-bootstrap/Card';
 import GoogleMapReact from 'google-map-react';
 import GOOGLE_API_KEY from '../../google-key';
 import PropTypes from 'prop-types';
+import { UW_MAP_PROPS } from '../../util/HardcodedData';
 
 export interface MapProps {
-  radius: number, // radius of their geofence in meters
-  buildingLocation: google.maps.LatLng | undefined, // coordinates of business location
+  // radius of their geofence in meters
+  radius: number,
+  // coordinates of business location
+  buildingLocation: google.maps.LatLng | undefined,
   setRadius: (rad: number) => void,
   editable: boolean,
 }
 
+/**
+ * The map of the given business, including display of their radius.
+ * @param {MapProps} MapProps the building location, radius, access to
+ * editing the radius, and whether the map is in an editable state or not.
+ * @return {jsx} Either the "no location info entered" view or the user's
+ * Google map with their radius.
+ */
 const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
   const renderMarker = (map: any) => {
     new google.maps.Marker({
@@ -53,11 +63,24 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
       /> :
       (<Card.Body id='loading-profile-container'>
         <Card.Title id='loading-profile-title'>
-          Welcome to Radius! A map of your business location will appear here upon entering your business address.
+          Welcome to Radius!
+          A map of your business location will appear here upon entering
+          your business address.
         </Card.Title>
-        <img id='loading-profile-logo' src='../../images/radius-logo.PNG' alt='Radius Logo' />
+        <img
+          id='loading-profile-logo'
+          src='../../images/radius-logo.PNG'
+          alt='Radius Logo'
+        />
       </Card.Body>)
   );
+};
+
+Map.propTypes = {
+  radius: PropTypes.element,
+  buildingLocation: PropTypes.element,
+  setRadius: PropTypes.element,
+  editable: PropTypes.element,
 };
 
 export default Map;

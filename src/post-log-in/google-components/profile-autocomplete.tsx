@@ -45,7 +45,7 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter, ed
     if (editable) {
       didMount();
     }
-  }, []);
+  }, [didMount]);
 
   return (
     <Form.Group>

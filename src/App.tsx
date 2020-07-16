@@ -11,7 +11,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
   useLocation,
 } from 'react-router-dom';
@@ -29,7 +28,6 @@ function App() {
     const unsub: firebase.Unsubscribe = auth.onAuthStateChanged((newUser) => {
       setIsLoading(false);
     });
-
     return unsub;
   }, []);
 

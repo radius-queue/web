@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import QueueTab from './queue-wrapper';
+// eslint-disable-next-line no-unused-vars
 import {Business} from '../util/business';
 import ProfilePage from './profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import firebase from 'firebase/app';
+// eslint-disable-next-line no-unused-vars
 import {Queue} from '../util/queue';
 import {auth} from '../firebase';
 
@@ -34,11 +36,19 @@ export const Hub = () => {
   const [business, setBusiness] = useState<Business | undefined | null>(null);
   const [queue, setQueue] = useState<Queue| undefined>(undefined);
 
+  /**
+   * Retrieves the user's business info and sets the business for the page.
+   */
   const queryForBusiness = async () => {
     const val : Business | undefined = await getBusiness(auth.currentUser!.uid);
     setBusiness(val);
   };
 
+  /**
+   * Retrieves the queue for the business and sets the page's queue.
+   * Currently retrieves the business' FIRST queue. If multiple queue
+   * functionality is added modification will be necessary.
+   */
   const queryForQueue = async () => {
     if (business) {
       const val : Queue | undefined = await getQueue(
