@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import QueueTab from './queue-wrapper';
+// eslint-disable-next-line no-unused-vars
 import {Business} from '../util/business';
 import ProfilePage from './profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import firebase from 'firebase/app';
+// eslint-disable-next-line no-unused-vars
 import {Queue} from '../util/queue';
 import {auth} from '../firebase';
 
