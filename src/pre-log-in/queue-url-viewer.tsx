@@ -16,20 +16,19 @@ const QueueURLViewer = () => {
   const [queue, setQueue] = useState<Queue | undefined>(undefined);
   const [phoneNum, setPhoneNum] = useState<string>('');
   const [time, setTime] = useState<Date>(new Date());
-  const [listener, setListener] =
-    useState<QueueListener | undefined>(undefined);
 
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 60000);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
+    let listener : QueueListener;
     if (!urlParams.has('queue') || !urlParams.has('phoneNumber')) {
       window.location.href = '/404';
     } else {
       const uid : string = urlParams.get('queue')!;
       setPhoneNum(urlParams.get('phoneNumber')!);
       queryForQueue(uid);
-      setListener(new QueueListener(uid, (newQ: Queue) => setQueue(newQ)));
+      listener = new QueueListener(uid, (newQ: Queue) => setQueue(newQ));
     }
     return () => {
       if (listener) {

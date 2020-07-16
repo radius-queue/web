@@ -34,8 +34,9 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter,
 
       autocompleteObject.current.setFields(['geometry', 'formatted_address']);
       autocompleteObject.current.addListener('place_changed', () => selectValue(state));
+      console.log('called');
     }
-  }, []);
+  }, [editable]);
 
   const selectValue = (val: string) => {
     const result : google.maps.places.PlaceResult =

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Queue, Party} from '../../util/queue';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
@@ -25,38 +25,35 @@ interface ViewProps {
  */
 const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
+  const currentQRef = useRef<Queue | undefined>();
   const [party, setParty] = useState<[Party, number] | undefined>(undefined);
   const [time, setTime] = useState<Date>(new Date());
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [clearModal, setClearModal] = useState<boolean>(false);
-  const [listener, setListener] = useState<QueueListener | undefined>(undefined);
 
   useEffect(()=> {
-    setListener(new QueueListener(stateQ.uid, (newQ: Queue) => {
+    const listener = new QueueListener(queue.uid, (newQ: Queue) => {
       setQ(newQ);
-      const contains = (party: Party) => {
-        for (const p of newQ.parties) {
-          if (p.phoneNumber === party.phoneNumber) {
-            return true;
-          }
-        }
-        return false;
-      };
-      if (party && !contains(party[0])) {
-        setParty(undefined);
-      }
-    }));
+      setParty(undefined);
+    });
 
     const interval = setInterval(() => setTime(new Date()), 60000);
     return () => {
       if (listener) {
         listener!.free();
       }
-      setQueue(stateQ);
+      if (currentQRef.current) {
+        setQueue(currentQRef.current);
+      }
       clearInterval(interval);
+      console.log(currentQRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    currentQRef.current = stateQ;
+  }, [stateQ]);
 
   /**
    * Adds the given party at the bottom of the current queue.
