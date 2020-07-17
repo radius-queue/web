@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import QueueTab from './queue/queue-wrapper';
 // eslint-disable-next-line no-unused-vars
 import {Business} from '../util/business';
-import ProfilePage from './profile';
+import ProfilePage from './profile-page/profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
 import Navbar from 'react-bootstrap/Navbar';

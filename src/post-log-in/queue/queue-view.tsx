@@ -26,7 +26,8 @@ interface ViewProps {
 const QueueView = ({queue, setQueue} : ViewProps) => {
   const [stateQ, setQ] = useState<Queue>(queue);
   const currentQRef = useRef<Queue | undefined>();
-  const [party, setParty] = useState<[Party, number] | undefined>(undefined);
+  const currentPartyRef = useRef<[Party, number] | undefined>();
+  const [party, setParty] = useState<[Party, number] | undefined>();
   const [time, setTime] = useState<Date>(new Date());
   const [addModal, setAddModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
@@ -35,7 +36,24 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
   useEffect(()=> {
     const listener = new QueueListener(queue.uid, (newQ: Queue) => {
       setQ(newQ);
-      setParty(undefined);
+
+      const includes = () => {
+        let result : [boolean, number] = [false, -1];
+        if (currentPartyRef.current) {
+          newQ.parties.forEach((val: Party, idx: number) => {
+            if (val.name === currentPartyRef.current![0].name && val.phoneNumber === currentPartyRef.current![0].phoneNumber) {
+              result = [true, idx];
+            }
+          });
+        }
+        return result;
+      };
+      const includesResult : [boolean, number] = includes();
+      if (newQ.parties.length === 0 || !includesResult[0]) {
+        setParty(undefined);
+      } else {
+        setParty([currentPartyRef.current![0], includesResult[1]]);
+      }
     });
 
     const interval = setInterval(() => setTime(new Date()), 60000);
@@ -47,13 +65,16 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
         setQueue(currentQRef.current);
       }
       clearInterval(interval);
-      console.log(currentQRef.current);
     };
   }, [setQueue, queue.uid]);
 
   useEffect(() => {
     currentQRef.current = stateQ;
   }, [stateQ]);
+
+  useEffect(() => {
+    currentPartyRef.current = party;
+  }, [party]);
 
   /**
    * Adds the given party at the bottom of the current queue.

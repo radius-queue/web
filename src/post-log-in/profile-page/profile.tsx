@@ -1,21 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import {Business, BusinessLocation, getHoursArray} from '../util/business';
+import {Business, BusinessLocation, getHoursArray} from '../../util/business';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './profile.css';
 import Col from 'react-bootstrap/Col';
-import Map from './google-components/profile-map';
-import AddressAutocomplete from './google-components/profile-autocomplete';
+import Map from '../google-components/profile-map';
+import AddressAutocomplete from '../google-components/profile-autocomplete';
 import LoadingProfile from './profile-loading';
-import {auth} from '../firebase';
+import {auth} from '../../firebase';
 import PropTypes from 'prop-types';
-import {DAYS} from '../util/business';
+import {DAYS} from '../../util/business';
 import {Prompt} from 'react-router-dom';
-import postBusiness from '../util/post-business';
-import {Queue, Party} from '../util/queue';
+import postBusiness from '../../util/post-business';
+import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
-import postQueue from '../util/post-queue';
+import postQueue from '../../util/post-queue';
 
 interface ProfileProps {
   uid: string;
@@ -101,6 +101,16 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       lastName: business!.lastName,
       phone: business!.locations[0].phoneNumber,
     });
+    if (business!.locations[0].hours.length !== 0) {
+      setOpenState(business!.locations[0].hours.map((val: [Date | null, Date | null]) => val[0] !== null));
+      setHours(business!.locations[0].hours.map((val: [Date | null, Date | null]) => {
+        if (val[0] && val[1]) {
+          return [val[0].toTimeString().slice(0, 8), val[1].toTimeString().slice(0, 8)];
+        } else {
+          return ['', ''];
+        }
+      }));
+    }
     setAddress(business!.locations[0].address);
     setBuilding(new google.maps.LatLng(business!.locations[0].coordinates[0],
       business!.locations[0].coordinates[1]));
