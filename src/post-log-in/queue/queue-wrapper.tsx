@@ -12,6 +12,12 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import QueueView from './queue-view';
 import PropTypes from 'prop-types';
 
+/**
+ * The skeleton loading page for when the queue is being
+ * fetched from firestore.
+ *
+ * @return {jsx} the HTML display for the component.
+ */
 const QueueLoadingPage = () => {
   return (
     <Container>
@@ -84,11 +90,19 @@ const DefaultQueuePage = () => {
 };
 
 interface QueueTabProps {
-  business: Business | undefined | null,
-  queue: Queue | undefined,
-  setQueue: (q: Queue) => void,
+  business: Business | undefined | null, // current signed in business
+  queue: Queue | undefined, // current queue
+  setQueue: (q: Queue) => void, // function to set the queue
 }
 
+/**
+ * The wrapper component for the queue page that determines which
+ * component do display depending on if the business and queue are
+ * being fetched or even exist.
+ *
+ * @param {QueueTabProps} props properties passed into the component.
+ * @return {jsx} the appropriate HTML display for the Queue page.
+ */
 const QueueTab = ({business, queue, setQueue}: QueueTabProps) => {
   const [isBusinessLoading, setBusinessLoading] = useState<boolean>(true);
   const [isQueueLoading, setQueueLoading] = useState<boolean>(true);

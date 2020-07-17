@@ -9,7 +9,7 @@ import postQueue from '../../util/post-queue';
 import {Queue} from '../../util/queue';
 
 interface QueueControlsProps {
-  queue: Queue,
+  queue: Queue, // the current queue
   clear: () => void, // clears the queue
   setQueue: (q: Queue) => void, // updates the parent state with the passed in Q
 }

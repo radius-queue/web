@@ -6,12 +6,17 @@ import {
   useHistory,
 } from 'react-router-dom';
 
-interface registerValues {
-    email: string;
-    password: string;
-    confirmPassword: string;
+interface RegisterValues {
+    email: string; // current email input value
+    password: string; // current password input value
+    confirmPassword: string; // current confirm input value
 }
 
+/**
+ * The component that handles registering a new business.
+ *
+ * @return {jsx} the HTML display for the component.
+ */
 const RegistrationPage = () => {
   const [formValues, setFormValues] = useForm({
     email: '',
@@ -20,8 +25,14 @@ const RegistrationPage = () => {
   });
 
   const history = useHistory();
-
-  const submitFormValues = async (formValues : registerValues) => {
+  /**
+   * Submit form callback function that creates a new user and logs them
+   * in.
+   *
+   * @param {RegisterValues} formValues the form values object that holds
+   * the user inputted values.
+   */
+  const submitFormValues = async (formValues : RegisterValues) => {
     let changePage: boolean = true;
     if (formValues.password !== formValues.confirmPassword) {
       console.log('mismatching passwords');

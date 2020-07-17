@@ -7,12 +7,18 @@ import {Party} from '../../util/queue';
 import PropTypes from 'prop-types';
 
 interface ModalProps {
-  show: boolean,
-  mainAction: (p: Party) => void,
-  party ?: Party | undefined,
-  close: () => void,
+  show: boolean, // wheter the modal is displayed or not
+  mainAction: (p: Party) => void, // submit action
+  party ?: Party | undefined, // a party that is targeted
+  close: () => void, // functino to close the modal
 }
 
+/**
+ * Modal for adding a customer on the queue page.
+ *
+ * @param {ModalProps} props the properties passed into the component.
+ * @return {jsx} the display for the add customer modal.
+ */
 export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [name, setName] = useState('');
   const [size, setSize] = useState(0);
@@ -37,15 +43,23 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   };
 
   /**
+   * Checks if the state of the phone number value is a
+   * ten digit number.
    *
+   * @return {boolean} whether or not the current phone number
+   * input is a valid number.
    */
-  function checkValid() {
+  const checkValid = () => {
     return (phoneNumber.length === 10);
-  }
+  };
 
+  /**
+   * Submission handler for the add party form.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e form submission
+   * event.
+   */
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(phoneNumber);
-    console.log(phoneNumber.length);
     e.preventDefault();
     if (e.currentTarget.checkValidity() === false) {
       e.stopPropagation();
@@ -150,6 +164,12 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   </Modal>);
 };
 
+/**
+ * The warning modal for when a party is deleted from the queue.
+ *
+ * @param {ModalProps} props the properties passed into this component
+ * @return {jsx} the HTML display for this component.
+ */
 export const DeleteCustomerModal = ({show, close, party, mainAction}
   : ModalProps) => {
   const onDelete = () => {
@@ -181,12 +201,23 @@ DeleteCustomerModal.propTypes = {
 };
 
 interface ClearProps {
-  clear: () => void;
-  show: boolean;
-  close: () => void;
+  clear: () => void; // function to clear the queue
+  show: boolean; // whether or not the modal is visible
+  close: () => void; // function to close the modal
 }
 
+/**
+ * The component for the warning modal when the user attempts to clear
+ * the queue.
+ *
+ * @param {ClearProps} props the properties passed into the component
+ * @return {jsx} HTML display for the display of the clear modal.
+ */
 export const ClearModal = ({clear, show, close} : ClearProps) => {
+  /**
+   * Callback function for clearing the queue on pressing the clear
+   * button.
+   */
   const onClear = () => {
     clear();
     close();

@@ -5,6 +5,11 @@ import {
   Link,
 } from 'react-router-dom';
 
+/**
+ * the landing page after the user signs in.
+ *
+ * @return {jsx} the HTML to be displayed for this component.
+ */
 const LandingPage = () => {
   return (
     <Card>
@@ -14,6 +19,6 @@ const LandingPage = () => {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default LandingPage;

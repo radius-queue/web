@@ -30,7 +30,10 @@ interface ListProps {
  */
 const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
   showAddModal, showDeleteModal} : ListProps) => {
-  const moveOne = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index : number, offset: number) => {
+  const moveOne = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+      index : number,
+      offset: number,
+  ) => {
     e.stopPropagation();
     if (index + offset >= 0 && index + offset < queue.parties.length) {
       const list : Party[] = queue.parties.slice();
@@ -40,7 +43,13 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
       list[index + offset] = list[index];
       list[index] = target;
 
-      const newQ : Queue = new Queue(queue.name, queue.end, queue.uid, queue.open, list);
+      const newQ : Queue = new Queue(
+          queue.name,
+          queue.end,
+          queue.uid,
+          queue.open,
+          list,
+      );
       if (currentPartyInfo) {
         showParty([currentPartyInfo[0], currentPartyInfo[1] + offset]);
       }
@@ -86,13 +95,19 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
               <Col md={3}>
                 <Button
                   className='queue-list-buttons'
-                  onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => moveOne(e, idx, -1)}
+                  onClick={
+                    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+                      moveOne(e, idx, -1)
+                  }
                 >
                   <CaretUpFill />
                 </Button>
                 <Button
                   className='queue-list-buttons'
-                  onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => moveOne(e, idx, 1)}
+                  onClick={
+                    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+                      moveOne(e, idx, 1)
+                  }
                 >
                   <CaretDownFill />
                 </Button>

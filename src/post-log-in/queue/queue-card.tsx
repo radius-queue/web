@@ -8,8 +8,8 @@ import {timeDiffInMinutes} from '../../logic/logic';
 import {parsePhoneNum} from '../../util/util-functions';
 
 interface CardProps {
-  party: Party | undefined,
-  time: Date,
+  party: Party | undefined, // the current party to be displayed
+  time: Date, // the most recent time stamp to show elapsed time
 }
 
 /**

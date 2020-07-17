@@ -41,7 +41,8 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
         let result : [boolean, number] = [false, -1];
         if (currentPartyRef.current) {
           newQ.parties.forEach((val: Party, idx: number) => {
-            if (val.name === currentPartyRef.current![0].name && val.phoneNumber === currentPartyRef.current![0].phoneNumber) {
+            if (val.name === currentPartyRef.current![0].name &&
+                val.phoneNumber === currentPartyRef.current![0].phoneNumber) {
               result = [true, idx];
             }
           });

@@ -54,7 +54,8 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
   const [editing, setEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [openState, setOpenState] = useState<boolean[]>(DAYS.map(() => false));
-  const [hours, setHours] = useState<[string, string][]>(DAYS.map(() => ['', '']));
+  const [hours, setHours] =
+    useState<[string, string][]>(DAYS.map(() => ['', '']));
 
   useEffect(() => {
     if (business !== null) {
@@ -67,14 +68,17 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
           phone: business.locations[0].phoneNumber,
         });
         if (business.locations[0].hours.length !== 0) {
-          setOpenState(business.locations[0].hours.map((val: [Date | null, Date | null]) => val[0] !== null));
-          setHours(business.locations[0].hours.map((val: [Date | null, Date | null]) => {
-            if (val[0] && val[1]) {
-              return [val[0].toTimeString().slice(0, 8), val[1].toTimeString().slice(0, 8)];
-            } else {
-              return ['', ''];
-            }
-          }));
+          setOpenState(business.locations[0].hours.map(
+              (val: [Date | null, Date | null]) => val[0] !== null));
+          setHours(business.locations[0].hours.map(
+              (val: [Date | null, Date | null]) => {
+                if (val[0] && val[1]) {
+                  return [val[0].toTimeString().slice(0, 8),
+                    val[1].toTimeString().slice(0, 8)];
+                } else {
+                  return ['', ''];
+                }
+              }));
         }
         setAddress(business.locations[0].address);
         setBuilding(new google.maps.LatLng(business.locations[0].coordinates[0],
@@ -102,14 +106,17 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       phone: business!.locations[0].phoneNumber,
     });
     if (business!.locations[0].hours.length !== 0) {
-      setOpenState(business!.locations[0].hours.map((val: [Date | null, Date | null]) => val[0] !== null));
-      setHours(business!.locations[0].hours.map((val: [Date | null, Date | null]) => {
-        if (val[0] && val[1]) {
-          return [val[0].toTimeString().slice(0, 8), val[1].toTimeString().slice(0, 8)];
-        } else {
-          return ['', ''];
-        }
-      }));
+      setOpenState(business!.locations[0].hours.map(
+          (val: [Date | null, Date | null]) => val[0] !== null));
+      setHours(business!.locations[0].hours.map(
+          (val: [Date | null, Date | null]) => {
+            if (val[0] && val[1]) {
+              return [val[0].toTimeString().slice(0, 8),
+                val[1].toTimeString().slice(0, 8)];
+            } else {
+              return ['', ''];
+            }
+          }));
     }
     setAddress(business!.locations[0].address);
     setBuilding(new google.maps.LatLng(business!.locations[0].coordinates[0],
@@ -132,8 +139,8 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       enableOtherNavs();
       const locationHours : [Date | null, Date | null][] = getHoursArray(hours);
       console.log(hours);
-      const locationParams :
-        [string, string, string, [Date | null, Date | null][], number[], string[], number] =
+      const locationParams : [string, string, string,
+        [Date | null, Date | null][], number[], string[], number] =
       [
         form.businessName,
         address,
@@ -174,7 +181,8 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       if (value.length === 0) return false;
     }
     for (let i = 0; i < hours.length; i++) {
-      if (openState[i] && (hours[i][0].length === 0 || hours[i][1].length === 0)) {
+      if (openState[i] &&
+        (hours[i][0].length === 0 || hours[i][1].length === 0)) {
         return false;
       }
     }
