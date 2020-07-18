@@ -115,7 +115,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
               required
             />
             <Form.Control.Feedback type='invalid'>
-              Please Enter a 10 digit Phone Number
+              Please Enter a 10 Digit Phone Number
             </Form.Control.Feedback>
           </Form.Group>
         </Col>

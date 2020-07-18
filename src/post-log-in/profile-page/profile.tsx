@@ -180,6 +180,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
     for (const [, value] of Object.entries(form)) {
       if (value.length === 0) return false;
     }
+    if (form.phone.length !== 10) return false;
     for (let i = 0; i < hours.length; i++) {
       if (openState[i] &&
         (hours[i][0].length === 0 || hours[i][1].length === 0)) {
@@ -267,19 +268,19 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
             <Form.Group controlId="phone">
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="phoneNumber"
-                value={form.phone}
+                value={form.phone === '' ? '' : parseInt(form.phone)}
                 placeholder="###-###-####"
-                onChange={(e) => setForm({...form, phone: e.target.value})}
+                onChange={(e) => setForm({...form, phone: '' + e.target.value})}
                 isInvalid={submitted &&
-                  form.phone.length === 0}
+                  form.phone.length !== 10}
                 isValid={submitted &&
-                  form.phone.length > 0}
+                  form.phone.length === 10}
                 readOnly={!editing}
               />
               <Form.Control.Feedback type='invalid'>
-                Please Enter A Phone Number
+                Please Enter A 10 Digit Phone Number
               </Form.Control.Feedback>
             </Form.Group>
             <AddressAutocomplete
