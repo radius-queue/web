@@ -36,7 +36,7 @@ const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps)=> {
                 {idx + 1}
               </Col>
               <Col md={5}>
-                {person.name}
+                {person.firstName}
               </Col>
               <Col md={3}>
                 {person.size}

@@ -20,7 +20,8 @@ interface ModalProps {
  * @return {jsx} the display for the add customer modal.
  */
 export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
-  const [name, setName] = useState('');
+  const [firstName, setFirst] = useState('');
+  const [lastName, setLast] = useState('');
   const [size, setSize] = useState(0);
   const [phoneNumber, setNumber] = useState('');
   const [quote, setQuote] = useState(0);
@@ -31,7 +32,8 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   }, [show]);
 
   const clearState = () => {
-    setName('');
+    setFirst('');
+    setLast('');
     setSize(0);
     setNumber('');
   };
@@ -66,7 +68,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
     }
 
     if (checkValid()) {
-      const party : Party = new Party(name, size, phoneNumber, quote);
+      const party : Party = new Party(firstName, size, phoneNumber, quote, new Date(),lastName);
 
       mainAction(party);
       onHide();
@@ -86,21 +88,39 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
       <Form.Row>
         <Col>
           <Form.Group>
-            <Form.Label>Party Name</Form.Label>
+            <Form.Label>First Name</Form.Label>
             <Form.Control
-              placeholder='Michael Jordan'
-              isValid={validated && name.length > 0}
-              isInvalid={validated && name.length === 0}
+              placeholder='Michael'
+              isValid={validated && firstName.length > 0}
+              isInvalid={validated && firstName.length === 0}
               type='text'
-              onChange={(e) => setName(e.target.value)}
-              name='name'
+              onChange={(e) => setFirst(e.target.value)}
+              name='first name'
               required
             />
             <Form.Control.Feedback type='invalid'>
-              Please Enter a Name
+              Please Enter First Name
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
+        <Col>
+          <Form.Group>
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control
+              placeholder='Jordan'
+              isValid={validated}
+              isInvalid={validated}
+              type='text'
+              onChange={(e) => setLast(e.target.value)}
+              name='last name'
+            />
+            <Form.Control.Feedback type='invalid'>
+              Please Enter Last Name
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+      </Form.Row>
+      <Form.Row style={{marginTop: '5px'}}>
         <Col>
           <Form.Group>
             <Form.Label>Phone Number</Form.Label>
@@ -181,12 +201,13 @@ export const DeleteCustomerModal = ({show, close, party, mainAction}
     <Modal show={show} onHide={close}>
       <Modal.Header>
         <Modal.Title>
-          Are you sure you want to remove {party!.name} from the queue?
+          Are you sure you want to remove
+          {party!.firstName + ' ' + party!.lastName} from the queue?
         </Modal.Title>
       </Modal.Header>
       <Modal.Footer>
         <Button onClick={onDelete} variant='danger'>
-          Remove {party!.name}
+          Remove {party!.firstName + ' ' + party!.lastName}
         </Button>
       </Modal.Footer>
     </Modal>

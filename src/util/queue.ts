@@ -42,7 +42,8 @@ export class Queue {
  * A party in the queue
  */
 export class Party {
-  name: string;
+  firstName: string;
+  lastName: string;
   checkIn : Date;
   size: number;
   phoneNumber: string;
@@ -50,16 +51,18 @@ export class Party {
   // uid: string;
 
   /**
-   * @param {string} name Name of the Party
+   * @param {string} firstName first name
    * @param {number} size Size of the party
    * @param {string} phoneNumber phoneNumber of the party
    * @param {number} quote The given estimated time to be called
    * @param {Date} checkIn Optional time when customer checked in.
    *    Default is set to now.
+   * @param {string} lastName last name
    */
-  constructor(name: string, size: number, phoneNumber: string,
-      quote:number, checkIn : Date= new Date()) {
-    this.name = name;
+  constructor(firstName: string, size: number, phoneNumber: string,
+      quote:number, checkIn : Date= new Date(), lastName : string = '') {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.checkIn = checkIn;
     this.size = size;
     this.phoneNumber = phoneNumber;
@@ -70,12 +73,13 @@ export class Party {
   * @param party
   */
   static fromFirebase(party: any): Party {
-    const partyPrams : [string, number, string, number, Date] = [
-      party.name,
+    const partyPrams : [string, number, string, number, Date, string] = [
+      party.firstName,
       party.size,
       party.phoneNumber,
       party.quote,
       party.checkIn.toDate(),
+      party.lastName,
     ];
     return new Party(...partyPrams);
   }
@@ -85,11 +89,12 @@ export class Party {
     */
   static toFirebase(party: Party): any {
     return {
-      name: party.name,
+      firstName: party.firstName,
       size: party.size,
       phoneNumber: party.phoneNumber,
       quote: party.quote,
       checkIn: firebase.firestore.Timestamp.fromDate(party.checkIn!),
+      lastName: party.lastName,
     };
   }
 }

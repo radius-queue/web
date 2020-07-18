@@ -84,7 +84,7 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
                 {idx + 1}
               </Col>
               <Col md={3}>
-                {person.name}
+                {person.firstName + ' ' + person.lastName}
               </Col>
               <Col md={2}>
                 {person.size}

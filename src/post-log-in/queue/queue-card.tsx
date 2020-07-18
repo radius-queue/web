@@ -30,7 +30,7 @@ const UserCard = ({party, time} : CardProps) => {
         />
       ) : (
         <Card.Body>
-          <Card.Title as='h1'>{party.name}</Card.Title>
+          <Card.Title as='h1'>{party.firstName + ' ' + party.lastName}</Card.Title>
           <Card.Text>
             Phone Number: {parsePhoneNum(party.phoneNumber)}
           </Card.Text>
