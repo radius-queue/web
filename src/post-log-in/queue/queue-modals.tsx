@@ -37,9 +37,9 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   };
 
   const onHide = () => {
-    clearState();
     setValidated(false);
     close();
+    clearState();
   };
 
   /**

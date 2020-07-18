@@ -81,7 +81,13 @@ const ProfileHours = ({values, setValues, openState, setOpenState,
               disabled={!openState[idx] || !editable}
               value={values[idx][0]}
               onChange={(e) => handleTimeChange(e, 0, idx)}
+              isInvalid={submitted && openState[idx] &&
+                values[idx][0].length === 0 &&
+                values[idx][1].length === 0}
             />
+            <Form.Control.Feedback type='invalid'>
+              Open days must have hours specified.
+            </Form.Control.Feedback>
           </Col>
           <Col>
             <Form.Control
@@ -89,6 +95,9 @@ const ProfileHours = ({values, setValues, openState, setOpenState,
               disabled={!openState[idx] || !editable}
               value={values[idx][1]}
               onChange={(e) => handleTimeChange(e, 1, idx)}
+              isInvalid={submitted && openState[idx] &&
+                values[idx][0].length === 0 &&
+                values[idx][1].length === 0}
             />
           </Col>
         </Form.Row>

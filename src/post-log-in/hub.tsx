@@ -35,7 +35,6 @@ export const Hub = () => {
   const {path, url} = useRouteMatch();
   const [business, setBusiness] = useState<Business | undefined | null>(null);
   const [queue, setQueue] = useState<Queue| undefined>(undefined);
-
   /**
    * Retrieves the user's business info and sets the business for the page.
    */
