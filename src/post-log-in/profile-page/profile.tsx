@@ -11,7 +11,6 @@ import LoadingProfile from './profile-loading';
 import {auth} from '../../firebase';
 import PropTypes from 'prop-types';
 import {DAYS} from '../../util/business';
-import {Prompt} from 'react-router-dom';
 import postBusiness from '../../util/post-business';
 import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
@@ -199,13 +198,6 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
         </Card.Title>
         <Card.Body>
           <Form noValidate onSubmit={submitForm}>
-            <Prompt
-              when={editing}
-              message={() =>
-                'You have unsaved changes.' +
-                ' Are you sure you want to leave the page?'
-              }
-            />
             <Form.Group controlId="businessName">
               <Form.Label>Business Name</Form.Label>
               <Form.Control
@@ -310,7 +302,9 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
               {editing &&
                 <Form.Text>Edit using the circle on the map.</Form.Text>}
             </Form.Group>
-            {!editing ? <Button variant='warning' key='edit'
+            {!editing ? <Button
+              variant='warning'
+              key='edit'
               onClick={() => {
                 setEditing(true);
                 disableOtherNavs();
@@ -331,6 +325,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                       type='submit'
                       className='editing-button'
                       variant='success'
+                      id='submit-changes-button'
                     >
                       Submit Changes
                     </Button>

@@ -85,7 +85,18 @@ export const Hub = () => {
           </Nav.Link>
         </Nav>
         <Form inline>
-          <Button id='sign-out-button' onClick={() => signOut(history)}>
+          <Button id='sign-out-button' onClick={() => {
+            const isEditing = document.getElementById('submit-changes-button');
+            if (isEditing === null) {
+              signOut(history);
+            } else {
+              if (window.confirm('You have unsaved changes.' +
+                 ' Are you sure you want to sign out?')) {
+                signOut(history);
+              };
+            }
+          }}
+          >
             Sign Out
           </Button>
         </Form>
