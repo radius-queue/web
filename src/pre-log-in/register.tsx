@@ -20,6 +20,10 @@ const initialState : ValidityState = {
   password: [true, ''],
 };
 
+/**
+ * The component that handles registering a new business.
+ * @return {jsx} the HTML display for the component.
+ */
 const RegistrationPage = () => {
   const [formValues, setFormValues] = useForm({email: '', password: '',
     confirm: ''});
@@ -28,6 +32,10 @@ const RegistrationPage = () => {
 
   const history = useHistory();
 
+  /**
+   * Boolean method returns true when user fills in all fields in registration page.
+   * @return {boolean} whether all fields are completed
+   */
   const allFieldsCompleted : () => boolean = () => {
     let result : boolean = true;
     for (const field of Object.keys(formValues)) {
@@ -36,6 +44,10 @@ const RegistrationPage = () => {
     return result;
   };
 
+  /**
+   * Method that checks if password/confirm password are valid.
+   * @return {[boolean, string]} string given validation for user input 
+   */
   const validatePassword : () => [boolean, string] = () => {
     const result : [boolean, string] = [true, ''];
     if (formValues.password.length < 6) {
@@ -48,6 +60,12 @@ const RegistrationPage = () => {
     return result;
   };
 
+  /**
+   * Async function that handles user registration with firebase and validates
+   * form of user input
+   * @param {React.FormEvent<HTMLFormElement>} e form submission
+   *  
+   */
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setValidity(initialState);
