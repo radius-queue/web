@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
+import './landing-page.css';
 
 import {
   Link,
@@ -13,17 +13,20 @@ import {
 const LandingPage = () => {
   return (
     <div>
-      <Card>
-        <Card.Body>
-          <Card.Link as={Link} to="/pre-log-in/register">Register</Card.Link>
-          <Card.Link as={Link} to="/post-log-in/hub">Log In</Card.Link>
-        </Card.Body>
-      </Card>
-      <Card>
-        <Card.Body>
-          <img src="./../images/vector-1.png" alt="Businesses with Radii" />
-        </Card.Body>
-      </Card>
+      <div id="landing-page-header">
+        <div>
+          <Link id='the-title' to="/">Radius</Link>
+        </div>
+        <div id='landing-page-links'>
+          <Link to="/pre-log-in/register">Register</Link>
+          <Link to="/post-log-in/hub">Log In</Link>
+        </div>
+      </div>
+      <div id="landing-page-display">
+        <img className="d-block w-100" src="../../images/vector-1.png" alt="Businesses with Radii" />
+        <h1>Radius for Business</h1>
+        <p>Welcome to a new era of waiting rooms.</p>
+      </div>
     </div>
   );
 };

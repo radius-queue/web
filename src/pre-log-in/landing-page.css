@@ -1,0 +1,52 @@
+#landing-page-header {
+  display: flex;
+  margin-left: 8%;
+  margin-right: 8%;
+  height: 12vh;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#the-title {
+  font-size: 20pt;
+  color: black;
+  transition: all linear .2s;
+}
+
+#the-title:hover {
+  text-decoration: none;
+  color: #9c9c9c;
+}
+
+#landing-page-links {
+  display: flex;
+  justify-content: space-between;
+}
+
+#landing-page-links a {
+  color: black;
+  transition: all linear .2s;
+  margin-left: 20px;
+}
+
+#landing-page-links a:hover {
+  text-decoration: none;
+  color: #9c9c9c;
+}
+
+#landing-page-display {
+  display: flex;
+  flex-direction: column;
+  background-color: #9c9c9c;
+  margin-left: 8%;
+  margin-right: 8%;
+  border-radius: 10px;
+  align-items: center;
+  padding: 30px;
+}
+
+#landing-page-display img {
+  height: auto;
+  width: auto;
+  margin-bottom: 50px;
+}
