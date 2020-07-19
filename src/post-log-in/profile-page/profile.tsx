@@ -233,7 +233,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                     readOnly={!editing}
                   />
                   <Form.Control.Feedback type='invalid'>
-                    Please Enter an First Name
+                    Please Enter a First Name
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
@@ -337,6 +337,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                     className='editing-button'
                     variant='success'
                     style={{width: '100%'}}
+                    id='submit-changes-button'
                   >
                     Submit Business Profile
                   </Button>
