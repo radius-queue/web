@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import './log-in.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
+import {GOOGLE_SIGN_IN} from '../firebase'; 
 import {
   Link,
   useHistory,
@@ -57,6 +58,14 @@ const BusinessLogInPage = () => {
     }
   };
 
+  const signInWithGoogle = () => {
+    firebase.auth().signInWithPopup(GOOGLE_SIGN_IN).then(function(result) {
+      history.replace('/post-log-in/hub');
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <div id="login-container">
       <Card id="login-card">
@@ -87,10 +96,12 @@ const BusinessLogInPage = () => {
               isInvalid={!validity.password}
             />
           </Form.Group>
-          <Button type='submit' block>
+          <Button type='submit' variant='dark' block>
             Log In
           </Button>
         </Form>
+        <p style={{textAlign: 'center'}}>or</p>
+        <Button variant='info' onClick={() => signInWithGoogle()} block>Sign in with Google</Button>
       </Card>
       <div>
         <p>

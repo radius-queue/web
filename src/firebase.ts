@@ -24,6 +24,9 @@ export const auth : firebase.auth.Auth = firebase.auth();
 
 export const firestore : firebase.firestore.Firestore = firebase.firestore();
 
+export const GOOGLE_SIGN_IN : firebase.auth.GoogleAuthProvider =
+  new firebase.auth.GoogleAuthProvider();
+
 export const firebaseUIConfig = {
   signInFlow: 'popup',
   signInOptions: [
