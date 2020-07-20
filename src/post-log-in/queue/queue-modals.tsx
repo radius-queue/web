@@ -109,14 +109,10 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
             <Form.Control
               placeholder='Jordan'
               isValid={validated}
-              isInvalid={validated}
               type='text'
               onChange={(e) => setLast(e.target.value)}
               name='last name'
             />
-            <Form.Control.Feedback type='invalid'>
-              Please Enter Last Name
-            </Form.Control.Feedback>
           </Form.Group>
         </Col>
       </Form.Row>
