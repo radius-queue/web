@@ -161,7 +161,7 @@ const RegistrationPage = () => {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
-            <Button type='submit' style={{width: '100%'}}>
+            <Button type='submit' variant='dark' style={{width: '100%'}}>
             Register</Button>
           </Form>
         </Card.Body>
