@@ -45,9 +45,10 @@ function App() {
         <Route exact path="/url-based-queue">
           <QueueURLViewer/>
         </Route>
-        <Route exact path="/">
+        <Route path="/home">
           <LandingPage />
         </Route>
+        <Redirect exact from="/" to="/home" />
         <Route path="/" render={() => <div>404</div>} />
       </Switch>
     </Router>

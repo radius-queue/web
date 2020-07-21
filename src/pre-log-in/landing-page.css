@@ -2,7 +2,8 @@
   display: flex;
   margin-left: 8%;
   margin-right: 8%;
-  height: 12vh;
+  padding: 0;
+  height: 11vh;
   justify-content: space-between;
   align-items: center;
 }
@@ -26,7 +27,7 @@
 #landing-page-links a {
   color: black;
   transition: all linear .2s;
-  margin-left: 20px;
+  margin-left: 25px;
 }
 
 #landing-page-links a:hover {
