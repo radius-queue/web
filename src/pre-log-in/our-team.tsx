@@ -129,24 +129,24 @@ const OurTeamPage = () => {
           </Col>
           <Col>
             <div className='image-crop'>
-              <img src='../images/sam-portrait.jpg'
-                alt='Samuel Berensohn'
+              <img src='../images/zizhen-portrait.jpg'
+                alt='Zizhen Song'
               />
             </div>
-            <h2>Samuel Berensohn</h2>
+            <h2>Zizhen Song</h2>
             <div className='link-box'>
-              <a href='https://github.com/sberen' target='_blank'>
+              <a href='https://github.com/songziz' target='_blank'>
                 <img src='../images/github.png'
                   alt='GitHub Link'
                 />
               </a>
-              <a href='https://linkedin.com/in/samuel-berensohn/' target='_blank'>
+              <a href='https://www.linkedin.com/in/zizhen-song/' target='_blank'>
                 <img src='../images/linked-in.png'
                   alt='LinkedIn Link'
                   id='linked-in'
                 />
               </a>
-              <a href='https://www.facebook.com/sam.berensohn' target='_blank'>
+              <a href='https://www.facebook.com/kevin.song.336' target='_blank'>
                 <img src='../images/facebook.png'
                   alt='Facebook Link'
                 />
@@ -154,13 +154,7 @@ const OurTeamPage = () => {
             </div>
             <div className='member-bio'>
               <p>
-                Samuel is a rising junior at the University of Washington studying Computer Science. As a Freshman,
-                Samuel explored the field of CSE, and fell in love with the problem solving and critical thinking
-                skills it requires. Outside of academics, Samuel is heavily involved with his campus ministry as well as
-                local and international volunteer organizations. In the summers, Samuel spends the time he isn't
-                developing software leading service trips as a Global Service Intern with HOPE worldwide. As an
-                aspiring software engineer, Samuel is hoping to combine his involvement in volunteer work with his
-                technical background and leverage the power of technology to make lives better.
+                Ziz's Bio Here.
               </p>
             </div>
           </Col>
