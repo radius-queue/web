@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 import './log-in.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
-import {GOOGLE_SIGN_IN} from '../firebase'; 
+import {GOOGLE_SIGN_IN} from '../firebase';
 import {
   Link,
   useHistory,
@@ -101,7 +101,9 @@ const BusinessLogInPage = () => {
           </Button>
         </Form>
         <p style={{textAlign: 'center'}}>or</p>
-        <Button variant='info' onClick={() => signInWithGoogle()} block>Sign in with Google</Button>
+        <Button variant='info' onClick={() => signInWithGoogle()} block>
+          Sign in with Google
+        </Button>
       </Card>
       <div>
         <p>
