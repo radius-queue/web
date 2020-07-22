@@ -39,7 +39,7 @@ function App() {
           <LandingPageNav />
           <RegistrationPage />
         </Route>
-        <PrivateRoute path="/post-log-in/hub" isLoading={isLoading}>
+        <PrivateRoute path="/hub" isLoading={isLoading}>
           <Hub />
         </PrivateRoute>
         <Route exact path="/log-in">
