@@ -9,15 +9,25 @@ const LandingPageNav = () => {
     <Navbar id="landing-page-header">
       <Link id='the-title' to="/">Radius</Link>
       <Nav id='landing-page-links'>
-        <NavLink to="/our-team" activeClassName="landing-nav-selected">
+        <NavLink
+          to="/our-team"
+          activeClassName="landing-nav-selected"
+        >
           Our Team
         </NavLink>
-        <Link to="/pre-log-in/register">
+        <NavLink
+          to="/pre-log-in/register"
+          activeClassName="landing-nav-selected"
+        >
           Register
-        </Link>
-        <Link to="/post-log-in/hub">
+        </NavLink>
+        <NavLink
+          to="/pre-log-in/log-in"
+          // to="/post-log-in/hub"
+          activeClassName="landing-nav-selected"
+        >
           Log In
-        </Link>
+        </NavLink>
       </Nav>
     </Navbar>
   );
