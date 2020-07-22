@@ -53,6 +53,11 @@ const OurTeamPage = () => {
                 leverage the power of technology to make lives better.
               </p>
             </div>
+            <ul>
+              <li>Favorite Restaurant: Aji Sushi</li>
+              <li>Happy Place: The 15th tee box at Chambers Bay</li>
+              <li>Favorite TV Show: The West Wing</li>
+            </ul>
           </Col>
           <Col className="single-team-member">
             <div className="image-crop">
@@ -178,6 +183,11 @@ const OurTeamPage = () => {
                 about exploring disruptive technologies and is hoping to
                 reimagine waitrooms with radius. </p>
             </div>
+            <ul>
+              <li>Favorite Restaurant: Kong Tofu House</li>
+              <li>Happy Place: Engineering Library</li>
+              <li>Favorite TV Show: Suits</li>
+            </ul>
           </Col>
         </Row>
       </Container>
