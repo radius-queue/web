@@ -60,55 +60,11 @@ const OurTeamPage = () => {
           </Col>
           <Col className="single-team-member">
             <div className="image-crop">
-              <img src="../images/grant-portrait.jpg" alt="Grant Williams" />
-            </div>
-            <h2>Grant Williams</h2>
-            <div className="link-box">
-              <a href="https://github.com/grantmwilliams38" target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src="../images/github.png" alt="GitHub Link" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/grant-williams-uwcompe/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="../images/linked-in.png"
-                  alt="LinkedIn Link"
-                  id="linked-in"
-                />
-              </a>
-            </div>
-            <div className="member-bio">
-              <p>
-                Grant is an aspiring software engineer studying at the
-                University of Washington. Among other things, he’s known for his
-                hatred towards Mark Zuckerberg. A soccer fanatic, he’s a staple
-                of the UW Club Soccer team and enjoys watching the English
-                Premier League. He supports Manchester United and his favorite
-                player is Paul Pogba.
-              </p>
-            </div>
-            <ul>
-              <li>Favorite Restaurant: Thaiger Room</li>
-              <li>Happy Place: The Midfield</li>
-              <li>Favorite TV Show: Elementary</li>
-            </ul>
-
-          </Col>
-        </Row>
-        <Row md={2} sm={1} xs={1}>
-          <Col className="single-team-member">
-            <div className="image-crop">
-              <img src="../images/wes-portrait.jpg" alt="Wesley Lam"/>
+              <img src="../images/wes-portrait.jpg" alt="Wesley Lam" />
             </div>
             <h2>Wesley Lam</h2>
             <div className="link-box">
-              <a href="https://github.com/wesleyplam" target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://github.com/wesleyplam" target="_blank">
                 <img src="../images/github.png" alt="GitHub Link" />
               </a>
               <a
@@ -144,6 +100,47 @@ const OurTeamPage = () => {
               <li>Favorite Restaurant: Hiroshi's</li>
               <li>Happy Place: Out in Nature/Traveling</li>
               <li>Favorite TV Show: The Office</li>
+            </ul>
+          </Col>
+        </Row>
+        <Row md={2} sm={1} xs={1}>
+          <Col className="single-team-member">
+            <div className="image-crop">
+              <img src="../images/grant-portrait.jpg" alt="Grant Williams" />
+            </div>
+            <h2>Grant Williams</h2>
+            <div className="link-box">
+              <a href="https://github.com/grantmwilliams38" target="_blank">
+                <img src="../images/github.png" alt="GitHub Link" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/grant-williams-uwcompe/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="../images/linked-in.png"
+                  alt="LinkedIn Link"
+                  id="linked-in"
+                />
+              </a>
+            </div>
+            <div className="member-bio">
+              <p>
+                Grant can be found studying tech ethics and the global impacts
+                of innovation. He is known to dislike Mark Zuckerberg. He
+                studies at the University of Washington and aspires to be a
+                software engineer. After working in customer service and
+                retail, Grant appreciates the power of a positive-minded team.
+                A soccer fanatic, he is a leader of the UW Club Soccer
+                program and enjoys watching the English Premier League,
+                supporting Manchester United.
+              </p>
+            </div>
+            <ul>
+              <li>Favorite Restaurant: Thaiger Room</li>
+              <li>Happy Place: The midfield</li>
+              <li>Favorite TV Show: Elementary</li>
             </ul>
           </Col>
           <Col className="single-team-member">

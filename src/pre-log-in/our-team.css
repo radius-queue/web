@@ -22,3 +22,11 @@
 .single-team-member li {
   padding-top: 2px;
 }
+
+#landing-page-display {
+  text-align: center;
+}
+
+#landing-page-display p {
+  margin-bottom: 0.5rem;
+}
