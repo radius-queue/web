@@ -36,12 +36,14 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/pre-log-in/register">
+          <LandingPageNav />
           <RegistrationPage />
         </Route>
         <PrivateRoute path="/post-log-in/hub" isLoading={isLoading}>
           <Hub />
         </PrivateRoute>
         <Route exact path="/pre-log-in/log-in">
+          <LandingPageNav />
           <BusinessLogInPage />
         </Route>
         <Route exact path="/url-based-queue">
