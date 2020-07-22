@@ -34,9 +34,6 @@ const OurTeamPage = () => {
                   id="linked-in"
                 />
               </a>
-              <a href="https://www.facebook.com/sam.berensohn" target="_blank">
-                <img src="../images/facebook.png" alt="Facebook Link" />
-              </a>
             </div>
             <div className="member-bio">
               <p>
@@ -78,12 +75,6 @@ const OurTeamPage = () => {
                   id="linked-in"
                 />
               </a>
-              <a
-                href="https://www.facebook.com/grant.williams.397"
-                target="_blank"
-              >
-                <img src="../images/facebook.png" alt="Facebook Link" />
-              </a>
             </div>
             <div className="member-bio">
               <p>
@@ -122,9 +113,6 @@ const OurTeamPage = () => {
                   alt="LinkedIn Link"
                   id="linked-in"
                 />
-              </a>
-              <a href="https://www.facebook.com/wesley.lam.903" target="_blank">
-                <img src="../images/facebook.png" alt="Facebook Link" />
               </a>
             </div>
             <div className="member-bio">
@@ -168,9 +156,6 @@ const OurTeamPage = () => {
                   alt="LinkedIn Link"
                   id="linked-in"
                 />
-              </a>
-              <a href="https://www.facebook.com/kevin.song.336" target="_blank">
-                <img src="../images/facebook.png" alt="Facebook Link" />
               </a>
             </div>
             <div className="member-bio">
