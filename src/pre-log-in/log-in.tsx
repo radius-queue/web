@@ -54,13 +54,13 @@ const BusinessLogInPage = () => {
           changePage = false;
         });
     if (changePage) {
-      history.replace('/post-log-in/hub');
+      history.replace('/hub');
     }
   };
 
   const signInWithGoogle = () => {
     firebase.auth().signInWithPopup(GOOGLE_SIGN_IN).then(function(result) {
-      history.replace('/post-log-in/hub');
+      history.replace('/hub');
     }).catch((error) => {
       console.log(error);
     });
