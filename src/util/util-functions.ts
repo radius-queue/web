@@ -15,3 +15,17 @@ export function parsePhoneNum(phoneNum : string) : string {
   }
   return phoneNum;
 }
+
+/**
+ * Parses Name for customer side display
+ * @param {string} firstName first name of customer
+ * @param {string} lastName last name of customer
+ * @return {string} display name
+ */
+export function parseShortName(firstName: string, lastName: String) : string {
+  if (lastName.length < 1) {
+    return firstName.substring(0, 1).toUpperCase();
+  }
+  return firstName.substring(0, 1).toUpperCase() + ' ' +
+      lastName.substring(0, 1).toUpperCase();
+}

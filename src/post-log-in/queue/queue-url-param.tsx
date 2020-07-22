@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { parseShortName } from '../../util/util-functions';
 
 
 interface URLParamProps {
@@ -36,7 +37,7 @@ const QueueURLParamViewer = ({queue, phoneNum, time} : URLParamProps)=> {
                 {idx + 1}
               </Col>
               <Col md={5}>
-                {person.firstName}
+                {parseShortName(person.firstName, person.lastName)}
               </Col>
               <Col md={3}>
                 {person.size}
