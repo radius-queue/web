@@ -87,17 +87,19 @@ const OurTeamPage = () => {
             </div>
             <div className="member-bio">
               <p>
-                Grant is an aspiring software engineer studying at the
-                University of Washington. Among other things, he’s known for his
-                hatred towards Mark Zuckerberg. A soccer fanatic, he’s a staple
-                of the UW Club Soccer team and enjoys watching the English
-                Premier League. He supports Manchester United and his favorite
-                player is Paul Pogba.
+                Grant can be found studying tech ethics and the global impacts
+                of innovation. He is known to dislike Mark Zuckerberg. He
+                studies at the University of Washington and aspires to be a
+                software engineer. After working in customer service and
+                retail, Grant appreciates the power of a positive-minded team.
+                A soccer fanatic, he is a leader of the UW Club Soccer
+                program and enjoys watching the English Premier League,
+                supporting Manchester United.
               </p>
             </div>
             <ul>
               <li>Favorite Restaurant: Thaiger Room</li>
-              <li>Happy Place: The Midfield</li>
+              <li>Happy Place: The midfield</li>
               <li>Favorite TV Show: Elementary</li>
             </ul>
 
