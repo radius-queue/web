@@ -16,14 +16,13 @@ const LandingPageNav = () => {
           Our Team
         </NavLink>
         <NavLink
-          to="/pre-log-in/register"
+          to="/register"
           activeClassName="landing-nav-selected"
         >
           Register
         </NavLink>
         <NavLink
-          to="/pre-log-in/log-in"
-          // to="/post-log-in/hub"
+          to="/log-in"
           activeClassName="landing-nav-selected"
         >
           Log In

@@ -35,14 +35,14 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/pre-log-in/register">
+        <Route exact path="/register">
           <LandingPageNav />
           <RegistrationPage />
         </Route>
         <PrivateRoute path="/post-log-in/hub" isLoading={isLoading}>
           <Hub />
         </PrivateRoute>
-        <Route exact path="/pre-log-in/log-in">
+        <Route exact path="/log-in">
           <LandingPageNav />
           <BusinessLogInPage />
         </Route>
@@ -82,7 +82,7 @@ function PrivateRoute({children, isLoading, ...rest}: privateRouteProps) {
         ) : (
           <Redirect
             to={{
-              pathname: '/pre-log-in/log-in',
+              pathname: '/log-in',
               state: {from: location},
             }}
           />
