@@ -48,6 +48,10 @@ const OurTeamPage = () => {
                 technical background and leverage the power of technology to make lives better.
               </p>
             </div>
+            <p>
+              Favourite Restaurant: Aji Sushi <br/>
+              Happy Place: The 15th tee box at Chambers Bay <br/>
+              Favourite TV Show: The West Wing</p>
           </Col>
           <Col>
             <div className='image-crop'>
@@ -82,9 +86,9 @@ const OurTeamPage = () => {
                 He supports Manchester United and his favorite player is Paul Pogba.
               </p>
             </div>
-            <p>Favorite Restaurant: Thaiger Room</p>
-            <p>Happy Place: The Midfield</p>
-            <p>Favorite TV Show: Elementary</p>
+            <p>Favorite Restaurant: Thaiger Room<br/>
+            Happy Place: The Midfield<br/>
+            Favorite TV Show: Elementary</p>
           </Col>
         </Row>
         <Row md={2} sm={1} xs={1}>
