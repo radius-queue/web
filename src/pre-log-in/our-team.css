@@ -1,0 +1,24 @@
+.single-team-member {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.single-team-member h2 {
+  margin-top: 35px;
+  margin-bottom: 15px;
+}
+
+.single-team-member p {
+  margin-top: 15px;
+}
+
+.single-team-member ul {
+  list-style: none;
+}
+
+.single-team-member li {
+  padding-top: 2px;
+}

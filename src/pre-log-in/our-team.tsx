@@ -1,7 +1,8 @@
-import React from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import './our-team.css';
 
 const OurTeamPage = () => {
   return (
@@ -12,7 +13,7 @@ const OurTeamPage = () => {
           We Love Solving Problems and Helping You Safely Serve Your Customers.
         </p>
       </div>
-      <Container style={{ marginTop: "30px" }}>
+      <Container style={{marginTop: '30px'}}>
         <Row md={2} sm={1} xs={1}>
           <Col className="single-team-member">
             <div className="image-crop">
@@ -53,7 +54,7 @@ const OurTeamPage = () => {
               </p>
             </div>
           </Col>
-          <Col>
+          <Col className="single-team-member">
             <div className="image-crop">
               <img src="../images/grant-portrait.jpg" alt="Grant Williams" />
             </div>
@@ -89,9 +90,12 @@ const OurTeamPage = () => {
                 player is Paul Pogba.
               </p>
             </div>
-            <p>Favorite Restaurant: Thaiger Room</p>
-            <p>Happy Place: The Midfield</p>
-            <p>Favorite TV Show: Elementary</p>
+            <ul>
+              <li>Favorite Restaurant: Thaiger Room</li>
+              <li>Happy Place: The Midfield</li>
+              <li>Favorite TV Show: Elementary</li>
+            </ul>
+
           </Col>
         </Row>
         <Row md={2} sm={1} xs={1}>
@@ -135,13 +139,15 @@ const OurTeamPage = () => {
                 guitar, and hitting the courts for a game of pickup basketball.
               </p>
             </div>
-            <p>Favorite Restaurant: Hiroshi's</p>
-            <p>Happy Place: Out in Nature/Traveling</p>
-            <p>Favorite TV Show: The Office</p>
+            <ul>
+              <li>Favorite Restaurant: Hiroshi's</li>
+              <li>Happy Place: Out in Nature/Traveling</li>
+              <li>Favorite TV Show: The Office</li>
+            </ul>
           </Col>
-          <Col>
+          <Col className="single-team-member">
             <div className="image-crop">
-              <img src="../images/zizhen-portrait.jpg" alt="Zizhen Song" />
+              <img src="../images/ziz-portrait.jpg" alt="Zizhen Song" />
             </div>
             <h2>Zizhen Song</h2>
             <div className="link-box">
@@ -163,7 +169,14 @@ const OurTeamPage = () => {
               </a>
             </div>
             <div className="member-bio">
-              <p>Ziz's Bio Here.</p>
+              <p>Zizhen loves building software. Working with University of
+                Washington Transportation Services, he has led the deployment
+                of campus parking management software to keep track of
+                university resources and aid with event planning. He has also
+                researched cellular image processing methodologies as an
+                assistant at the Cell Biomechanics Lab. Zizhen is passionate
+                about exploring disruptive technologies and is hoping to
+                reimagine waitrooms with radius. </p>
             </div>
           </Col>
         </Row>
