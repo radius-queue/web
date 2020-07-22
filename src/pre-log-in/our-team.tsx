@@ -130,10 +130,10 @@ const OurTeamPage = () => {
             <div className="member-bio">
               <p>
                 Wesley is currently a junior at the University of Washington
-                majoring in computer science. Upon entering UW as a college of
-                engineering admit, he was inspired to change his field of study
+                majoring in computer science. Upon entering UW as a College of
+                Engineering admit, he was inspired to change his field of study
                 after taking the introductory computer science series, and
-                decided to pursue a degree in the Allen school of CSE. Outside
+                decided to pursue a degree in the Allen School of CSE. Outside
                 of school, Wesley is invested in giving back to his community,
                 leading a tutoring program for Dearborn Elementary students for
                 the past two years. As an aspiring professional, Wesley strives
