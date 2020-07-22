@@ -93,9 +93,11 @@ const OurTeamPage = () => {
                 player is Paul Pogba.
               </p>
             </div>
-            <p>Favorite Restaurant: Thaiger Room<br/>
-            Happy Place: The Midfield<br/>
-            Favorite TV Show: Elementary</p>
+            <p>
+              Favorite Restaurant: Thaiger Room<br/>
+              Happy Place: The Midfield<br/>
+              Favorite TV Show: Elementary
+            </p>
           </Col>
         </Row>
         <Row md={2} sm={1} xs={1}>
@@ -139,9 +141,11 @@ const OurTeamPage = () => {
                 guitar, and hitting the courts for a game of pickup basketball.
               </p>
             </div>
-            <p>Favorite Restaurant: Hiroshi's</p>
-            <p>Happy Place: Out in Nature/Traveling</p>
-            <p>Favorite TV Show: The Office</p>
+            <p>
+              Favorite Restaurant: Hiroshi's<br/>
+              Happy Place: Out in Nature/Traveling<br/>
+              Favorite TV Show: The Office
+            </p>
           </Col>
           <Col>
             <div className="image-crop">
