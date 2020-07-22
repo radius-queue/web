@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,7 +6,8 @@ import Card from 'react-bootstrap/Card';
 import './log-in.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
-import {GOOGLE_SIGN_IN} from '../firebase';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import {firebaseUIConfig, auth} from '../firebase';
 import {
   Link,
   useHistory,
@@ -33,9 +34,18 @@ const BusinessLogInPage = () => {
 
   const history = useHistory();
 
+  useEffect(() => {
+    const unsub = auth.onAuthStateChanged((user) => {
+      if (user) {
+        history.replace('/post-log-in/hub');
+      }
+    });
+
+    return unsub;
+  }, [history]);
+
   const submitFormValues = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let changePage : boolean = true;
     await firebase.auth()
         .signInWithEmailAndPassword(formValues.email, formValues.password)
         .then((e) => {
@@ -51,19 +61,7 @@ const BusinessLogInPage = () => {
             password: false,
             message: error.message,
           });
-          changePage = false;
         });
-    if (changePage) {
-      history.replace('/post-log-in/hub');
-    }
-  };
-
-  const signInWithGoogle = () => {
-    firebase.auth().signInWithPopup(GOOGLE_SIGN_IN).then(function(result) {
-      history.replace('/post-log-in/hub');
-    }).catch((error) => {
-      console.log(error);
-    });
   };
 
   return (
@@ -100,10 +98,8 @@ const BusinessLogInPage = () => {
             Log In
           </Button>
         </Form>
-        <p style={{textAlign: 'center'}}>or</p>
-        <Button variant='info' onClick={() => signInWithGoogle()} block>
-          Sign in with Google
-        </Button>
+        <p style={{textAlign: 'center', marginTop: '15px'}}>or</p>
+        <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={auth}/>
       </Card>
       <div>
         <p>

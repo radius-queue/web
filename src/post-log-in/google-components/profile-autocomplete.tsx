@@ -29,28 +29,28 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter,
     setState(value);
   }, [value]);
 
-  /**
-   * Callback function passed in to be called on selection
-   * of an address from the Google Autocomplete Input.
-   *
-   * @param {string} val the value of the input element
-   * on selection.
-   */
-  const selectValue = () => {
-    const result : google.maps.places.PlaceResult =
-      autocompleteObject.current!.getPlace();
-    if (result) {
-      onChange(result.formatted_address!);
-      setState(result.formatted_address!);
-      setCenter(result.geometry!.location!);
-    } else {
-      window.alert('There was an unforseen error with your request, please' +
-        ' refresh the page and try again.');
-    }
-  };
-
   useEffect(() => {
     if (editable) {
+      /**
+       * Callback function passed in to be called on selection
+       * of an address from the Google Autocomplete Input.
+       *
+       * @param {string} val the value of the input element
+       * on selection.
+       */
+      const selectValue = () => {
+        const result : google.maps.places.PlaceResult =
+          autocompleteObject.current!.getPlace();
+        if (result) {
+          onChange(result.formatted_address!);
+          setState(result.formatted_address!);
+          setCenter(result.geometry!.location!);
+        } else {
+          window.alert('There was an unforseen error with your request,' +
+            ' please refresh the page and try again.');
+        }
+      };
+
       autocompleteObject.current = new google.maps.places.Autocomplete(
         document.getElementById('autocomplete') as HTMLInputElement,
       );
@@ -61,7 +61,7 @@ export const AddressAutocomplete = ({onChange, isValid, isInvalid, setCenter,
           () => selectValue(),
       );
     }
-  }, [editable]);
+  }, [editable, onChange, setCenter]);
 
   /**
    * On change handler for the input element. This function ensures

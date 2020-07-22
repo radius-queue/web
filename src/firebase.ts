@@ -31,12 +31,6 @@ export const firebaseUIConfig = {
   signInFlow: 'popup',
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
-  Callbacks: {
-    signInSuccessWithAuthResult: () => {
-      return false;
-    },
-  },
 };
 

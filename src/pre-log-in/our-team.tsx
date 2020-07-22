@@ -21,12 +21,14 @@ const OurTeamPage = () => {
             </div>
             <h2>Samuel Berensohn</h2>
             <div className="link-box">
-              <a href="https://github.com/sberen" target="_blank">
+              <a href="https://github.com/sberen" target="_blank"
+                rel="noopener noreferrer">
                 <img src="../images/github.png" alt="GitHub Link" />
               </a>
               <a
                 href="https://linkedin.com/in/samuel-berensohn/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <img
                   src="../images/linked-in.png"
@@ -62,12 +64,15 @@ const OurTeamPage = () => {
             </div>
             <h2>Grant Williams</h2>
             <div className="link-box">
-              <a href="https://github.com/grantmwilliams38" target="_blank">
+              <a href="https://github.com/grantmwilliams38" target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src="../images/github.png" alt="GitHub Link" />
               </a>
               <a
                 href="https://www.linkedin.com/in/grant-williams-uwcompe/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <img
                   src="../images/linked-in.png"
@@ -97,16 +102,19 @@ const OurTeamPage = () => {
         <Row md={2} sm={1} xs={1}>
           <Col className="single-team-member">
             <div className="image-crop">
-              <img src="../images/wes-portrait.jpg" alt="Wesley Lam" />
+              <img src="../images/wes-portrait.jpg" alt="Wesley Lam"/>
             </div>
             <h2>Wesley Lam</h2>
             <div className="link-box">
-              <a href="https://github.com/wesleyplam" target="_blank">
+              <a href="https://github.com/wesleyplam" target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src="../images/github.png" alt="GitHub Link" />
               </a>
               <a
                 href="https://www.linkedin.com/in/wesley-lam-43562a170/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <img
                   src="../images/linked-in.png"
@@ -144,12 +152,15 @@ const OurTeamPage = () => {
             </div>
             <h2>Zizhen Song</h2>
             <div className="link-box">
-              <a href="https://github.com/songziz" target="_blank">
+              <a href="https://github.com/songziz" target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src="../images/github.png" alt="GitHub Link" />
               </a>
               <a
                 href="https://www.linkedin.com/in/zizhen-song/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <img
                   src="../images/linked-in.png"

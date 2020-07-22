@@ -35,31 +35,18 @@ export const Hub = () => {
   const {path, url} = useRouteMatch();
   const [business, setBusiness] = useState<Business | undefined | null>(null);
   const [queue, setQueue] = useState<Queue| undefined>(undefined);
-  /**
-   * Retrieves the user's business info and sets the business for the page.
-   */
-  const queryForBusiness = async () => {
-    const val : Business | undefined = await getBusiness(auth.currentUser!.uid);
-    setBusiness(val);
-  };
-
-  /**
-   * Retrieves the queue for the business and sets the page's queue.
-   * Currently retrieves the business' FIRST queue. If multiple queue
-   * functionality is added modification will be necessary.
-   */
-  const queryForQueue = async () => {
-    if (business) {
-      const val : Queue | undefined = await getQueue(
-          business!.locations[0].queues[0]);
-      if (val) {
-        setQueue(val!);
-      }
-    }
-  };
 
   useEffect(() => {
     if (!business) {
+      /**
+       * Retrieves the user's business info and sets the business for the page.
+       */
+      const queryForBusiness = async () => {
+        const val : Business | undefined =
+          await getBusiness(auth.currentUser!.uid);
+        setBusiness(val);
+      };
+
       queryForBusiness();
     }
   }, []);
@@ -67,9 +54,24 @@ export const Hub = () => {
 
   useEffect(() => {
     if (!queue) {
+      /**
+       * Retrieves the queue for the business and sets the page's queue.
+       * Currently retrieves the business' FIRST queue. If multiple queue
+       * functionality is added modification will be necessary.
+       */
+      const queryForQueue = async () => {
+        if (business) {
+          const val : Queue | undefined = await getQueue(
+              business!.locations[0].queues[0]);
+          if (val) {
+            setQueue(val!);
+          }
+        }
+      };
+
       queryForQueue();
     }
-  }, [business]);
+  }, [business, queue]);
 
   return (
     <div id="whole-hub">
