@@ -107,12 +107,12 @@ const RegistrationPage = () => {
     <div id="reg-container">
       <Card id="reg-card">
         <Card.Title className="form-header-reg">
-        Register your business with Radius.</Card.Title>
+        Register your Business with Radius</Card.Title>
 
         <Card.Body>
           <Form noValidate onSubmit={submitForm}>
             <Form.Group controlId="email">
-              <Form.Label>E-mail</Form.Label>
+              <Form.Label>Email Address:</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
@@ -128,12 +128,12 @@ const RegistrationPage = () => {
             </Form.Group>
 
             <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Password:</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
                 value={formValues.password}
-                placeholder="Enter password here"
+                placeholder="Password"
                 onChange={setFormValues}
                 isValid={validity.submitted && !!validity.password[0]}
                 isInvalid={validity.submitted && !validity.password[0]}
@@ -150,7 +150,7 @@ const RegistrationPage = () => {
                 type="password"
                 name="confirm"
                 value={formValues.confirm}
-                placeholder="Confirm password"
+                placeholder="Confirm Password"
                 onChange={setFormValues}
                 isValid={validity.submitted && !!validity.password[0]}
                 isInvalid={validity.submitted && !validity.password[0]}
@@ -161,7 +161,7 @@ const RegistrationPage = () => {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
-            <Button type='submit' variant='dark' style={{width: '100%'}}>
+            <Button type='submit' style={{width: '100%'}}>
             Register</Button>
           </Form>
         </Card.Body>

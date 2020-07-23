@@ -10,13 +10,13 @@
 
 #the-title {
   font-size: 20pt;
-  color: black;
+  color: var(--light);
   transition: all linear .2s;
 }
 
 #the-title:hover {
   text-decoration: none;
-  color: #9c9c9c;
+  color: var(--light-hover);
 }
 
 #landing-page-links {
@@ -25,16 +25,16 @@
 }
 
 #landing-page-links a {
-  color: black;
+  color: var(--light);
   transition: all linear .2s;
   margin-left: 25px;
 }
 
 #landing-page-links a:hover {
   text-decoration: none;
-  color: #9c9c9c;
+  color: var(--light-hover);
 }
 
 .landing-nav-selected {
-  color: #9c9c9c !important;
+  color: var(--light-hover) !important;
 }

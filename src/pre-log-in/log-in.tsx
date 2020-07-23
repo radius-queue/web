@@ -69,7 +69,7 @@ const BusinessLogInPage = () => {
   return (
     <div id="login-container">
       <Card id="login-card">
-        <h1 className="form-header">Sign in to Radius for Business</h1>
+        <h1 className="form-header">Log in to Radius for Business</h1>
         <Form noValidate onSubmit={submitFormValues}>
           <Form.Group controlId="businessLogInEmail">
             <Form.Label>Email Address:</Form.Label>
@@ -96,12 +96,12 @@ const BusinessLogInPage = () => {
               isInvalid={!validity.password}
             />
           </Form.Group>
-          <Button type='submit' variant='dark' block>
+          <Button type='submit' block>
             Log In
           </Button>
         </Form>
         <p style={{textAlign: 'center'}}>or</p>
-        <Button variant='info' onClick={() => signInWithGoogle()} block>
+        <Button onClick={() => signInWithGoogle()} block>
           Sign in with Google
         </Button>
       </Card>

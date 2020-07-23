@@ -1,15 +1,32 @@
 #login-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 
 #login-card {
   display: flex;
-  padding: 10px;
+  padding: 30px;
   margin: 10px;
-  width: 25rem;
+  width: 30rem;
+  background-color: var(--light);
+  color: var(--dark);
+  justify-content: space-between;
+}
+
+#login-card .btn {
+  background-color: var(--dark);
+  color: var(--light);
+  border-color: var(--light);
+}
+
+#login-card p {
+  margin: 0.5rem;
+}
+
+#login-card .btn:hover {
+  background-color: var(--dark-hover);
 }
 
 .form {
@@ -18,7 +35,6 @@
 
 .form-header {
   text-align: center;
-  background-color: white;
   border: none;
   margin-bottom: 1.3rem;
   font-size: 18pt;
