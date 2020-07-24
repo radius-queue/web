@@ -9,11 +9,23 @@ import {useHistory} from 'react-router-dom';
 
 import {useState} from 'react';
 
+/**
+ * The modal informing the user that they must verify their email
+ * in order to view their hub. Provides an option to resend the
+ * verification email and a link to the login page.
+ * @param {VerifyUserModalProps} param0 boolean that determines
+ * whether the modal should be displayed or not (show) and a function
+ * for hiding the modal (onHide).
+ * @return {Modal} Modal asking user to verify their email.
+ */
 const VerifyUserModal = ({show, onHide}: VerifyUserModalProps) => {
   const history = useHistory();
 
   const [displayResendSuccess, setDisplayResendSuccess] = useState(false);
 
+  /**
+   * Resends email verification email to the current user.
+   */
   const resendVerificationEmail = () => {
     const user = firebase.auth().currentUser;
     user?.sendEmailVerification()

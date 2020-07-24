@@ -9,10 +9,22 @@ import './verify-user.css';
 
 import {useState} from 'react';
 
+/**
+ * The modal displayed when the user clicks Forgot Password. Requires
+ * email input and sends a reset password email.
+ * @param {ForgotPasswordModalProps} param0 boolean that determines
+ * whether the modal should be displayed or not (show) and a function
+ * for hiding the modal (onHide).
+ * @return {Modal} Modal for resetting user password.
+ */
 const ForgotPasswordModal = ({show, onHide}: ForgotPasswordModalProps) => {
   const [formValues, setFormValues] = useForm({email: ''});
   const [displayResetSuccess, setDisplayResetSuccess] = useState(false);
 
+  /**
+   * Sends a password reset email to the given email.
+   * @param {React.FormEvent<HTMLFormElement>} e React form event.
+   */
   const submitPasswordReset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     firebase.auth().sendPasswordResetEmail(formValues.email).then(function() {
@@ -36,11 +48,11 @@ const ForgotPasswordModal = ({show, onHide}: ForgotPasswordModalProps) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>
+        <h4 hidden={displayResetSuccess}>
           Enter your email and instructions for resetting your password will
           be emailed to you.
         </h4>
-        <Form onSubmit={submitPasswordReset}>
+        <Form onSubmit={submitPasswordReset} hidden={displayResetSuccess}>
           <Form.Group controlId="formBasicEmail">
             <Form.Control
               type="email"
@@ -54,12 +66,10 @@ const ForgotPasswordModal = ({show, onHide}: ForgotPasswordModalProps) => {
             Submit
           </Button>
         </Form>
-      </Modal.Body>
-      <Modal.Footer>
         <Alert show={displayResetSuccess}>
           Reset password email sent!
         </Alert>
-      </Modal.Footer>
+      </Modal.Body>
     </Modal>
   );
 };

@@ -37,6 +37,11 @@ const BusinessLogInPage = () => {
   const [verifyUserModalShow, setVerifyUserModalShow] = useState(false);
   const [forgotPasswordModalShow, setForgotPasswordModalShow] = useState(false);
 
+  /**
+   * Takes the values in the log in form to log in the user and redirect to
+   * the user's hub. Invalid form values get displayed as invalid.
+   * @param {React.FormEvent<HTMLFormElement>} e The React forrm event.
+   */
   const submitFormValues = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let changePage : boolean = true;
@@ -69,6 +74,9 @@ const BusinessLogInPage = () => {
     }
   };
 
+  /**
+   * Causes a Google sign in popup for the user to sign in with Google.
+   */
   const signInWithGoogle = () => {
     firebase.auth().signInWithPopup(GOOGLE_SIGN_IN).then(function(result) {
       history.replace('/hub');
