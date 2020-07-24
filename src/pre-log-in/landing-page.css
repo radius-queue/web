@@ -1,7 +1,8 @@
 #landing-page-display {
   display: flex;
   flex-direction: column;
-  background-color: #9c9c9c;
+  background-color: var(--light);
+  color: var(--dark);
   margin-left: 8%;
   margin-right: 8%;
   border-radius: 10px;

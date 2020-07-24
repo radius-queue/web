@@ -7,10 +7,27 @@
 
 #reg-card {
     display: flex;
-    padding: 20px;
+    padding: 30px;
     margin: 10px;
+    width: 30rem;
+    background-color: var(--light);
+    color: var(--dark);
+    justify-content: space-between;
+  }
+
+#reg-card .btn {
+    background-color: var(--dark);
+    color: var(--light);
+    border-color: var(--light);
+}
+
+#reg-card .btn:hover {
+    background-color: var(--dark-hover);
 }
 
 .form-header-reg {
     text-align: center;
-}
+    border: none;
+    margin-bottom: 1.3rem;
+    font-size: 18pt;
+  }

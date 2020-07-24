@@ -8,6 +8,8 @@ import './../firebase.ts';
 import firebase from 'firebase/app';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import {firebaseUIConfig, auth} from '../firebase';
+import VerifyUserModal from './verify-user';
+import ForgotPasswordModal from './forgot-password';
 import {
   Link,
   useHistory,
@@ -33,21 +35,26 @@ const BusinessLogInPage = () => {
   });
 
   const history = useHistory();
+  const [verifyUserModalShow, setVerifyUserModalShow] = useState(false);
+  const [forgotPasswordModalShow, setForgotPasswordModalShow] = useState(false);
 
-  useEffect(() => {
-    const unsub = auth.onAuthStateChanged((user) => {
-      if (user) {
-        history.replace('/post-log-in/hub');
-      }
-    });
-
-    return unsub;
-  }, [history]);
-
+  /**
+   * Takes the values in the log in form to log in the user and redirect to
+   * the user's hub. Invalid form values get displayed as invalid.
+   * @param {React.FormEvent<HTMLFormElement>} e The React forrm event.
+   */
   const submitFormValues = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let changePage : boolean = true;
     await firebase.auth()
         .signInWithEmailAndPassword(formValues.email, formValues.password)
+        .then(function() {
+          const user = firebase.auth().currentUser;
+          if (!(user?.emailVerified)) {
+            setVerifyUserModalShow(true);
+            changePage = false;
+          }
+        })
         .then((e) => {
           setValidity({
             username: true,
@@ -61,13 +68,17 @@ const BusinessLogInPage = () => {
             password: false,
             message: error.message,
           });
+          changePage = false;
         });
+    if (changePage) {
+      history.replace('/hub');
+    }
   };
 
   return (
     <div id="login-container">
       <Card id="login-card">
-        <h1 className="form-header">Sign in to Radius for Business</h1>
+        <h1 className="form-header">Log in to Radius for Business</h1>
         <Form noValidate onSubmit={submitFormValues}>
           <Form.Group controlId="businessLogInEmail">
             <Form.Label>Email Address:</Form.Label>
@@ -94,20 +105,34 @@ const BusinessLogInPage = () => {
               isInvalid={!validity.password}
             />
           </Form.Group>
-          <Button type='submit' variant='dark' block>
+          <Button type='submit' block>
             Log In
           </Button>
         </Form>
         <p style={{textAlign: 'center', marginTop: '15px'}}>or</p>
         <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={auth}/>
       </Card>
-      <div>
+      <div id="login-links">
         <p>
-          New to Radius? <Link to="./register">
+          New to Radius? <Link className="login-link" to="./register">
             Register here.
           </Link>
         </p>
+        <p
+          className="login-link"
+          onClick={() => setForgotPasswordModalShow(true)}
+        >
+          Forgot Password?
+        </p>
       </div>
+      <VerifyUserModal
+        show={verifyUserModalShow}
+        onHide={() => setVerifyUserModalShow(false)}
+      />
+      <ForgotPasswordModal
+        show={forgotPasswordModalShow}
+        onHide={() => setForgotPasswordModalShow(false)}
+      />
     </div>
   );
 };

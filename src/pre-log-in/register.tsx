@@ -6,7 +6,8 @@ import Card from 'react-bootstrap/Card';
 import './register.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import VerifyUserModal from './verify-user';
 
 interface ValidityState {
   submitted: boolean;
@@ -29,11 +30,11 @@ const RegistrationPage = () => {
     confirm: ''});
 
   const [validity, setValidity] = useState(initialState);
-
-  const history = useHistory();
+  const [verifyUserModalShow, setVerifyUserModalShow] = useState(false);
 
   /**
-   * Boolean method returns true when user fills in all fields in registration page.
+   * Boolean method returns true when user fills in all fields in
+   * registration page.
    * @return {boolean} whether all fields are completed
    */
   const allFieldsCompleted : () => boolean = () => {
@@ -46,7 +47,7 @@ const RegistrationPage = () => {
 
   /**
    * Method that checks if password/confirm password are valid.
-   * @return {[boolean, string]} string given validation for user input 
+   * @return {[boolean, string]} string given validation for user input
    */
   const validatePassword : () => [boolean, string] = () => {
     const result : [boolean, string] = [true, ''];
@@ -64,12 +65,10 @@ const RegistrationPage = () => {
    * Async function that handles user registration with firebase and validates
    * form of user input
    * @param {React.FormEvent<HTMLFormElement>} e form submission
-   *  
    */
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setValidity(initialState);
-    let changePage: boolean = true;
     const validityObject : any = {
       submitted: true,
       password: validatePassword(),
@@ -78,28 +77,39 @@ const RegistrationPage = () => {
     const fieldsFilled : boolean = allFieldsCompleted();
     let shouldSetValidity : boolean = true;
     if (!!validityObject.password[0] && fieldsFilled) {
+      // Create a user
       const createResult = await firebase.auth()
           .createUserWithEmailAndPassword(formValues.email, formValues.password)
+          .then(function() {
+            // When user is created, send an email verification
+            const user = firebase.auth().currentUser;
+            user?.sendEmailVerification()
+              .then(function() {
+                setVerifyUserModalShow(true);
+              })
+              .catch(function(error) {
+                const result : [boolean, string] = [false, error.message];
+                setValidity({
+                  ...validityObject,
+                  email: result,
+                });
+                return false;
+              });
+          })
           .catch(function(error) {
             const result : [boolean, string] = [false, error.message];
             setValidity({
               ...validityObject,
               email: result,
             });
-            changePage = false;
             return false;
           });
       if (typeof createResult === 'boolean') {
         shouldSetValidity = false;
       }
-    } else {
-      changePage = false;
     }
     if (shouldSetValidity) {
       setValidity(validityObject);
-    }
-    if (changePage) {
-      history.replace('/post-log-in/hub');
     }
   };
 
@@ -107,12 +117,12 @@ const RegistrationPage = () => {
     <div id="reg-container">
       <Card id="reg-card">
         <Card.Title className="form-header-reg">
-        Register your business with Radius.</Card.Title>
+        Register your Business with Radius</Card.Title>
 
         <Card.Body>
           <Form noValidate onSubmit={submitForm}>
             <Form.Group controlId="email">
-              <Form.Label>E-mail</Form.Label>
+              <Form.Label>Email Address:</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
@@ -128,12 +138,12 @@ const RegistrationPage = () => {
             </Form.Group>
 
             <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Password:</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
                 value={formValues.password}
-                placeholder="Enter password here"
+                placeholder="Password"
                 onChange={setFormValues}
                 isValid={validity.submitted && !!validity.password[0]}
                 isInvalid={validity.submitted && !validity.password[0]}
@@ -150,7 +160,7 @@ const RegistrationPage = () => {
                 type="password"
                 name="confirm"
                 value={formValues.confirm}
-                placeholder="Confirm password"
+                placeholder="Confirm Password"
                 onChange={setFormValues}
                 isValid={validity.submitted && !!validity.password[0]}
                 isInvalid={validity.submitted && !validity.password[0]}
@@ -161,7 +171,7 @@ const RegistrationPage = () => {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
-            <Button type='submit' variant='dark' style={{width: '100%'}}>
+            <Button type='submit' style={{width: '100%'}}>
             Register</Button>
           </Form>
         </Card.Body>
@@ -172,6 +182,10 @@ const RegistrationPage = () => {
           Sign in here.
         </Link>
       </div>
+      <VerifyUserModal
+        show={verifyUserModalShow}
+        onHide={() => setVerifyUserModalShow(false)}
+      />
     </div>
   );
 };

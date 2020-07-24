@@ -29,6 +29,7 @@ export const GOOGLE_SIGN_IN : firebase.auth.GoogleAuthProvider =
 
 export const firebaseUIConfig = {
   signInFlow: 'popup',
+  signInSuccessUrl: '/hub',
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
