@@ -1,10 +1,10 @@
 :root {
   --white: #FFFFFF;
   --black: #000000;
-  --dark: #24312c;
-  --light: #eae5ee;
+  --dark: #000000;
+  --light: #fff2d0;
   --dark-hover: #3b2d3a;
-  --light-hover: #d2ee58;
+  --light-hover: #f0b23e;
 }
 
 body {
