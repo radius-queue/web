@@ -39,3 +39,17 @@
   margin-bottom: 1.3rem;
   font-size: 18pt;
 }
+
+#login-links {
+  text-align: center;
+}
+
+.login-link {
+  color: #007bff;
+}
+
+.login-link:hover {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}

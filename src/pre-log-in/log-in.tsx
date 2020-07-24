@@ -7,6 +7,7 @@ import './log-in.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
 import VerifyUserModal from './verify-user';
+import ForgotPasswordModal from './forgot-password';
 import {GOOGLE_SIGN_IN} from '../firebase';
 import {
   Link,
@@ -34,6 +35,7 @@ const BusinessLogInPage = () => {
 
   const history = useHistory();
   const [verifyUserModalShow, setVerifyUserModalShow] = useState(false);
+  const [forgotPasswordModalShow, setForgotPasswordModalShow] = useState(false);
 
   const submitFormValues = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -114,16 +116,26 @@ const BusinessLogInPage = () => {
           Sign in with Google
         </Button>
       </Card>
-      <div>
+      <div id="login-links">
         <p>
-          New to Radius? <Link to="./register">
+          New to Radius? <Link className="login-link" to="./register">
             Register here.
           </Link>
+        </p>
+        <p
+          className="login-link"
+          onClick={() => setForgotPasswordModalShow(true)}
+        >
+          Forgot Password?
         </p>
       </div>
       <VerifyUserModal
         show={verifyUserModalShow}
         onHide={() => setVerifyUserModalShow(false)}
+      />
+      <ForgotPasswordModal
+        show={forgotPasswordModalShow}
+        onHide={() => setForgotPasswordModalShow(false)}
       />
     </div>
   );

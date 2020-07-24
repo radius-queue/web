@@ -33,7 +33,7 @@ const VerifyUserModal = ({show, onHide}: VerifyUserModalProps) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Verify your email!
+          Verify Your Email
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
