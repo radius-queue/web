@@ -77,7 +77,7 @@ function PrivateRoute({children, isLoading, ...rest}: privateRouteProps) {
     <Route
       {...rest}
       render={() =>
-        isLoading || auth.currentUser ? (
+        isLoading || auth.currentUser?.emailVerified ? (
           auth.currentUser ? children : null
         ) : (
           <Redirect
