@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import './log-in.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
+import VerifyUserModal from './verify-user';
 import {GOOGLE_SIGN_IN} from '../firebase';
 import {
   Link,
@@ -32,12 +33,20 @@ const BusinessLogInPage = () => {
   });
 
   const history = useHistory();
+  const [verifyUserModalShow, setVerifyUserModalShow] = useState(false);
 
   const submitFormValues = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let changePage : boolean = true;
     await firebase.auth()
         .signInWithEmailAndPassword(formValues.email, formValues.password)
+        .then(function() {
+          const user = firebase.auth().currentUser;
+          if (!(user?.emailVerified)) {
+            setVerifyUserModalShow(true);
+            changePage = false;
+          }
+        })
         .then((e) => {
           setValidity({
             username: true,
@@ -112,6 +121,10 @@ const BusinessLogInPage = () => {
           </Link>
         </p>
       </div>
+      <VerifyUserModal
+        show={verifyUserModalShow}
+        onHide={() => setVerifyUserModalShow(false)}
+      />
     </div>
   );
 };
