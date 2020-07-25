@@ -10,6 +10,7 @@ export class Business {
   locations: BusinessLocation[];
   // password : string;
   uid : string;
+  type : string;
 
   /**
    * @param {string} name Business name
@@ -17,17 +18,19 @@ export class Business {
    * @param {string} lastName Owner Last Name
    * @param {string} email Account email
    * @param {string} uid Unique Identifier
+   * @param {string} type Type of establishment
    * @param {BusinessLocation[]} locations Optional array of store location
    *    objects, Default value is set to be empty array
    */
   constructor(name: string, firstName: string, lastName: string, email: string,
-      uid: string, locations: BusinessLocation[] =[]) {
+      uid: string, type: string, locations: BusinessLocation[] =[]) {
     this.name = name;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.uid = uid;
     this.locations = locations;
+    this.type = type;
     // this.uid = uid || "";
   }
 }
@@ -147,6 +150,7 @@ export const businessConverter = {
       firstName: b.firstName,
       lastName: b.lastName,
       email: b.email,
+      type: b.type,
       locations: b.locations.map((e) => BusinessLocation.toFirebase(e)),
     };
   },
@@ -158,6 +162,7 @@ export const businessConverter = {
         data.lastName,
         data.email,
         '', // uid
+        data.type,
         data.locations.map((e: any) => BusinessLocation.fromFirebase(e)),
     );
   },

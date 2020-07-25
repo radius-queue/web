@@ -28,6 +28,7 @@ interface FormState {
   firstName: string;
   lastName: string;
   phone: string;
+  type: string;
 }
 
 /**
@@ -42,6 +43,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
     firstName: '',
     lastName: '',
     phone: '',
+    type: '',
   };
 
   const [form, setForm] = useState<FormState>(initialState);
@@ -65,6 +67,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
           firstName: business.firstName,
           lastName: business.lastName,
           phone: business.locations[0].phoneNumber,
+          type: business.type,
         });
         if (business.locations[0].hours.length !== 0) {
           setOpenState(business.locations[0].hours.map(
@@ -103,6 +106,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       firstName: business!.firstName,
       lastName: business!.lastName,
       phone: business!.locations[0].phoneNumber,
+      type: business!.type,
     });
     if (business!.locations[0].hours.length !== 0) {
       setOpenState(business!.locations[0].hours.map(
@@ -153,7 +157,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
         [new BusinessLocation(...locationParams)];
       const newBusiness =
         new Business(form.businessName, form.firstName, form.lastName,
-          auth.currentUser!.email!, uid, newLocation);
+          auth.currentUser!.email!, uid, form.type, newLocation);
       setBusiness(newBusiness);
       if (!business) {
         const queueParams : [string, Date, string, boolean, Party[]] = [
@@ -211,6 +215,25 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                 isInvalid={submitted &&
                   form.businessName.length === 0}
                 placeholder={'My Amazing Business'}
+                readOnly={!editing}
+              />
+              <Form.Control.Feedback type='invalid'>
+                Please Enter a Business Name
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group controlId="type">
+              <Form.Label>Business Type</Form.Label>
+              <Form.Control
+                type="text"
+                name="type"
+                onChange={(e) =>
+                  setForm({...form, type: e.target.value})}
+                value={form.type}
+                isValid={submitted &&
+                  form.type.length > 0}
+                isInvalid={submitted &&
+                  form.type.length === 0}
+                placeholder={'Pizzeria'}
                 readOnly={!editing}
               />
               <Form.Control.Feedback type='invalid'>
