@@ -64,7 +64,7 @@ const OurTeamPage = () => {
             </div>
             <h2>Wesley Lam</h2>
             <div className="link-box">
-              <a href="https://github.com/wesleyplam" target="_blank">
+              <a href="https://github.com/wesleyplam" target="_blank" rel="noopener noreferrer">
                 <img src="../images/github.png" alt="GitHub Link" />
               </a>
               <a
@@ -110,7 +110,7 @@ const OurTeamPage = () => {
             </div>
             <h2>Grant Williams</h2>
             <div className="link-box">
-              <a href="https://github.com/grantmwilliams38" target="_blank">
+              <a href="https://github.com/grantmwilliams38" target="_blank" rel="noopener noreferrer">
                 <img src="../images/github.png" alt="GitHub Link" />
               </a>
               <a

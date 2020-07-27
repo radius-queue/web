@@ -49,6 +49,7 @@ export const Hub = () => {
 
       queryForBusiness();
     }
+    // eslint-disable-next-line
   }, []);
 
 
