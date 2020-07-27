@@ -70,6 +70,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
   }, [setQueue, queue.uid]);
 
   useEffect(() => {
+    console.log(stateQ);
     currentQRef.current = stateQ;
   }, [stateQ]);
 

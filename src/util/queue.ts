@@ -71,11 +71,13 @@ export class Party {
    */
   static messageFromFB(messages: any[]): [Date, string][] {
     const ret : [Date, string][] = [];
-    for (let i =0; i < messages.length; i++) {
-      const entry : [Date, string] =[new Date(), ''];
-      entry[0] = messages[i].date.toDate();
-      entry[1] = messages[i].message;
-      ret.push(entry);
+    if (messages) {
+      for (let i =0; i < messages.length; i++) {
+        const entry : [Date, string] =[new Date(), ''];
+        entry[0] = messages[i].date.toDate();
+        entry[1] = messages[i].message;
+        ret.push(entry);
+      }
     }
     return ret;
   }
@@ -87,12 +89,14 @@ export class Party {
    */
   static messageToFB(messages: [Date, string][]) : any[] {
     const ret : any[] = [];
-    for (let i = 0; i <messages.length; i++) {
-      const entry = {
-        date: messages[i][0],
-        message: messages[i][1],
-      };
-      ret.push(entry);
+    if (messages) {
+      for (let i = 0; i <messages.length; i++) {
+        const entry = {
+          date: messages[i][0],
+          message: messages[i][1],
+        };
+        ret.push(entry);
+      }
     }
     return ret;
   }
