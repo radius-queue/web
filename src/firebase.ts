@@ -1,6 +1,7 @@
 import 'firebase/firestore';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
 
 /*
 Utility class for all of the firebase references and
@@ -24,7 +25,7 @@ export const auth : firebase.auth.Auth = firebase.auth();
 
 export const firestore : firebase.firestore.Firestore = firebase.firestore();
 
-//export const storage = firebase.storage();
+export const storage = firebase.storage();
 
 export const GOOGLE_SIGN_IN : firebase.auth.GoogleAuthProvider =
   new firebase.auth.GoogleAuthProvider();
