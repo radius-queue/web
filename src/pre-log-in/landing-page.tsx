@@ -13,11 +13,13 @@ const DefaultLandingPage = () => {
     <div id="landing-page-display">
       <img
         className="d-block w-100"
-        src="../../images/vector-1.png"
+        src="../../images/storefront-radii.png"
         alt="Businesses with Radii"
       />
-      <h1>Radius for Business</h1>
-      <p>Welcome to a new era of waiting rooms.</p>
+      <div id="landing-page-display-text">
+        <h1>Radius for Business</h1>
+        <p>Welcome to a new era of waiting rooms.</p>
+      </div>
     </div>
   );
 };

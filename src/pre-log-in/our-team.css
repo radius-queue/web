@@ -30,3 +30,7 @@
 #landing-page-display p {
   margin-bottom: 0.5rem;
 }
+
+.github {
+  filter: invert(1);
+}
