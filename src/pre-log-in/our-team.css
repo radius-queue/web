@@ -38,3 +38,13 @@
 #team p, #team li {
   color: var(--white);
 }
+
+#team {
+  background-image: url('/../images/background-radii.png');
+  background-size: 50px 50px;
+  /* background-image: url('/../images/github.png'); */
+}
+
+#team #landing-page-display {
+  padding-top: 2vh;
+}
