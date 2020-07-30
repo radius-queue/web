@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, {useState, useEffect} from 'react';
 import {Business, BusinessLocation, getHoursArray} from '../../util/business';
 import Form from 'react-bootstrap/Form';
@@ -11,10 +12,9 @@ import LoadingProfile from './profile-loading';
 import {auth} from '../../firebase';
 import PropTypes from 'prop-types';
 import {DAYS} from '../../util/business';
-import postBusiness from '../../util/post-business';
 import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
-import postQueue from '../../util/post-queue';
+import {functions} from '../../firebase';
 
 interface ProfileProps {
   uid: string;
@@ -137,11 +137,11 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
+
     if (allFieldsCompleted()) {
       setEditing(false);
       enableOtherNavs();
       const locationHours : [Date | null, Date | null][] = getHoursArray(hours);
-      console.log(hours);
       const locationParams : [string, string, string,
         [Date | null, Date | null][], number[], string[], number] =
       [
@@ -153,25 +153,28 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
         [uid],
         radius,
       ];
-      const newLocation : BusinessLocation[] =
-        [new BusinessLocation(...locationParams)];
-      const newBusiness =
-        new Business(form.businessName, form.firstName, form.lastName,
-          auth.currentUser!.email!, uid, form.type, newLocation);
+      const newLocation : BusinessLocation[] = [
+        new BusinessLocation(...locationParams),
+      ];
+      const newBusiness = new Business(
+        form.businessName,
+        form.firstName,
+        form.lastName,
+        auth.currentUser!.email!,
+        uid,
+        form.type,
+        newLocation,
+      );
       setBusiness(newBusiness);
       if (!business) {
-        const queueParams : [string, Date, string, boolean, Party[]] = [
-          form.businessName,
-          new Date('2020-08-30'),
-          uid,
-          false,
-          [],
-        ];
-        const newQueue : Queue[] = [new Queue(...queueParams)];
-        setQueue(newQueue[0]);
-        postQueue(newQueue[0]);
+        const createNewQueue = functions.httpsCallable('createNewQueue');
+        createNewQueue({uid: uid, name: form.businessName}).then((ret) => {
+          console.log(ret.data);
+          setQueue(ret.data);
+        });
       }
-      postBusiness(newBusiness);
+      const postBusiness = functions.httpsCallable('postBusiness');
+      postBusiness({business: newBusiness});
     }
   };
 

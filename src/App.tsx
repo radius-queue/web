@@ -7,7 +7,7 @@ import LandingPageNav from './pre-log-in/landing-nav';
 import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import {auth, functions} from './firebase';
+import {auth} from './firebase';
 import {
   BrowserRouter as Router,
   Switch,
