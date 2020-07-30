@@ -26,7 +26,7 @@ import QueueURLViewer from './pre-log-in/queue-url-viewer';
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // const func = functions.httpsCallable('getQueueInfo');
-  // func({uid: '00xcsacs4xTgfmhuJbder8PViXT2'}).then((ret) =>{
+  // func({uid: '0eh3xLubykWaKstTZXsRJnnHX8f1'}).then((ret) =>{
   //   console.log(ret.data);
   // });
 
