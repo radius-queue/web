@@ -13,7 +13,7 @@ const DefaultLandingPage = () => {
     <div id="landing-page-display">
       <img
         className="d-block w-100"
-        src="../../images/storefront-radii.png"
+        src="../../images/storefront-radii-dark.png"
         alt="Businesses with Radii"
       />
       <div id="landing-page-display-text">

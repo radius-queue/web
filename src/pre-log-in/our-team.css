@@ -34,3 +34,7 @@
 .github {
   filter: invert(1);
 }
+
+#team p, #team li {
+  color: var(--white);
+}

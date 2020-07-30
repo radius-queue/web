@@ -1,8 +1,6 @@
 #landing-page-display {
   display: flex;
   flex-direction: column;
-  margin-left: -0.1%;
-  margin-right: -0.02%;
   align-items: center;
 }
 
@@ -10,7 +8,6 @@
   height: auto;
   width: auto;
   margin-bottom: 10px;
-
 }
 
 #landing-page-display-text {

@@ -6,7 +6,7 @@ import './our-team.css';
 
 const OurTeamPage = () => {
   return (
-    <div>
+    <div id="team">
       <div id="landing-page-display">
         <h1>Meet the Team</h1>
         <p>
