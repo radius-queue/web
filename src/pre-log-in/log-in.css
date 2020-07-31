@@ -3,6 +3,11 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  background-image: url('/../images/background-radii.png');
+  background-size: 80px 60px;
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 89vh;
 }
 
 #login-card {
