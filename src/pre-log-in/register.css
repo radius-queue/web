@@ -15,19 +15,20 @@
     padding: 30px;
     margin: 10px;
     width: 30rem;
-    background-color: var(--light);
-    color: var(--dark);
+    background-color: var(--white);
+    color: var(--black);
     justify-content: space-between;
   }
 
 #reg-card .btn {
-    background-color: var(--dark);
-    color: var(--light);
-    border-color: var(--light);
+    background-color: var(--black);
+    color: white;
+    border-color: var(--black);
 }
 
 #reg-card .btn:hover {
     background-color: var(--dark-hover);
+    border-color: var(--dark-hover);
 }
 
 .form-header-reg {
@@ -36,3 +37,15 @@
     margin-bottom: 1.3rem;
     font-size: 18pt;
   }
+
+.input-box {
+    color: black !important;
+}
+
+#already-account {
+    color: var(--white);
+}
+
+#already-account a {
+    color: var(--light);
+}

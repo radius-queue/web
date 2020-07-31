@@ -15,15 +15,15 @@
   padding: 30px;
   margin: 10px;
   width: 30rem;
-  background-color: var(--light);
-  color: var(--dark);
+  background-color: var(--white);
+  color: var(--black);
   justify-content: space-between;
 }
 
 #login-card .btn {
-  background-color: var(--dark);
-  color: var(--light);
-  border-color: var(--light);
+  background-color: var(--black);
+  color: white;
+  border-color: var(--black);
 }
 
 #login-card p {
@@ -32,6 +32,11 @@
 
 #login-card .btn:hover {
   background-color: var(--dark-hover);
+  border-color: var(--dark-hover);
+}
+
+.input-box {
+  color: black !important;
 }
 
 .form {
@@ -49,12 +54,16 @@
   text-align: center;
 }
 
+#new-to-radius-text {
+  color: var(--white);
+}
+
 .login-link {
-  color: #007bff;
+  color: var(--light);
 }
 
 .login-link:hover {
-  color: #007bff;
+  color: var(--light);
   text-decoration: underline;
   cursor: pointer;
 }
