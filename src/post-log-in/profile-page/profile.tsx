@@ -15,6 +15,7 @@ import {DAYS} from '../../util/business';
 import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
 import {functions} from '../../firebase';
+import { postPic } from '../../util/storage-func';
 
 interface ProfileProps {
   uid: string;
