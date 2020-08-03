@@ -1,4 +1,4 @@
-import {postPic} from '../../util/storage-func';
+import {postPic, getPic} from '../../util/storage-func';
 import {Business} from '../../util/business';
 import Form from 'react-bootstrap/Form';
 import React, {useState, useEffect} from 'react';
@@ -19,14 +19,23 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
     // const images = document.createElement('div');
     // images.id = 'image-holder';
 
-    const imageUrlList = business?.locations[0].images;
-
-  });
+    const imagePathList = business!.locations[0].images;
+    imagePathList!.forEach(async (path: string) => {
+      const url = await getPic(path) as string;
+      if (url !== '') {
+        setImages([...images, url]);
+      }
+    });
+    console.log(images);
+  }, []);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (file) {
-      postPic(file, true, undefined, console.log);
+      postPic(file, true, undefined, (url: string) => {
+        setImages([...images, url]);
+        console.log(images);
+      });
     }
   };
 
