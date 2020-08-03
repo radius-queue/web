@@ -46,6 +46,7 @@ export class BusinessLocation {
   coordinates: number[]; // in decimal degrees (DD).
   queues: string[];
   geoFenceRadius: number; // in meters
+  images: string[];
 
   /**
    * @param {string} name Name of specific location
@@ -63,7 +64,7 @@ export class BusinessLocation {
    */
   constructor(name: string, address: string, phoneNumber: string, hours: [Date | null, Date | null][],
       coordinates: number[], queues: string[] = [],
-      geoFenceRadius: number = -1) {
+      geoFenceRadius: number = -1, images: string[] = []) {
     this.name = name;
     this.address = address;
     this.phoneNumber = phoneNumber;
@@ -71,6 +72,7 @@ export class BusinessLocation {
     this.coordinates = coordinates;
     this.queues = queues;
     this.geoFenceRadius = geoFenceRadius;
+    this.images = images;
   }
 
   /* Firebase helper methods */

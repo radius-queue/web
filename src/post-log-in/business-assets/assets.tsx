@@ -1,7 +1,7 @@
 import {postPic} from '../../util/storage-func';
 import {Business} from '../../util/business';
 import Form from 'react-bootstrap/Form';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 
 
@@ -13,6 +13,15 @@ interface AssetsProps {
 
 const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
   const [file, setFile] = useState<File| null>(null);
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    // const images = document.createElement('div');
+    // images.id = 'image-holder';
+
+    const imageUrlList = business?.locations[0].images;
+
+  });
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +55,7 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
         type="submit"
         variant='primary'
       >
-        Submit Changes
+        Post Image
       </Button>
     </Form>
   );
