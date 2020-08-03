@@ -198,7 +198,7 @@ export const DeleteCustomerModal = ({show, close, party, mainAction}
       <Modal.Header>
         <Modal.Title>
           Are you sure you want to remove
-          {party!.firstName + ' ' + party!.lastName} from the queue?
+          {' ' + party!.firstName + ' ' + party!.lastName} from the queue?
         </Modal.Title>
       </Modal.Header>
       <Modal.Footer>

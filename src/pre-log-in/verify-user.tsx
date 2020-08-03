@@ -55,7 +55,7 @@ const VerifyUserModal = ({show, onHide}: VerifyUserModalProps) => {
           to your account.
         </p>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer id="pre-modal-footer">
         <Alert show={displayResendSuccess}>
           Verification email resent!
         </Alert>
