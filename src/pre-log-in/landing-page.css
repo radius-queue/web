@@ -5,13 +5,13 @@
 }
 
 #landing-page-display img {
-  height: auto;
+  height: 80vh;
   width: auto;
   margin-bottom: 10px;
+  filter: contrast(120%) brightness(80%);
 }
 
 #landing-page-display-text {
-  margin-bottom: 10px;
   color: var(--light);
 }
 

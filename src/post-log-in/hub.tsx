@@ -3,6 +3,7 @@ import QueueTab from './queue/queue-wrapper';
 // eslint-disable-next-line no-unused-vars
 import {Business} from '../util/business';
 import ProfilePage from './profile-page/profile';
+import AssetsPage from './business-assets/assets';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
 import Navbar from 'react-bootstrap/Navbar';
@@ -83,6 +84,10 @@ export const Hub = () => {
             as={NavLink} to={`${url}/queue-view`}>
             Queue
           </Nav.Link>
+          <Nav.Link id='assets-nav' className='nav-link-item not-profile'
+            as={NavLink} to={`${url}/assets`}>
+            Assets
+          </Nav.Link>
         </Nav>
         <Form inline>
           <Button id='sign-out-button' onClick={() => {
@@ -109,6 +114,10 @@ export const Hub = () => {
           <Route exact path={`${path}/profile`}>
             <ProfilePage uid={auth.currentUser!.uid} setBusiness={setBusiness}
               business={business} setQueue={setQueue}/>
+          </Route>
+          <Route exact path={`${path}/assets`}>
+            <AssetsPage uid={auth.currentUser!.uid} setBusiness={setBusiness}
+              business={business}/>
           </Route>
           <Redirect exact from={`${path}`} to={`${path}/profile`} />
           <Route path={`${path}`}>

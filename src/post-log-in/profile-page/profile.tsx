@@ -12,9 +12,11 @@ import LoadingProfile from './profile-loading';
 import {auth} from '../../firebase';
 import PropTypes from 'prop-types';
 import {DAYS} from '../../util/business';
+// eslint-disable-next-line no-unused-vars
 import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
 import {newQueue, postBusiness} from '../../util/api-functions';
+
 
 interface ProfileProps {
   uid: string;

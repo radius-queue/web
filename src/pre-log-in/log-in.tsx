@@ -83,6 +83,7 @@ const BusinessLogInPage = () => {
           <Form.Group controlId="businessLogInEmail">
             <Form.Label>Email Address:</Form.Label>
             <Form.Control
+              className="input-box"
               type="text"
               name="email"
               value={formValues.email}
@@ -97,6 +98,7 @@ const BusinessLogInPage = () => {
           <Form.Group controlId="businessLogInPassword">
             <Form.Label>Password:</Form.Label>
             <Form.Control
+              className="input-box"
               type="password"
               name="password"
               value={formValues.password}
@@ -113,7 +115,7 @@ const BusinessLogInPage = () => {
         <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={auth}/>
       </Card>
       <div id="login-links">
-        <p>
+        <p id="new-to-radius-text">
           New to Radius? <Link className="login-link" to="./register">
             Register here.
           </Link>

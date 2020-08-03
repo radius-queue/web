@@ -124,6 +124,7 @@ const RegistrationPage = () => {
             <Form.Group controlId="email">
               <Form.Label>Email Address:</Form.Label>
               <Form.Control
+                className="input-box"
                 type="email"
                 name="email"
                 value={formValues.email}
@@ -140,6 +141,7 @@ const RegistrationPage = () => {
             <Form.Group controlId="password">
               <Form.Label>Password:</Form.Label>
               <Form.Control
+                className="input-box"
                 type="password"
                 name="password"
                 value={formValues.password}
@@ -157,6 +159,7 @@ const RegistrationPage = () => {
             <Form.Group controlId="confirm">
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
+                className="input-box"
                 type="password"
                 name="confirm"
                 value={formValues.confirm}
@@ -177,7 +180,7 @@ const RegistrationPage = () => {
         </Card.Body>
 
       </Card>
-      <div>
+      <div id="already-account">
         Already have an account? <Link to="./log-in">
           Sign in here.
         </Link>
