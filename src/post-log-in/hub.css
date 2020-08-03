@@ -17,12 +17,39 @@
   height: 100%;
   max-width: 100%;
   justify-content: space-between;
-  background-color: var(--white);
+  background-color: var(--dark);
   color: var(--black);
 }
 
 #hub-nav {
   height: 6vh;
+  background-color: var(--light) !important;
+  border: 4px solid var(--light);
+}
+
+#hub-nav .btn {
+  background-color: var(--dark);
+  border-color: var(--dark);
+  color: 'white';
+  font-weight: bold;
+}
+
+#hub-nav .btn:hover {
+  background-color: var(--dark-hover);
+}
+
+.nav-link {
+  color: var(--dark);
+  opacity: .8;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  opacity: 1;
+}
+
+.active {
+  opacity: 1;
 }
 
 .active {
