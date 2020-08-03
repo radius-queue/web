@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import postQueue from '../../util/post-queue';
+import {postQueue} from '../../util/api-functions';
 import {Queue} from '../../util/queue';
 
 interface QueueControlsProps {
@@ -22,7 +22,7 @@ interface QueueControlsProps {
  */
 const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
   const newQ : Queue =
-    new Queue(queue.name, queue.end, queue.uid, true, queue.parties);
+    new Queue(queue.name, queue.uid, true, queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };
@@ -34,7 +34,7 @@ const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
  */
 const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
   const newQ : Queue =
-    new Queue(queue.name, queue.end, queue.uid, false, queue.parties);
+    new Queue(queue.name, queue.uid, false, queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };

@@ -5,23 +5,20 @@ import firebase from 'firebase/app';
 export class Queue {
   name : string;
   parties: Party[]; // where parties[0] is the front of the line
-  end: Date;
   uid : string;
   open: boolean;
 
   /**
    * @param {string} name Name of Queue
-   * @param {Date} end End time
    * @param {string} uid Uid of Queue
    * @param {boolean} open true if queue is open
    * @param {Party[]} parties Optional field for initializing current queue,
    *    Default value is set to empty array
    */
-  constructor(name: string, end: Date, uid: string, open: boolean,
+  constructor(name: string, uid: string, open: boolean,
       parties?: Party[]) {
     this.name = name;
     this.parties = parties ? parties :[];
-    this.end = end;
     this.open = open;
     this.uid = uid;
   }
@@ -72,11 +69,11 @@ export class Party {
   static messageFromFB(messages: any[]): [Date, string][] {
     const ret : [Date, string][] = [];
     if (messages) {
-      for (let i =0; i < messages.length; i++) {
-        const entry : [Date, string] =[new Date(), ''];
-        entry[0] = messages[i].date.toDate();
+      for (let i = 0; i < messages.length; i++) {
+        const entry = [];
+        entry[0] = new Date(messages[i].date);
         entry[1] = messages[i].message;
-        ret.push(entry);
+        ret.push(entry as [Date, string]);
       }
     }
     return ret;
@@ -111,7 +108,7 @@ export class Party {
           party.size,
           party.phoneNumber,
           party.quote,
-          party.checkIn.toDate(),
+          new Date(party.checkIn),
           party.lastName,
           this.messageFromFB(party.messages),
         ];
@@ -141,7 +138,6 @@ export const queueConverter = {
     return {
       name: q.name,
       parties: q.parties.map((e) => Party.toFirebase(e)),
-      end: firebase.firestore.Timestamp.fromDate(q.end!),
       open: q.open,
     };
   },
@@ -149,7 +145,6 @@ export const queueConverter = {
     const data = snapshot.data(options);
     return new Queue(
         data.name,
-        data.end.toDate(),
         '',
         data.open,
         data.parties.map((party: any)=> Party.fromFirebase(party)),

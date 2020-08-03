@@ -2,9 +2,12 @@ import React, {useState, useEffect, useRef} from 'react';
 import {Queue, Party} from '../../util/queue';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
-import {AddCustomerModal, DeleteCustomerModal,
-  ClearModal} from './queue-modals';
-import postQueue from '../../util/post-queue';
+import {
+  AddCustomerModal,
+  DeleteCustomerModal,
+  ClearModal,
+} from './queue-modals';
+import {postQueue} from '../../util/api-functions';
 import {QueueListener} from '../../util/queue-listener';
 import UserCard from './queue-card';
 import QueueList from './queue-list';
@@ -85,7 +88,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
     const list: Party[] = stateQ!.parties.slice();
     list.push(party);
     const newQueue : Queue =
-      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
+      new Queue(stateQ.name, stateQ.uid, stateQ.open, list);
     setQ(newQueue);
     postQueue(newQueue);
   };
@@ -97,7 +100,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
     const newQ: Queue =
-      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, list);
+      new Queue(stateQ.name, stateQ.uid, stateQ.open, list);
     setQ(newQ);
     setParty(undefined);
     postQueue(newQ);
@@ -108,7 +111,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
    */
   const clearQueue = () => {
     const newQ: Queue =
-      new Queue(stateQ.name, stateQ.end, stateQ.uid, stateQ.open, []);
+      new Queue(stateQ.name, stateQ.uid, stateQ.open, []);
     setQ(newQ);
     setParty(undefined);
     postQueue(newQ);

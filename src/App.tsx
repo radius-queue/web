@@ -7,7 +7,7 @@ import LandingPageNav from './pre-log-in/landing-nav';
 import {Hub} from './post-log-in/hub';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import {auth, functions} from './firebase';
+import {auth} from './firebase';
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,11 +25,6 @@ import QueueURLViewer from './pre-log-in/queue-url-viewer';
  */
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  
-  const func = functions.httpsCallable('getQueueInfo');
-  func({uid: '00xcsacs4xTgfmhuJbder8PViXT2'}).then((ret) =>{
-     console.log(ret.data);
-  });
 
   useEffect(() => {
     const unsub: firebase.Unsubscribe = auth.onAuthStateChanged((newUser) => {

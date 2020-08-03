@@ -1,6 +1,6 @@
 import React from 'react';
 import {timeDiffInMinutes} from '../../logic/logic';
-import postQueue from '../../util/post-queue';
+import {postQueue} from '../../util/api-functions';
 import {Queue, Party} from '../../util/queue';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
@@ -45,7 +45,6 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
 
       const newQ : Queue = new Queue(
           queue.name,
-          queue.end,
           queue.uid,
           queue.open,
           list,

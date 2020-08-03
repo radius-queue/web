@@ -22,9 +22,7 @@ import {
   Redirect,
   NavLink,
 } from 'react-router-dom';
-import getBusiness from '../util/get-business';
-import getQueue from '../util/get-queue';
-
+import {getBusiness, getQueue} from '../util/api-functions';
 /**
  * Presents the nav bar with links to the hub pages.
  * Retrieves the user's business and queue for presenting on those pages.
@@ -42,9 +40,9 @@ export const Hub = () => {
        * Retrieves the user's business info and sets the business for the page.
        */
       const queryForBusiness = async () => {
-        const val : Business | undefined =
-          await getBusiness(auth.currentUser!.uid);
-        setBusiness(val);
+        const newBusiness : Business | undefined = await getBusiness(auth.currentUser!.uid);
+
+        setBusiness(newBusiness);
       };
 
       queryForBusiness();
@@ -62,10 +60,9 @@ export const Hub = () => {
        */
       const queryForQueue = async () => {
         if (business) {
-          const val : Queue | undefined = await getQueue(
-              business!.locations[0].queues[0]);
+          const val : Queue | undefined = await getQueue(business.locations[0].queues[0]);
           if (val) {
-            setQueue(val!);
+            setQueue(val);
           }
         }
       };

@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import {DAYS} from '../../util/business';
 import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
-import {functions} from '../../firebase';
+import {newQueue, postBusiness} from '../../util/api-functions';
 
 interface ProfileProps {
   uid: string;
@@ -167,14 +167,13 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       );
       setBusiness(newBusiness);
       if (!business) {
-        const createNewQueue = functions.httpsCallable('createNewQueue');
-        createNewQueue({uid: uid, name: form.businessName}).then((ret) => {
-          console.log(ret.data);
-          setQueue(ret.data);
-        });
+        const returnedQueue : Queue = await newQueue(
+          auth.currentUser!.uid,
+          form.businessName,
+        );
+        setQueue(returnedQueue);
       }
-      const postBusiness = functions.httpsCallable('postBusiness');
-      postBusiness({business: newBusiness});
+      postBusiness(newBusiness);
     }
   };
 
