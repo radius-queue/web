@@ -17,6 +17,7 @@ import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
 import {newQueue, postBusiness} from '../../util/api-functions';
 import '../hub.css';
+import {parsePhoneNum} from '../../util/util-functions';
 
 interface ProfileProps {
   uid: string;
@@ -291,14 +292,20 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                   <Form.Control
                     type="text"
                     name="phoneNumber"
-                    value={form.phone === '' ? '' : parseInt(form.phone)}
+                    value={editing ?
+                      (form.phone === '' ? '' : parseInt(form.phone)) :
+                      parsePhoneNum(form.phone)
+                    }
                     placeholder="###-###-####"
-                    onChange={(e) => setForm({...form, phone: '' + e.target.value})}
+                    onChange={
+                      (e) => setForm({...form, phone: '' + e.target.value})
+                    }
                     isInvalid={submitted &&
                       form.phone.length !== 10}
                     isValid={submitted &&
                       form.phone.length === 10}
                     readOnly={!editing}
+                    maxLength={10}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter A 10 Digit Phone Number
