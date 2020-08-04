@@ -16,7 +16,7 @@ import {DAYS} from '../../util/business';
 import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
 import {newQueue, postBusiness} from '../../util/api-functions';
-
+import '../hub.css';
 
 interface ProfileProps {
   uid: string;
@@ -201,144 +201,153 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
     isBusinessLoading ? <LoadingProfile/> :
     <div>
       <Card id="profile-container">
-        <Card.Title className="form-header-profile">
-          Business Profile
-        </Card.Title>
-        <Card.Body>
-          <Form noValidate onSubmit={submitForm}>
-            <Form.Group controlId="businessName">
-              <Form.Label>Business Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="businessName"
-                onChange={(e) =>
-                  setForm({...form, businessName: e.target.value})}
-                value={form.businessName}
-                isValid={submitted &&
-                  form.businessName.length > 0}
-                isInvalid={submitted &&
-                  form.businessName.length === 0}
-                placeholder={'My Amazing Business'}
-                readOnly={!editing}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter a Business Name
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="type">
-              <Form.Label>Business Type</Form.Label>
-              <Form.Control
-                type="text"
-                name="type"
-                onChange={(e) =>
-                  setForm({...form, type: e.target.value})}
-                value={form.type}
-                isValid={submitted &&
-                  form.type.length > 0}
-                isInvalid={submitted &&
-                  form.type.length === 0}
-                placeholder={'Pizzeria'}
-                readOnly={!editing}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter a Business Name
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Row>
-              <Col>
-                <Form.Group controlId="firstName">
-                  <Form.Label>First Name</Form.Label>
+        <div id="scroll-container">
+          <div id="scroll-content-container">
+            <Card.Title className="form-header-profile">
+              Business Profile
+            </Card.Title>
+            <Card.Body>
+              <Form noValidate onSubmit={submitForm}>
+                <Form.Group controlId="businessName">
+                  <Form.Label>Business Name</Form.Label>
                   <Form.Control
                     type="text"
-                    name="firstName"
-                    placeholder="John"
+                    name="businessName"
                     onChange={(e) =>
-                      setForm({...form, firstName: e.target.value})}
-                    isValid={submitted && form.firstName.length > 0}
-                    isInvalid={submitted && form.firstName.length === 0}
-                    value={form.firstName}
+                      setForm({...form, businessName: e.target.value})}
+                    value={form.businessName}
+                    isValid={submitted &&
+                      form.businessName.length > 0}
+                    isInvalid={submitted &&
+                      form.businessName.length === 0}
+                    placeholder={'My Amazing Business'}
                     readOnly={!editing}
                   />
                   <Form.Control.Feedback type='invalid'>
-                    Please Enter a First Name
+                    Please Enter a Business Name
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="lastName">
-                  <Form.Label>Last Name</Form.Label>
+                <Form.Group controlId="type">
+                  <Form.Label>Business Type</Form.Label>
                   <Form.Control
                     type="text"
-                    name="lastName"
-                    placeholder="Smith"
+                    name="type"
                     onChange={(e) =>
-                      setForm({...form, lastName: e.target.value})}
-                    isValid={submitted && form.lastName.length > 0}
-                    isInvalid={submitted && form.lastName.length === 0}
-                    value={form.lastName}
+                      setForm({...form, type: e.target.value})}
+                    value={form.type}
+                    isValid={submitted &&
+                      form.type.length > 0}
+                    isInvalid={submitted &&
+                      form.type.length === 0}
+                    placeholder={'Pizzeria'}
                     readOnly={!editing}
                   />
                   <Form.Control.Feedback type='invalid'>
-                    Please Enter a Last Name
+                    Please Enter a Business Name
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Col>
-            </Form.Row>
-            <Form.Group controlId="phone">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="number"
-                name="phoneNumber"
-                value={form.phone === '' ? '' : parseInt(form.phone)}
-                placeholder="###-###-####"
-                onChange={(e) => setForm({...form, phone: '' + e.target.value})}
-                isInvalid={submitted &&
-                  form.phone.length !== 10}
-                isValid={submitted &&
-                  form.phone.length === 10}
-                readOnly={!editing}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please Enter A 10 Digit Phone Number
-              </Form.Control.Feedback>
-            </Form.Group>
-            <AddressAutocomplete
-              onChange={(s: string) => setAddress(s)}
-              isValid={submitted && address.length > 0}
-              isInvalid={submitted && address.length === 0}
-              setCenter={setBuilding}
-              editable={editing}
-              key={`${editing}`}
-              value={address}
-            />
-            <ProfileHours
-              values={hours}
-              setValues={setHours}
-              openState={openState}
-              setOpenState={setOpenState}
-              submitted={submitted}
-              editable={editing}
-            />
-            <Form.Group>
-              <Form.Label>Radius (m)</Form.Label>
-              <Form.Control
-                type='number'
-                value={Math.round(radius)}
-                readOnly
-              />
-              {editing &&
-                <Form.Text>Edit using the circle on the map.</Form.Text>}
-            </Form.Group>
-            {!editing ? <Button
+                <Form.Row>
+                  <Col>
+                    <Form.Group controlId="firstName">
+                      <Form.Label>First Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="firstName"
+                        placeholder="John"
+                        onChange={(e) =>
+                          setForm({...form, firstName: e.target.value})}
+                        isValid={submitted && form.firstName.length > 0}
+                        isInvalid={submitted && form.firstName.length === 0}
+                        value={form.firstName}
+                        readOnly={!editing}
+                      />
+                      <Form.Control.Feedback type='invalid'>
+                        Please Enter a First Name
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="lastName">
+                      <Form.Label>Last Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="lastName"
+                        placeholder="Smith"
+                        onChange={(e) =>
+                          setForm({...form, lastName: e.target.value})}
+                        isValid={submitted && form.lastName.length > 0}
+                        isInvalid={submitted && form.lastName.length === 0}
+                        value={form.lastName}
+                        readOnly={!editing}
+                      />
+                      <Form.Control.Feedback type='invalid'>
+                        Please Enter a Last Name
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Form.Row>
+                <Form.Group controlId="phone">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="phoneNumber"
+                    value={form.phone === '' ? '' : parseInt(form.phone)}
+                    placeholder="###-###-####"
+                    onChange={(e) => setForm({...form, phone: '' + e.target.value})}
+                    isInvalid={submitted &&
+                      form.phone.length !== 10}
+                    isValid={submitted &&
+                      form.phone.length === 10}
+                    readOnly={!editing}
+                  />
+                  <Form.Control.Feedback type='invalid'>
+                    Please Enter A 10 Digit Phone Number
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <AddressAutocomplete
+                  onChange={(s: string) => setAddress(s)}
+                  isValid={submitted && address.length > 0}
+                  isInvalid={submitted && address.length === 0}
+                  setCenter={setBuilding}
+                  editable={editing}
+                  key={`${editing}`}
+                  value={address}
+                />
+                <ProfileHours
+                  values={hours}
+                  setValues={setHours}
+                  openState={openState}
+                  setOpenState={setOpenState}
+                  submitted={submitted}
+                  editable={editing}
+                />
+                <Form.Group>
+                  <Form.Label>Radius (m)</Form.Label>
+                  <Form.Control
+                    type='number'
+                    value={Math.round(radius)}
+                    readOnly
+                  />
+                  {editing &&
+                    <Form.Text>Edit using the circle on the map.</Form.Text>}
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </div>
+        </div>
+        {!editing ? <Button
               variant='warning'
               key='edit'
               onClick={() => {
                 setEditing(true);
                 disableOtherNavs();
               }}
-              style={{width: '100%'}}>Edit Your Info</Button> :
+              className='editing-button-group'
+              >
+                Edit Your Info
+              </Button> :
                 business ? (
-                  <div id='editing-buttons'>
+                  <div className='editing-button-group'>
                     <Button
                       key='cancel'
                       className='editing-button'
@@ -370,8 +379,6 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                   </Button>
                 )
             }
-          </Form>
-        </Card.Body>
       </Card>
       <Card id='map-container'>
         <Map
