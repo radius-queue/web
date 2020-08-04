@@ -13,8 +13,13 @@ const DefaultLandingPage = () => {
       <div>
         <img
           className="hero-image"
-          src="../../images/storefront-radii-dark.png"
+          src="../../images/storefront-only.png"
           alt="Businesses with Radii"
+        />
+        <img
+          className="radii-outline"
+          src="../../images/radii-outline.png"
+          alt="Radii outline"
         />
         <div>
           <h1 className="hero-text-title">Radius for Business</h1>
