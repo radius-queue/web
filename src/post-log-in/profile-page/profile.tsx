@@ -17,7 +17,12 @@ import {Queue, Party} from '../../util/queue';
 import ProfileHours from './profile-hours';
 import {newQueue, postBusiness} from '../../util/api-functions';
 import '../hub.css';
-import {parsePhoneNum} from '../../util/util-functions';
+import {
+  parsePhoneNum,
+  // eslint-disable-next-line no-unused-vars
+  ChangePhoneProps,
+  changePhone,
+} from '../../util/util-functions';
 
 interface ProfileProps {
   uid: string;
@@ -60,6 +65,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
   const [openState, setOpenState] = useState<boolean[]>(DAYS.map(() => false));
   const [hours, setHours] =
     useState<[string, string][]>(DAYS.map(() => ['', '']));
+  const [phoneDisplay, setPhoneDisplay] = useState<string>(initialState.phone);
 
   useEffect(() => {
     if (business !== null) {
@@ -90,6 +96,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
             business.locations[0].coordinates[1]));
         setRadius(business.locations[0].geoFenceRadius);
         setBusiness(business);
+        setPhoneDisplay(parsePhoneNum(business.locations[0].phoneNumber));
       } else if (business === undefined) {
         setEditing(true);
       }
@@ -129,6 +136,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       business!.locations[0].coordinates[1]));
     setRadius(business!.locations[0].geoFenceRadius);
     setBusiness(business!);
+    setPhoneDisplay(parsePhoneNum(business!.locations[0].phoneNumber));
   };
 
   /**
@@ -196,6 +204,18 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       }
     }
     return address.length > 0;
+  };
+
+ /**
+   * Utilizes the changePhone util function to support formatted
+   * phone number display while maintaining a stripped down phone
+   * number string.
+   * @param {string} next The user phone number input.
+   */
+  const changePhoneNum = (next: string) => {
+    const {numbers, display}: ChangePhoneProps = changePhone(next);
+    setForm({...form, phone: numbers});
+    setPhoneDisplay(display);
   };
 
   return (
@@ -292,20 +312,17 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                   <Form.Control
                     type="text"
                     name="phoneNumber"
-                    value={editing ?
-                      (form.phone === '' ? '' : parseInt(form.phone)) :
-                      parsePhoneNum(form.phone)
-                    }
+                    value={phoneDisplay}
                     placeholder="###-###-####"
                     onChange={
-                      (e) => setForm({...form, phone: '' + e.target.value})
+                      (next) => changePhoneNum(next.target.value)
                     }
                     isInvalid={submitted &&
                       form.phone.length !== 10}
                     isValid={submitted &&
                       form.phone.length === 10}
                     readOnly={!editing}
-                    maxLength={10}
+                    maxLength={13}
                   />
                   <Form.Control.Feedback type='invalid'>
                     Please Enter A 10 Digit Phone Number
