@@ -51,19 +51,19 @@ export function postPic(file: File, isBusiness: boolean,
 /**
  * Obtain image from database
  * @param {string} path path to access image (ex: businessImages/IMG_1391.HEIC)
+ * @param {function} callback
  */
-export async function getPic(path: string) {
+export async function getPic(path: string, callback: (URL : string) => void) {
   const storageRef = storage.ref();
   const starsRef = storageRef.child(path);
 
   // Get the download URL
-  starsRef.getDownloadURL().then(function(url:string) {
-    return url;
+  await starsRef.getDownloadURL().then(function(url:string) {
+    callback(url);
   }).catch(function(error) {
     console.log(error.code);
-    return '';
+    callback('');
     // A full list of error codes is available at
     // https://firebase.google.com/docs/storage/web/handle-errors
   });
-  return '';
 }

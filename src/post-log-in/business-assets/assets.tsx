@@ -3,6 +3,9 @@ import {Business} from '../../util/business';
 import Form from 'react-bootstrap/Form';
 import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
+import { postBusiness } from '../../util/api-functions';
+import { auth } from '../../firebase';
+import './assets.css';
 
 
 interface AssetsProps {
@@ -16,26 +19,40 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
-    // const images = document.createElement('div');
-    // images.id = 'image-holder';
-
-    const imagePathList = business!.locations[0].images;
-    imagePathList!.forEach(async (path: string) => {
-      const url = await getPic(path) as string;
-      if (url !== '') {
-        setImages([...images, url]);
-      }
-    });
-    console.log(images);
+    loadImages();
   }, []);
+
+  /**
+   *
+   */
+  async function loadImages() {
+    const imagePathList = business!.locations[0].images;
+    const imageList : string[] = [];
+    for (let i = 0; i < imagePathList.length; i ++) {
+      const path = imagePathList[i];
+      await getPic(path, (url:string) => {
+        if (url !== '') {
+          imageList.push(url);
+        }
+      });
+    }
+    setImages(imageList);
+  };
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (file) {
-      postPic(file, true, undefined, (url: string) => {
-        setImages([...images, url]);
-        console.log(images);
-      });
+      if (file.type === 'image/png' || file.type === 'image/jpeg') {
+        postPic(file, true, undefined, (url: string) => {
+          if (url !== '') {
+            business!.locations[0].images.push('businessImages/' +
+              auth.currentUser!.uid + '/' + file.name);
+            postBusiness(business!);
+            setImages([...images, url]);
+            console.log(images);
+          }
+        });
+      }
     }
   };
 
@@ -47,26 +64,51 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
     }
   };
 
+  const displayImages = () => {
+    // const imageHolder = document.createElement('div');
+    // imageHolder.id = 'image-holder';
+    // images.forEach((img:string) => {
+    //   const entry = document.createElement('img');
+    //   entry.src = img;
+    //   entry.alt = img;
+    //   imageHolder.appendChild(entry);
+    // });
+    // return imageHolder;
+    return (
+      <div id='img-holder'>
+        {
+          images.map((img:string, idx: number) => (
+            <img src={img} alt={img} key={idx} className='img-asset'/>
+          ))
+        }
+      </div>
+    );
+  };
+
   return (
-    <Form noValidate onSubmit={submitForm}>
-      <Form.Group>
-        <Form.File
-          name="file"
-          label="File"
-          onChange={ (e : any) =>getFile('validationFormik107')}
-          // isInvalid={!!errors.file}
-          // feedback={errors.file}
-          id="validationFormik107"
-          // feedbackTooltip
-        />
-      </Form.Group>
-      <Button
-        type="submit"
-        variant='primary'
-      >
-        Post Image
-      </Button>
-    </Form>
+    <div>
+      {displayImages()}
+      <Form noValidate onSubmit={submitForm}>
+        <Form.Group>
+          <Form.File
+            name="file"
+            label="File"
+            onChange={ (e : any) =>getFile('validationFormik107')}
+            // isInvalid={!!errors.file}
+            // feedback={errors.file}
+            id="validationFormik107"
+            // feedbackTooltip
+          />
+        </Form.Group>
+        <Button
+          type="submit"
+          variant='primary'
+        >
+          Post Image
+        </Button>
+      </Form>
+    </div>
+
   );
 };
 
