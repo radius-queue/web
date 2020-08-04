@@ -4,6 +4,14 @@
   margin: 2px !important;
 }
 
+.card-header {
+  background-color: var(--light) !important;
+  border-color: var(--light);
+  border-width: 0 !important;
+  color: white;
+  font-weight: bold;
+}
+
 .col-md-3 {
   padding-left: 6px !important;
   padding-right: 6px !important;
@@ -12,4 +20,8 @@
 .col-md-2 {
   padding-left: 6px !important;
   padding-right: 6px !important;
+}
+
+#queue {
+  border: 0;
 }
