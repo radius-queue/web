@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import {Party} from '../../util/queue';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line no-unused-vars
+import {changePhone, ChangePhoneProps} from '../../util/util-functions';
 
 interface ModalProps {
   show: boolean, // wheter the modal is displayed or not
@@ -23,7 +25,8 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
   const [firstName, setFirst] = useState('');
   const [lastName, setLast] = useState('');
   const [size, setSize] = useState(0);
-  const [phoneNumber, setNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneDisplay, setPhoneDisplay] = useState('');
   const [quote, setQuote] = useState(0);
   const [validated, setValidated] = useState(false);
 
@@ -35,13 +38,26 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
     setFirst('');
     setLast('');
     setSize(0);
-    setNumber('');
+    setPhoneNumber('');
+    setPhoneDisplay('');
   };
 
   const onHide = () => {
     setValidated(false);
     close();
     clearState();
+  };
+
+  /**
+   * Utilizes the changePhone util function to support formatted
+   * phone number display while maintaining a stripped down phone
+   * number string.
+   * @param {string} next The user phone number input.
+   */
+  const changePhoneNum = (next: string) => {
+    const {numbers, display}: ChangePhoneProps = changePhone(next);
+    setPhoneNumber(numbers);
+    setPhoneDisplay(display);
   };
 
   /**
@@ -68,7 +84,8 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
     }
 
     if (checkValid()) {
-      const party : Party = new Party(firstName, size, phoneNumber, quote, new Date(),lastName);
+      const party : Party =
+        new Party(firstName, size, phoneNumber, quote, new Date(), lastName);
 
       mainAction(party);
       onHide();
@@ -122,13 +139,14 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               placeholder='(555)555-5555'
-              type='number'
+              type='text'
               isValid={validated && phoneNumber.length === 10}
               isInvalid={validated && phoneNumber.length !== 10}
-              onChange={(e) => setNumber('' + e.target.value)}
+              onChange={(e) => changePhoneNum(e.target.value)}
               name='phoneNumber'
-              value={phoneNumber === '' ? '' :parseInt(phoneNumber)}
+              value={phoneDisplay}
               required
+              maxLength={13}
             />
             <Form.Control.Feedback type='invalid'>
               Please Enter a 10 Digit Phone Number
