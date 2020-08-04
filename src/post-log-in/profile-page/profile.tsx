@@ -200,14 +200,14 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
   return (
     isBusinessLoading ? <LoadingProfile/> :
     <div>
-      <Card id="profile-container">
-        <div id="scroll-container">
-          <div id="scroll-content-container">
-            <Card.Title className="form-header-profile">
-              Business Profile
-            </Card.Title>
-            <Card.Body>
-              <Form noValidate onSubmit={submitForm}>
+      <Form noValidate onSubmit={submitForm}>
+        <Card id="profile-container">
+          <div id="scroll-container">
+            <div id="scroll-content-container">
+              <Card.Title className="form-header-profile">
+                Business Profile
+              </Card.Title>
+              <Card.Body>
                 <Form.Group controlId="businessName">
                   <Form.Label>Business Name</Form.Label>
                   <Form.Control
@@ -289,7 +289,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                 <Form.Group controlId="phone">
                   <Form.Label>Phone Number</Form.Label>
                   <Form.Control
-                    type="number"
+                    type="text"
                     name="phoneNumber"
                     value={form.phone === '' ? '' : parseInt(form.phone)}
                     placeholder="###-###-####"
@@ -331,53 +331,53 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                   {editing &&
                     <Form.Text>Edit using the circle on the map.</Form.Text>}
                 </Form.Group>
-              </Form>
-            </Card.Body>
+              </Card.Body>
+            </div>
           </div>
-        </div>
-        {!editing ? <Button
-              variant='warning'
-              key='edit'
-              onClick={() => {
-                setEditing(true);
-                disableOtherNavs();
-              }}
-              className='editing-button-group'
-              >
-                Edit Your Info
-              </Button> :
-                business ? (
-                  <div className='editing-button-group'>
-                    <Button
-                      key='cancel'
-                      className='editing-button'
-                      variant='danger'
-                      onClick={() => cancelEdits()}
-                    >
-                      Cancel
-                    </Button>
+          {!editing ? <Button
+                variant='warning'
+                key='edit'
+                onClick={() => {
+                  setEditing(true);
+                  disableOtherNavs();
+                }}
+                className='editing-button-group'
+                >
+                  Edit Your Info
+                </Button> :
+                  business ? (
+                    <div className='editing-button-group'>
+                      <Button
+                        key='cancel'
+                        className='editing-button'
+                        variant='danger'
+                        onClick={() => cancelEdits()}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        key='submit'
+                        type='submit'
+                        className='editing-button'
+                        variant='success'
+                        id='submit-changes-button'
+                      >
+                        Submit Changes
+                      </Button>
+                    </div>
+                  ) : (
                     <Button
                       key='submit'
                       type='submit'
-                      className='editing-button'
+                      className='editing-button-group'
                       variant='success'
-                      id='submit-changes-button'
                     >
-                      Submit Changes
+                      Submit Business Profile
                     </Button>
-                  </div>
-                ) : (
-                  <Button
-                    key='submit'
-                    type='submit'
-                    className='editing-button-group'
-                    variant='success'
-                  >
-                    Submit Business Profile
-                  </Button>
-                )
-            }
-      </Card>
+                  )
+              }
+        </Card>
+      </Form>
       <Card id='map-container'>
         <Map
           buildingLocation={building}
