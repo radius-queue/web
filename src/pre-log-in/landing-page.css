@@ -78,6 +78,13 @@
   animation: swing-in 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
+.radii-outline {
+  position: absolute;
+  top: 10%;
+  left: 0%;
+  animation: fade-in 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
 @keyframes tracking-in-expand {
   0% {
     letter-spacing: -0.5em;
@@ -125,15 +132,27 @@
     opacity: 0;
   }
   10% {
-    filter: blur(20px);
+    filter: blur(5px);
     opacity: 0.5;
   }
   60% {
-    filter: blur(20px);
+    filter: blur(5px);
     opacity: 0.5;
   }
   100% {
     filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
     opacity: 1;
   }
 }
