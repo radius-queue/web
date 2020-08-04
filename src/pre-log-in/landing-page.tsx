@@ -16,14 +16,10 @@ const DefaultLandingPage = () => {
           src="../../images/storefront-radii-dark.png"
           alt="Businesses with Radii"
         />
-        <div className="hero-text">
-          <h1>Radius</h1>
-          <p>The waiting room reimagined.</p>
+        <div>
+          <h1 className="hero-text-title">Radius for Business</h1>
+          <p className="hero-text-subtitle">The waiting room reimagined.</p>
         </div>
-      </div>
-      <div id="landing-page-display-text">
-        <h1>Radius for Business</h1>
-        <p>Welcome to a new era of waiting rooms.</p>
       </div>
     </div>
   );
