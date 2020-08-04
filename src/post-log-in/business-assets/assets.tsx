@@ -86,7 +86,8 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
   };
 
   return (
-    <div>
+    <div id='assets-page'>
+      <h1>Your Images:</h1>
       {displayImages()}
       <Form noValidate onSubmit={submitForm}>
         <Form.Group>

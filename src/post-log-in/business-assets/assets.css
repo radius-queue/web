@@ -1,3 +1,17 @@
 .img-asset {
   max-width: 300px;
+  margin: 20px;
+}
+
+#img-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#assets-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: turquoise;
 }
