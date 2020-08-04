@@ -370,10 +370,8 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                   <Button
                     key='submit'
                     type='submit'
-                    className='editing-button'
+                    className='editing-button-group'
                     variant='success'
-                    style={{width: '100%'}}
-                    id='submit-changes-button'
                   >
                     Submit Business Profile
                   </Button>

@@ -57,7 +57,7 @@
   cursor: default;
 }
 
-.card {
+#hub-content .card {
   border: 3pt solid var(--light) !important;
   border-radius: 6pt !important;
 }
