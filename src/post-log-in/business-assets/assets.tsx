@@ -1,8 +1,9 @@
-import {postPic, getPic} from '../../util/storage-func';
+import {postPic, getBusPic} from '../../util/storage-func';
 import {Business} from '../../util/business';
 import Form from 'react-bootstrap/Form';
 import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import { postBusiness } from '../../util/api-functions';
 import { auth } from '../../firebase';
 import './assets.css';
@@ -17,6 +18,7 @@ interface AssetsProps {
 const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
   const [file, setFile] = useState<File| null>(null);
   const [images, setImages] = useState<string[]>([]);
+  const [progress, setProgress] = useState<number>(-1);
 
   useEffect(() => {
     loadImages();
@@ -30,7 +32,7 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
     const imageList : string[] = [];
     for (let i = 0; i < imagePathList.length; i ++) {
       const path = imagePathList[i];
-      await getPic(path, (url:string) => {
+      await getBusPic(path, (url:string) => {
         if (url !== '') {
           imageList.push(url);
         }
@@ -43,13 +45,13 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
     e.preventDefault();
     if (file) {
       if (file.type === 'image/png' || file.type === 'image/jpeg') {
-        postPic(file, true, undefined, (url: string) => {
+        postPic(file, true, undefined, setProgress, (url: string) => {
           if (url !== '') {
-            business!.locations[0].images.push('businessImages/' +
-              auth.currentUser!.uid + '/' + file.name);
+            if (!business!.locations[0].images.includes(file.name)) {
+              business!.locations[0].images.push(file.name);
+            }
             postBusiness(business!);
             setImages([...images, url]);
-            console.log(images);
           }
         });
       }
@@ -108,6 +110,9 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
           Post Image
         </Button>
       </Form>
+      <div id='progress-bar-container'>
+        {(progress >= 0) ? <ProgressBar now={progress} /> : <div/>}
+      </div>
     </div>
 
   );

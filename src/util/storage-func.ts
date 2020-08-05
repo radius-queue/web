@@ -7,11 +7,13 @@ import firebase from 'firebase/app';
  * @param {boolean} isBusiness true if user is business, false if logged in
  *  customer
  * @param {JSON} metadata set of metadata
+ * @param {function} setProgress return progress percentage to be displayed
  * @param {function} callback takes in download url if successful post, empty
  *  string if failed
  */
 export function postPic(file: File, isBusiness: boolean,
-    metadata: any = undefined, callback: (URL : string) => void) {
+    metadata: any = undefined, setProgress: (progress : number) => void,
+    callback: (URL : string) => void) {
   const storageRef = storage.ref();
   metadata = (metadata) ? metadata : {contentType: 'image/jpeg'};
   let path = (isBusiness) ? 'businessImages/' : 'customerImages';
@@ -26,6 +28,7 @@ export function postPic(file: File, isBusiness: boolean,
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
+        setProgress(progress);
         switch (snapshot.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
             console.log('Upload is paused');
@@ -50,7 +53,7 @@ export function postPic(file: File, isBusiness: boolean,
 
 /**
  * Obtain image from database
- * @param {string} path path to access image (ex: businessImages/IMG_1391.HEIC)
+ * @param {string} path path to access image
  * @param {function} callback
  */
 export async function getPic(path: string, callback: (URL : string) => void) {
@@ -66,4 +69,15 @@ export async function getPic(path: string, callback: (URL : string) => void) {
     // A full list of error codes is available at
     // https://firebase.google.com/docs/storage/web/handle-errors
   });
+}
+
+/**
+ * Obtain image from database
+ * @param {string} path path to access image
+ * @param {function} callback
+ */
+export async function getBusPic(path: string, callback:
+    (URL : string) => void) {
+  await getPic('businessImages/' + auth.currentUser!.uid + '/largeJPG_' + path,
+      callback);
 }
