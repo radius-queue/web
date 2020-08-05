@@ -2,6 +2,7 @@
 import {Party, Queue} from './queue';
 // eslint-disable-next-line no-unused-vars
 import {Business} from './business';
+import {auth} from '../firebase';
 
 const ROOT_URL : string = 'https://us-central1-ahead-9d906.cloudfunctions.net/widgets';
 
@@ -14,8 +15,15 @@ const ROOT_URL : string = 'https://us-central1-ahead-9d906.cloudfunctions.net/wi
  * business object or undefined if it did not exist.
  * @throws {Error} if the connection with Firestore is severed
  */
-export const getBusiness = async (uid: string) => {
-  const response = await fetch(`${ROOT_URL}/api/businesses?uid=${uid}`);
+export const getBusiness = async (uid: string) :
+  Promise<Business | undefined> => {
+  const idToken : string = await auth.currentUser!.getIdToken();
+
+  const response = await fetch(
+      `${ROOT_URL}/api/businesses?uid=${uid}`,
+      fetchOptions('GET', idToken),
+  );
+
   if (response.status === 500) {
     throw new Error('Problem Connecting to Firestore');
   }
@@ -39,7 +47,16 @@ export const getBusiness = async (uid: string) => {
  * @throws {Error} if the connection with Firestore is severed
  */
 export const getQueue = async (uid: string): Promise<Queue | undefined> => {
-  const response = await fetch(`${ROOT_URL}/api/queues?uid=${uid}`);
+  const idToken : string = await auth.currentUser!.getIdToken();
+
+  const response = await fetch(
+      `${ROOT_URL}/api/queues?uid=${uid}`,
+      fetchOptions('GET', idToken),
+  );
+
+  if (response.status === 403) {
+    throw new Error('Unauthorized');
+  }
   if (response.status === 500) { // error on server (status === 500)
     // This would be a very big problem, will want the user
     // to refresh the page
@@ -48,6 +65,7 @@ export const getQueue = async (uid: string): Promise<Queue | undefined> => {
   if (response.status === 404) { // queue doesn't exist, shouldn't happen
     return undefined;
   }
+
   const value = await response.json();
   value.parties = value.parties.map((val : any) => partyFromAPI(val));
   return value;
@@ -57,12 +75,20 @@ export const getQueue = async (uid: string): Promise<Queue | undefined> => {
  * This function posts the given business to Firestore
  *
  * @param {Business} business the business to be posted
+ * @param {string} idToken the firebase id token
  * @throws {Error} if the connection with Firestore is severed or
  * the business object is missing properties (both should not occur)
  */
 export const postBusiness = async (business: Business) => {
-  const body = {business};
-  const response = await fetch(`${ROOT_URL}/api/businesses`, postOptions(body));
+  const idToken : string = await auth.currentUser!.getIdToken();
+
+  const options : any = fetchOptions('POST', idToken);
+  options.body = JSON.stringify({business});
+
+  const response = await fetch(`${ROOT_URL}/api/businesses`, options);
+  if (response.status === 403) {
+    throw new Error('Unauthorized');
+  }
   if (response.status === 400) {
     throw new Error('Malformed Request');
   }
@@ -79,9 +105,15 @@ export const postBusiness = async (business: Business) => {
  * the queue object is missing properties (both should not occur)
  */
 export const postQueue = async (queue : Queue) => {
-  const body = {queue};
-  console.log(body);
-  const response = await fetch(`${ROOT_URL}/api/queues`, postOptions(body));
+  const idToken : string = await auth.currentUser!.getIdToken();
+
+  const options : any = fetchOptions('POST', idToken);
+  options.body = JSON.stringify({queue});
+
+  const response = await fetch(`${ROOT_URL}/api/queues`, options);
+  if (response.status === 403) {
+    throw new Error('Unauthorized');
+  }
   if (response.status === 400) {
     throw new Error('Malformed Request');
   }
@@ -100,11 +132,11 @@ export const postQueue = async (queue : Queue) => {
  * @throws {Error} if the connection with Firestore is severed
  */
 export const newQueue = async (uid: string, name: string) : Promise<Queue> => {
+  const idToken : string = await auth.currentUser!.getIdToken();
+
   const response = await fetch(
       `${ROOT_URL}/api/queues/new?uid=${uid}&name=${name}`,
-      {
-        method: 'POST',
-      },
+      fetchOptions('POST', idToken),
   );
 
   if (response.status === 500) {
@@ -114,13 +146,13 @@ export const newQueue = async (uid: string, name: string) : Promise<Queue> => {
   return await response.json();
 };
 
-const postOptions = (body: any) => (
+const fetchOptions = (method: string, token: string) => (
   {
-    method: 'POST',
+    method: method,
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
     },
-    body: JSON.stringify(body),
   }
 );
 
