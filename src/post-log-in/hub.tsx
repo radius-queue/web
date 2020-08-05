@@ -3,7 +3,6 @@ import QueueTab from './queue/queue-wrapper';
 // eslint-disable-next-line no-unused-vars
 import {Business} from '../util/business';
 import ProfilePage from './profile-page/profile';
-import AssetsPage from './business-assets/assets';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './hub.css';
 import Navbar from 'react-bootstrap/Navbar';
@@ -24,6 +23,7 @@ import {
   NavLink,
 } from 'react-router-dom';
 import {getBusiness, getQueue} from '../util/api-functions';
+import AssetsWrapper from './business-assets/assets-wrapper';
 /**
  * Presents the nav bar with links to the hub pages.
  * Retrieves the user's business and queue for presenting on those pages.
@@ -116,7 +116,7 @@ export const Hub = () => {
               business={business} setQueue={setQueue}/>
           </Route>
           <Route exact path={`${path}/assets`}>
-            <AssetsPage uid={auth.currentUser!.uid} setBusiness={setBusiness}
+            <AssetsWrapper uid={auth.currentUser!.uid} setBusiness={setBusiness}
               business={business}/>
           </Route>
           <Redirect exact from={`${path}`} to={`${path}/profile`} />
