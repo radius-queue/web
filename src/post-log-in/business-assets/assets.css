@@ -7,11 +7,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: scroll;
+  width: 80vw;
+  margin-bottom: 2vh;
 }
 
 #assets-page {
+  margin-top: 2vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: turquoise;
+}
+
+#progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  height: auto;
+  width: 80vw;
+  margin: 10px;
+}
+
+#hub-content {
+  overflow-y: hidden;
 }
