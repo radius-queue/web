@@ -79,10 +79,39 @@
 }
 
 .radii-outline {
+  max-height: 50%;
+  max-width: auto;
+  animation: fade-in 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.radius-container {
   position: absolute;
   top: 10vh;
   left: 0vw;
-  animation: fade-in 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background-color: black;
+}
+
+.radius-container:hover .overlay {
+  opacity: 0.5;
+}
+
+.overlay-text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 42.5vh;
+  left: 40vw;
+  text-align: center;
 }
 
 @keyframes tracking-in-expand {
