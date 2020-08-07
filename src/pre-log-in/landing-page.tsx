@@ -29,19 +29,11 @@ const DefaultLandingPage = () => {
   const callRedRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
     const redRadius = document.getElementById('red-radii-outline');
     const handler1 = (e: any) => {
-      console.log('red radius triggered');
       setRedHover(!redHover);
-      console.log(redHover);
-      console.log(greenHover);
-      console.log(blueHover);
     };
     redRadius?.addEventListener('mouseenter', handler1);
     const handler2 = (e: any) => {
-      console.log('red radius off');
       setRedHover(!redHover);
-      console.log(redHover);
-      console.log(greenHover);
-      console.log(blueHover);
     };
     redRadius?.addEventListener('mouseleave', handler2);
     return [handler1, handler2, redRadius!];
@@ -50,19 +42,11 @@ const DefaultLandingPage = () => {
   const callGreenRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
     const greenRadius = document.getElementById('green-radii-outline');
     const handler1 = (e: any) => {
-      console.log('green radius triggered');
       setGreenHover(!greenHover);
-      console.log(redHover);
-      console.log(greenHover);
-      console.log(blueHover);
     };
     greenRadius?.addEventListener('mouseenter', handler1);
     const handler2 = (e: any) => {
-      console.log('green radius off');
       setGreenHover(!greenHover);
-      console.log(redHover);
-      console.log(greenHover);
-      console.log(blueHover);
     };
     greenRadius?.addEventListener('mouseleave', handler2);
     return [handler1, handler2, greenRadius!];
@@ -71,19 +55,11 @@ const DefaultLandingPage = () => {
   const callBlueRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
     const blueRadius = document.getElementById('blue-radii-outline');
     const handler1 = (e: any) => {
-      console.log('blue radius triggered');
       setBlueHover(!blueHover);
-      console.log(redHover);
-      console.log(greenHover);
-      console.log(blueHover);
     };
     blueRadius?.addEventListener('mouseenter', handler1);
     const handler2 = (e: any) => {
-      console.log('blue radius off');
       setBlueHover(!blueHover);
-      console.log(redHover);
-      console.log(greenHover);
-      console.log(blueHover);
     };
     blueRadius?.addEventListener('mouseleave', handler2);
     return [handler1, handler2, blueRadius!];
@@ -127,7 +103,7 @@ const DefaultLandingPage = () => {
               alt="Businesses with Radii"
             />
           </div>
-          <div>
+          <div className={(redHover || greenHover || blueHover) ? 'hero-text-dim' : ''} >
             <h1 className="hero-text-title">Radius for Business</h1>
             <p className="hero-text-subtitle">The waiting room reimagined.</p>
           </div>
@@ -138,6 +114,10 @@ const DefaultLandingPage = () => {
               alt="Red Radii outline"
             />
           </div>
+          <div className={redHover ? 'red-text-on' : 'red-text-off'} >
+            <h1>Title 1</h1>
+            <p>Description goes here...</p>
+          </div>
           <div className={greenString}>
             <img
               id="green-radii-outline"
@@ -145,12 +125,20 @@ const DefaultLandingPage = () => {
               alt="Green Radii outline"
             />
           </div>
+          <div className={greenHover ? 'green-text-on' : 'green-text-off'} >
+            <h1>Title 2</h1>
+            <p>Description goes here...</p>
+          </div>
           <div className={blueString}>
             <img
               id="blue-radii-outline"
               src="../../images/blue-radius.png"
               alt="Blue Radii outline"
             />
+          </div>
+          <div className={blueHover ? 'blue-text-on' : 'blue-text-off'} >
+            <h1>Title 3</h1>
+            <p>Description goes here...</p>
           </div>
         </div>
       </div>

@@ -67,6 +67,10 @@
   animation: blurred-bg 5s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
+.hero-text-dim {
+  opacity: 0;
+}
+
 .hero-text-title {
   text-align: center;
   position: absolute;
@@ -114,6 +118,21 @@
   opacity: 0.2;
 }
 
+.red-text-on {
+  opacity: 1;
+  position: absolute;
+  top: 20vh;
+  left: 20vw;
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.red-text-off {
+  opacity: 0;
+  position: absolute;
+  top: 20vh;
+  left: 20vw;
+}
+
 #green-radii-outline {
   max-height: 43vh;
   max-width: 34.5vw;
@@ -141,6 +160,21 @@
   opacity: 0.2;
 }
 
+.green-text-on {
+  opacity: 1;
+  position: absolute;
+  top: 20vh;
+  left: 70vw;
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.green-text-off {
+  opacity: 0;
+  position: absolute;
+  top: 20vh;
+  left: 70vw;
+}
+
 #blue-radii-outline {
   max-height: 23vh;
   max-width: 6vw;
@@ -166,6 +200,21 @@
   top: 42.5vh;
   left: 35.75vw;
   opacity: 0.2;
+}
+
+.blue-text-on {
+  opacity: 1;
+  position: absolute;
+  top: 50vh;
+  left: 70vw;
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.blue-text-off {
+  opacity: 0;
+  position: absolute;
+  top: 50vh;
+  left: 70vw;
 }
 
 .overlay {
@@ -229,6 +278,17 @@
   100% {
     transform: rotateX(0deg);
     transform-origin: top;
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
     opacity: 1;
   }
 }
