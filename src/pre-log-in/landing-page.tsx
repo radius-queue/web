@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './landing-page.css';
 
 /**
@@ -8,31 +8,154 @@ import './landing-page.css';
  */
 
 const DefaultLandingPage = () => {
-  return (
-    <div id="landing-page-display">
-      <div>
-        <img
-          className="hero-image"
-          src="../../images/storefront-only.png"
-          alt="Businesses with Radii"
-        />
+  const [redHover, setRedHover] = useState(false);
+  const [greenHover, setGreenHover] = useState(false);
+  const [blueHover, setBlueHover] = useState(false);
+
+  useEffect(() => {
+    const [redOn, redOff, redRadius] = callRedRadius();
+    const [greenOn, greenOff, greenRadius] = callGreenRadius();
+    const [blueOn, blueOff, blueRadius] = callBlueRadius();
+    return () => {
+      (redRadius as HTMLElement).removeEventListener('mouseenter', redOn);
+      (blueRadius as HTMLElement).removeEventListener('mouseenter', blueOn);
+      (greenRadius as HTMLElement).removeEventListener('mouseenter', greenOn);
+      (greenRadius as HTMLElement).removeEventListener('mouseleave', greenOff);
+      (redRadius as HTMLElement).removeEventListener('mouseleave', redOff);
+      (blueRadius as HTMLElement).removeEventListener('mouseleave', blueOff);
+    };
+  }, [redHover, greenHover, blueHover]);
+
+  const callRedRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
+    const redRadius = document.getElementById('red-radii-outline');
+    const handler1 = (e: any) => {
+      console.log('red radius triggered');
+      setRedHover(!redHover);
+      console.log(redHover);
+      console.log(greenHover);
+      console.log(blueHover);
+    };
+    redRadius?.addEventListener('mouseenter', handler1);
+    const handler2 = (e: any) => {
+      console.log('red radius off');
+      setRedHover(!redHover);
+      console.log(redHover);
+      console.log(greenHover);
+      console.log(blueHover);
+    };
+    redRadius?.addEventListener('mouseleave', handler2);
+    return [handler1, handler2, redRadius!];
+  };
+
+  const callGreenRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
+    const greenRadius = document.getElementById('green-radii-outline');
+    const handler1 = (e: any) => {
+      console.log('green radius triggered');
+      setGreenHover(!greenHover);
+      console.log(redHover);
+      console.log(greenHover);
+      console.log(blueHover);
+    };
+    greenRadius?.addEventListener('mouseenter', handler1);
+    const handler2 = (e: any) => {
+      console.log('green radius off');
+      setGreenHover(!greenHover);
+      console.log(redHover);
+      console.log(greenHover);
+      console.log(blueHover);
+    };
+    greenRadius?.addEventListener('mouseleave', handler2);
+    return [handler1, handler2, greenRadius!];
+  };
+
+  const callBlueRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
+    const blueRadius = document.getElementById('blue-radii-outline');
+    const handler1 = (e: any) => {
+      console.log('blue radius triggered');
+      setBlueHover(!blueHover);
+      console.log(redHover);
+      console.log(greenHover);
+      console.log(blueHover);
+    };
+    blueRadius?.addEventListener('mouseenter', handler1);
+    const handler2 = (e: any) => {
+      console.log('blue radius off');
+      setBlueHover(!blueHover);
+      console.log(redHover);
+      console.log(greenHover);
+      console.log(blueHover);
+    };
+    blueRadius?.addEventListener('mouseleave', handler2);
+    return [handler1, handler2, blueRadius!];
+  };
+
+  let redString: string;
+  if (redHover) {
+    redString = 'red-radius-container-lit';
+  } else if (greenHover || blueHover) {
+    redString = 'red-radius-container-dim';
+  } else {
+    redString = 'red-radius-container';
+  }
+
+  let greenString: string;
+  if (greenHover) {
+    greenString = 'green-radius-container-lit';
+  } else if (redHover || blueHover) {
+    greenString = 'green-radius-container-dim';
+  } else {
+    greenString = 'green-radius-container';
+  }
+
+  let blueString: string;
+  if (blueHover) {
+    blueString = 'blue-radius-container-lit';
+  } else if (redHover || greenHover) {
+    blueString = 'blue-radius-container-dim';
+  } else {
+    blueString = 'blue-radius-container';
+  }
+
+  {
+    return (
+      <div id="landing-page-display">
         <div>
-          <h1 className="hero-text-title">Radius for Business</h1>
-          <p className="hero-text-subtitle">The waiting room reimagined.</p>
-        </div>
-        <div className="radius-container">
-          <img
-            className="radii-outline"
-            src="../../images/radii-outline.png"
-            alt="Red Radii outline"
-          />
-          <div className="overlay">
-            <div className="overlay-text">Description of Radius goes here!</div>
+          <div id={(redHover || greenHover || blueHover) ? 'background-image-dim' : 'background-image'}>
+            <img
+              className="hero-image"
+              src="../../images/storefront-only.png"
+              alt="Businesses with Radii"
+            />
+          </div>
+          <div>
+            <h1 className="hero-text-title">Radius for Business</h1>
+            <p className="hero-text-subtitle">The waiting room reimagined.</p>
+          </div>
+          <div className={redString}>
+            <img
+              id="red-radii-outline"
+              src="../../images/red-radius.png"
+              alt="Red Radii outline"
+            />
+          </div>
+          <div className={greenString}>
+            <img
+              id="green-radii-outline"
+              src="../../images/green-radius.png"
+              alt="Green Radii outline"
+            />
+          </div>
+          <div className={blueString}>
+            <img
+              id="blue-radii-outline"
+              src="../../images/blue-radius.png"
+              alt="Blue Radii outline"
+            />
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 };
 
 export default DefaultLandingPage;

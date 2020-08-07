@@ -2,11 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: 1;
 }
 
 #landing-page-display img {
   height: 90vh;
-  width: 100vmax;
+  width: 100vw;
   filter: contrast(120%) brightness(80%);
 }
 
@@ -45,6 +46,14 @@
   max-height: 100%;
 }
 
+#background-image {
+  opacity: 1;
+}
+
+#background-image-dim {
+  opacity: 0.2;
+}
+
 .hero-image {
   opacity: 1;
 
@@ -78,16 +87,85 @@
   animation: swing-in 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
-.radii-outline {
-  max-height: 50%;
-  max-width: auto;
+#red-radii-outline {
+  max-height: 69.5vh;
+  max-width: 50.5vw;
   animation: fade-in 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-.radius-container {
+.red-radius-container {
   position: absolute;
-  top: 10vh;
-  left: 0vw;
+  top: 30.5vh;
+  left: 49.5vw;
+  opacity: 0.7;
+}
+
+.red-radius-container-lit {
+  position: absolute;
+  top: 30.5vh;
+  left: 49.5vw;
+  opacity: 1;
+}
+
+.red-radius-container-dim {
+  position: absolute;
+  top: 30.5vh;
+  left: 49.5vw;
+  opacity: 0.2;
+}
+
+#green-radii-outline {
+  max-height: 43vh;
+  max-width: 34.5vw;
+  animation: fade-in 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.green-radius-container {
+  position: absolute;
+  top: 47vh;
+  left: 12.5vw;
+  opacity: 0.7;
+}
+
+.green-radius-container-lit {
+  position: absolute;
+  top: 47vh;
+  left: 12.5vw;
+  opacity: 1;
+}
+
+.green-radius-container-dim {
+  position: absolute;
+  top: 47vh;
+  left: 12.5vw;
+  opacity: 0.2;
+}
+
+#blue-radii-outline {
+  max-height: 23vh;
+  max-width: 6vw;
+  animation: fade-in 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.blue-radius-container {
+  position: absolute;
+  top: 42.5vh;
+  left: 35.75vw;
+  opacity: 0.7;
+}
+
+.blue-radius-container-lit {
+  position: absolute;
+  top: 42.5vh;
+  left: 35.75vw;
+  opacity: 1;
+}
+
+.blue-radius-container-dim {
+  position: absolute;
+  top: 42.5vh;
+  left: 35.75vw;
+  opacity: 0.2;
 }
 
 .overlay {
