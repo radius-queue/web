@@ -7,6 +7,32 @@
   padding: 20px;
 }
 
+#appview-holder {
+  padding: 30px;
+}
+
+#app-feed {
+  height: 200px;
+  width: 300px;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  border-radius: 3px;
+  color: white;
+}
+
+#app-feed p {
+  padding-top: 24px;
+  padding-left: 18px;
+  margin: 0;
+}
+
+#app-feed h1{
+  padding-top: 0px;
+  padding-left: 18px;
+  font-weight: 400;
+  font-size: 3rem;
+}
+
 #img-holder {
   display: flex;
   align-items: center;

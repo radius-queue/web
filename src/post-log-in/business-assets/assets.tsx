@@ -4,8 +4,8 @@ import Form from 'react-bootstrap/Form';
 import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import { postBusiness } from '../../util/api-functions';
-import { auth } from '../../firebase';
+import {postBusiness} from '../../util/api-functions';
+import {auth} from '../../firebase';
 import './assets.css';
 
 
@@ -69,25 +69,39 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
   };
 
   const displayImages = () => {
-    // const imageHolder = document.createElement('div');
-    // imageHolder.id = 'image-holder';
-    // images.forEach((img:string) => {
-    //   const entry = document.createElement('img');
-    //   entry.src = img;
-    //   entry.alt = img;
-    //   imageHolder.appendChild(entry);
-    // });
-    // return imageHolder;
     return (
       <div id='img-holder'>
         {
-          images.map((img:[string,string], idx: number) => (
+          images.map((img:[string, string], idx: number) => (
             <div id={img[0]} key={idx} className='img-info'>
               <p>{img[0]}</p>
               <img src={img[1]} alt={img[0]} key={idx} className='img-asset'/>
             </div>
           ))
         }
+      </div>
+    );
+  };
+
+  const appPreview = () => {
+    // const background = (images[0])? images[0][1] : 'red';
+    console.log(images[0]);
+    return (
+      <div id='appview-holder'>
+        <div id='app-feed-wrapper'>
+          <p>Feed View of your business:</p>
+          <div
+            id='app-feed'
+            style={{background: (images[0])?
+              'url(' + images[0][1] + ')': 'red'}}>
+            <p>{business!.type}</p>
+            <h1>{business!.name}</h1>
+          </div>
+        </div>
+
+        <div id='app-business-view'>
+        </div>
+
       </div>
     );
   };
@@ -115,6 +129,7 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
           Post Image
         </Button>
       </Form>
+      {appPreview()}
       <div id='progress-bar-container'>
         {(progress >= 0) ? <ProgressBar now={progress} /> : <div/>}
       </div>
