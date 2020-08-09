@@ -56,6 +56,8 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
         });
       }
     }
+    const form = document.getElementById('form') as HTMLFormElement;
+    form.reset();
   };
 
   const getFile = (id: string) => {
@@ -91,15 +93,15 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
     <div id='assets-page'>
       <h1>Your Images:</h1>
       {displayImages()}
-      <Form noValidate onSubmit={submitForm}>
+      <Form id='form' noValidate onSubmit={submitForm}>
         <Form.Group>
           <Form.File
             name="file"
             label="File"
-            onChange={ (e : any) =>getFile('validationFormik107')}
+            onChange={ (e : any) =>getFile('imageInput')}
             // isInvalid={!!errors.file}
             // feedback={errors.file}
-            id="validationFormik107"
+            id="imageInput"
             // feedbackTooltip
           />
         </Form.Group>
