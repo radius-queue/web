@@ -50,8 +50,8 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
             if (!business!.locations[0].images.includes(file.name)) {
               business!.locations[0].images.push(file.name);
               setImages([...images, [file.name, url]]);
+              postBusiness(business!);
             }
-            postBusiness(business!);
             setBusiness(business!);
           }
         });
@@ -78,6 +78,13 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
               <p>
                 {img[0]}
                 <Button
+                  variant='primary'
+                  size="sm"
+                  onClick={() => moveToFirst(img[0])}
+                >
+                  Set as Background
+                </Button>
+                <Button
                   variant='danger'
                   size="sm"
                   onClick={() => deleteImage(img[0])}
@@ -93,6 +100,24 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
     );
   };
 
+  const moveToFirst = (imgId:string) => {
+    const businessImage = business!.locations[0].images;
+    const index = businessImage.indexOf(imgId);
+    if (index > 0) {
+      const oldfirst = businessImage[0];
+      businessImage[0] = businessImage[index];
+      businessImage[index] = oldfirst;
+
+      const oldImages = images.slice();
+      const oldpair = oldImages[0];
+      oldImages[0] = oldImages[index];
+      oldImages[index] = oldpair;
+      setImages(oldImages);
+      postBusiness(business!);
+    }
+    setBusiness(business!);
+  };
+
   const deleteImage = (imgId:string) => {
     deleteBusPic(imgId);
 
@@ -102,8 +127,8 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
       const imagelist = images.slice();
       imagelist.splice(index, 1);
       setImages(imagelist);
+      postBusiness(business!);
     }
-    postBusiness(business!);
     setBusiness(business!);
   };
 
