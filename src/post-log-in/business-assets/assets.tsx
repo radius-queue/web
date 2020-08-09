@@ -17,7 +17,7 @@ interface AssetsProps {
 
 const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
   const [file, setFile] = useState<File| null>(null);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<[string, string][]>([]);
   const [progress, setProgress] = useState<number>(-1);
 
   useEffect(() => {
@@ -29,12 +29,12 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
    */
   async function loadImages() {
     const imagePathList = business!.locations[0].images;
-    const imageList : string[] = [];
+    const imageList : [string, string][] = [];
     for (let i = 0; i < imagePathList.length; i ++) {
       const path = imagePathList[i];
       await getBusPic(path, (url:string) => {
         if (url !== '') {
-          imageList.push(url);
+          imageList.push([path, url]);
         }
       });
     }
@@ -51,7 +51,7 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
               business!.locations[0].images.push(file.name);
             }
             postBusiness(business!);
-            setImages([...images, url]);
+            setImages([...images, [file.name, url]]);
           }
         });
       }
@@ -81,8 +81,11 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
     return (
       <div id='img-holder'>
         {
-          images.map((img:string, idx: number) => (
-            <img src={img} alt={img} key={idx} className='img-asset'/>
+          images.map((img:[string,string], idx: number) => (
+            <div id={img[0]} key={idx} className='img-info'>
+              <p>{img[0]}</p>
+              <img src={img[1]} alt={img[0]} key={idx} className='img-asset'/>
+            </div>
           ))
         }
       </div>
