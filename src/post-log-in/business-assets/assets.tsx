@@ -1,4 +1,4 @@
-import {postPic, getBusPic} from '../../util/storage-func';
+import {postPic, getBusPic, deleteBusPic} from '../../util/storage-func';
 import {Business} from '../../util/business';
 import Form from 'react-bootstrap/Form';
 import React, {useState, useEffect} from 'react';
@@ -49,9 +49,10 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
           if (url !== '') {
             if (!business!.locations[0].images.includes(file.name)) {
               business!.locations[0].images.push(file.name);
+              setImages([...images, [file.name, url]]);
             }
             postBusiness(business!);
-            setImages([...images, [file.name, url]]);
+            setBusiness(business!);
           }
         });
       }
@@ -74,13 +75,36 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
         {
           images.map((img:[string, string], idx: number) => (
             <div id={img[0]} key={idx} className='img-info'>
-              <p>{img[0]}</p>
+              <p>
+                {img[0]}
+                <Button
+                  variant='danger'
+                  size="sm"
+                  onClick={() => deleteImage(img[0])}
+                >
+                  Delete
+                </Button>
+              </p>
               <img src={img[1]} alt={img[0]} key={idx} className='img-asset'/>
             </div>
           ))
         }
       </div>
     );
+  };
+
+  const deleteImage = (imgId:string) => {
+    deleteBusPic(imgId);
+
+    const index = business!.locations[0].images.indexOf(imgId);
+    if (index > -1) {
+      business!.locations[0].images.splice(index, 1);
+      const imagelist = images.slice();
+      imagelist.splice(index, 1);
+      setImages(imagelist);
+    }
+    postBusiness(business!);
+    setBusiness(business!);
   };
 
   const appPreview = () => {

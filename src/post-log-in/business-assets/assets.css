@@ -7,6 +7,11 @@
   padding: 20px;
 }
 
+.img-info button {
+  margin-left: 20px;
+  padding:0 5px;
+}
+
 #appview-holder {
   padding: 30px;
 }

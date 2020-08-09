@@ -16,7 +16,7 @@ export function postPic(file: File, isBusiness: boolean,
     callback: (URL : string) => void) {
   const storageRef = storage.ref();
   metadata = (metadata) ? metadata : {contentType: 'image/jpeg'};
-  let path = (isBusiness) ? 'businessImages/' : 'customerImages';
+  let path = (isBusiness) ? 'businessImages/' : 'customerImages/';
   path = path + auth.currentUser!.uid + '/';
 
   // Upload file and metadata to the object 'images/mountains.jpg'
@@ -80,4 +80,31 @@ export async function getBusPic(path: string, callback:
     (URL : string) => void) {
   await getPic('businessImages/' + auth.currentUser!.uid + '/largeJPG_' + path,
       callback);
+}
+
+/**
+ * @param {string} filePath
+ */
+function deletePic(filePath: string) {
+  // Create a reference to the file to delete
+  const storageRef = storage.ref();
+  const imgRef = storageRef.child(filePath);
+
+  // Delete the file
+  imgRef.delete().then(function() {
+    console.log('success');
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+
+/**
+ *
+ * @param fileName
+ */
+export function deleteBusPic(fileName: string) {
+  deletePic('businessImages/' + auth.currentUser!.uid +
+    '/largeJPG_' + fileName);
+  deletePic('businessImages/' + auth.currentUser!.uid +
+    '/thumb_128_' + fileName);
 }
