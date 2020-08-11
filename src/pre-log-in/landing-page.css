@@ -7,7 +7,7 @@
 
 #landing-page-display img {
   height: 90vh;
-  width: 100vw;
+  width: 100vmax;
   filter: contrast(120%) brightness(80%);
 }
 
@@ -47,11 +47,11 @@
 }
 
 #background-image {
-  opacity: 1;
+  animation: bright-bg 1s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 #background-image-dim {
-  opacity: 0.2;
+  animation: dimmed-bg 1s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 .hero-image {
@@ -93,28 +93,28 @@
 
 #red-radii-outline {
   max-height: 69.5vh;
-  max-width: 50.5vw;
+  max-width: 49.25vw;
   animation: fade-in 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .red-radius-container {
   position: absolute;
   top: 30.5vh;
-  left: 49.5vw;
+  left: 50.75vw;
   opacity: 0.7;
 }
 
 .red-radius-container-lit {
   position: absolute;
   top: 30.5vh;
-  left: 49.5vw;
+  left: 50.75vw;
   opacity: 1;
 }
 
 .red-radius-container-dim {
   position: absolute;
   top: 30.5vh;
-  left: 49.5vw;
+  left: 50.75vw;
   opacity: 0.2;
 }
 
@@ -135,28 +135,28 @@
 
 #green-radii-outline {
   max-height: 43vh;
-  max-width: 34.5vw;
+  max-width: 33.5vw;
   animation: fade-in 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .green-radius-container {
   position: absolute;
   top: 47vh;
-  left: 12.5vw;
+  left: 13vw;
   opacity: 0.7;
 }
 
 .green-radius-container-lit {
   position: absolute;
   top: 47vh;
-  left: 12.5vw;
+  left: 13vmax;
   opacity: 1;
 }
 
 .green-radius-container-dim {
   position: absolute;
   top: 47vh;
-  left: 12.5vw;
+  left: 13vw;
   opacity: 0.2;
 }
 
@@ -308,6 +308,24 @@
   }
   100% {
     filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes dimmed-bg {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes bright-bg {
+  0% {
+    opacity: 0.2;
+  }
+  100% {
     opacity: 1;
   }
 }
