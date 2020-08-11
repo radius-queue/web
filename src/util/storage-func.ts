@@ -73,13 +73,13 @@ export async function getPic(path: string, callback: (URL : string) => void) {
 
 /**
  * Obtain image from database
+ * @param {string} uid
  * @param {string} path path to access image
  * @param {function} callback
  */
-export async function getBusPic(path: string, callback:
+export async function getBusPic(uid: string, path: string, callback:
     (URL : string) => void) {
-  await getPic('businessImages/' + auth.currentUser!.uid + '/largeJPG_' + path,
-      callback);
+  await getPic('businessImages/' + uid + '/largeJPG_' + path, callback);
 }
 
 /**
@@ -99,12 +99,10 @@ function deletePic(filePath: string) {
 }
 
 /**
- *
- * @param fileName
+ * @param {string} uid
+ * @param {string} fileName
  */
-export function deleteBusPic(fileName: string) {
-  deletePic('businessImages/' + auth.currentUser!.uid +
-    '/largeJPG_' + fileName);
-  deletePic('businessImages/' + auth.currentUser!.uid +
-    '/thumb_128_' + fileName);
+export function deleteBusPic(uid: string, fileName: string) {
+  deletePic('businessImages/' + uid + '/largeJPG_' + fileName);
+  deletePic('businessImages/' + uid + '/thumb_128_' + fileName);
 }

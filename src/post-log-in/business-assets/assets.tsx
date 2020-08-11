@@ -5,7 +5,6 @@ import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import {postBusiness} from '../../util/api-functions';
-import {auth} from '../../firebase';
 import './assets.css';
 
 
@@ -32,7 +31,7 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
     const imageList : [string, string][] = [];
     for (let i = 0; i < imagePathList.length; i ++) {
       const path = imagePathList[i];
-      await getBusPic(path, (url:string) => {
+      await getBusPic(uid, path, (url:string) => {
         if (url !== '') {
           imageList.push([path, url]);
         }
@@ -119,7 +118,7 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
   };
 
   const deleteImage = (imgId:string) => {
-    deleteBusPic(imgId);
+    deleteBusPic(uid, imgId);
 
     const index = business!.locations[0].images.indexOf(imgId);
     if (index > -1) {
@@ -134,7 +133,6 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
 
   const appPreview = () => {
     // const background = (images[0])? images[0][1] : 'red';
-    console.log(images[0]);
     return (
       <div id='appview-holder'>
         <div id='app-feed-wrapper'>
