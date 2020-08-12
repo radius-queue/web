@@ -13,6 +13,7 @@ import UserCard from './queue-card';
 import QueueList from './queue-list';
 import QueueControls from './queue-controls';
 import './queue-view.css';
+import { stat } from 'fs';
 
 
 interface ViewProps {
@@ -88,7 +89,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
     const list: Party[] = stateQ!.parties.slice();
     list.push(party);
     const newQueue : Queue =
-      new Queue(stateQ.name, stateQ.uid, stateQ.open, list);
+      new Queue(stateQ.uid, stateQ.open, list);
     setQ(newQueue);
     postQueue(newQueue);
   };
@@ -100,9 +101,21 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
     const newQ: Queue =
-      new Queue(stateQ.name, stateQ.uid, stateQ.open, list);
+      new Queue(stateQ.uid, stateQ.open, list);
     setQ(newQ);
     setParty(undefined);
+    postQueue(newQ);
+  };
+
+  /**
+   * Sends a message to the current selected user
+   * @param {string} message the message to be sent
+   */
+  const sendMessage = (message: string) => {
+    const list = stateQ.parties.slice();
+    list[party![1]].messages.push([new Date(), message]);
+    const newQ = new Queue(stateQ.uid, stateQ.open, list);
+    setQ(newQ);
     postQueue(newQ);
   };
 
@@ -111,7 +124,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
    */
   const clearQueue = () => {
     const newQ: Queue =
-      new Queue(stateQ.name, stateQ.uid, stateQ.open, []);
+      new Queue(stateQ.uid, stateQ.open, []);
     setQ(newQ);
     setParty(undefined);
     postQueue(newQ);
@@ -132,7 +145,11 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
         currentPartyInfo={party}
         time={time}
       />
-      <UserCard party={party ? party[0] : party} time={time}/>
+      <UserCard
+        sendMessage={sendMessage}
+        party={party ? party[0] : party}
+        time={time}
+      />
       <AddCustomerModal
         show={addModal}
         close={() => setAddModal(false)}

@@ -44,7 +44,6 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
       list[index] = target;
 
       const newQ : Queue = new Queue(
-          queue.name,
           queue.uid,
           queue.open,
           list,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import {postQueue} from '../../util/api-functions';
-import {Queue} from '../../util/queue';
+import {Queue, Party} from '../../util/queue';
 
 interface QueueControlsProps {
   queue: Queue, // the current queue
@@ -22,7 +22,7 @@ interface QueueControlsProps {
  */
 const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
   const newQ : Queue =
-    new Queue(queue.name, queue.uid, true, queue.parties);
+    new Queue(queue.uid, true, queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };
@@ -34,7 +34,7 @@ const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
  */
 const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
   const newQ : Queue =
-    new Queue(queue.name, queue.uid, false, queue.parties);
+    new Queue(queue.uid, false, queue.parties);
   setQueue(newQ);
   postQueue(newQ);
 };
@@ -49,6 +49,21 @@ const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
  * displayed queue.
  */
 const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
+  const [message, setMessage] = useState<string>('');
+
+  const sendMessage = () => {
+    const newParties = queue.parties.slice();
+    const date = new Date();
+
+    newParties.forEach((val: Party) => val.messages.push([date, message]));
+
+    const newQ: Queue = new Queue(queue.uid, queue.open, newParties);
+    console.log(queue);
+    setMessage('');
+    setQueue(newQ);
+    postQueue(newQ);
+  };
+
   const selectedOpenClosed: string = queue.open ? 'open' : 'closed';
   return (
     <Card id='control-group-card'>
@@ -84,8 +99,15 @@ const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
             placeholder='Type a Message'
             rows={3}
             id='messanger'
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
-          <Button id='control-message-button'>Send Message to All</Button>
+          <Button
+            id='control-message-button'
+            onClick={() => sendMessage()}
+          >
+            Send Message to All
+          </Button>
         </Form.Group>
       </Card.Body>
     </Card>

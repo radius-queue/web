@@ -131,11 +131,11 @@ export const postQueue = async (queue : Queue) => {
  * @param {string} name the name of the queue to be created
  * @throws {Error} if the connection with Firestore is severed
  */
-export const newQueue = async (uid: string, name: string) : Promise<Queue> => {
+export const newQueue = async (uid: string) : Promise<Queue> => {
   const idToken : string = await auth.currentUser!.getIdToken();
 
   const response = await fetch(
-      `${ROOT_URL}/api/queues/new?uid=${uid}&name=${name}`,
+      `${ROOT_URL}/api/queues/new?uid=${uid}`,
       fetchOptions('POST', idToken),
   );
 

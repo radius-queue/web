@@ -3,21 +3,18 @@ import firebase from 'firebase/app';
  * This class represents a queue
  */
 export class Queue {
-  name : string;
   parties: Party[]; // where parties[0] is the front of the line
   uid : string;
   open: boolean;
 
   /**
-   * @param {string} name Name of Queue
    * @param {string} uid Uid of Queue
    * @param {boolean} open true if queue is open
    * @param {Party[]} parties Optional field for initializing current queue,
    *    Default value is set to empty array
    */
-  constructor(name: string, uid: string, open: boolean,
+  constructor(uid: string, open: boolean,
       parties?: Party[]) {
-    this.name = name;
     this.parties = parties ? parties :[];
     this.open = open;
     this.uid = uid;
@@ -136,15 +133,14 @@ export const Q_COLUMNS : string[] = ['#', 'Name', 'Party Size', 'Quoted Time'];
 export const queueConverter = {
   toFirestore: function(q: Queue) {
     return {
-      name: q.name,
       parties: q.parties.map((e) => Party.toFirebase(e)),
       open: q.open,
+      uid: q.uid,
     };
   },
   fromFirestore: function(snapshot: any, options: any) {
     const data = snapshot.data(options);
     return new Queue(
-        data.name,
         '',
         data.open,
         data.parties.map((party: any)=> Party.fromFirebase(party)),

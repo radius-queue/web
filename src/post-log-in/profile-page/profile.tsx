@@ -180,7 +180,6 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
       if (!business) {
         const returnedQueue : Queue = await newQueue(
           auth.currentUser!.uid,
-          form.businessName,
         );
         setQueue(returnedQueue);
       }
