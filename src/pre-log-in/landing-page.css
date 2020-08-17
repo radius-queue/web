@@ -122,7 +122,7 @@
   opacity: 1;
   position: absolute;
   top: 20vh;
-  left: 20vw;
+  left: 5vw;
   animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
@@ -164,7 +164,7 @@
   opacity: 1;
   position: absolute;
   top: 20vh;
-  left: 70vw;
+  left: 50vw;
   animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
@@ -206,7 +206,7 @@
   opacity: 1;
   position: absolute;
   top: 50vh;
-  left: 70vw;
+  left: 60vw;
   animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
