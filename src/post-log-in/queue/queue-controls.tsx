@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import {postQueue} from '../../util/api-functions';
+import {postQueue, pushNotifications} from '../../util/api-functions';
 import {Queue, Party} from '../../util/queue';
 
 interface QueueControlsProps {
@@ -54,14 +54,19 @@ const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
   const sendMessage = () => {
     const newParties = queue.parties.slice();
     const date = new Date();
-
-    newParties.forEach((val: Party) => val.messages.push([date, message]));
+    const messages : string[] = [];
+    newParties.forEach(async (val: Party) => {
+      val.messages.push([date, message]);
+      if (val.pushToken) {
+        messages.push(val.pushToken);
+      }
+    });
 
     const newQ: Queue = new Queue(queue.uid, queue.open, newParties);
-    console.log(queue);
     setMessage('');
     setQueue(newQ);
     postQueue(newQ);
+    pushNotifications(message, messages);
   };
 
   const selectedOpenClosed: string = queue.open ? 'open' : 'closed';

@@ -7,13 +7,12 @@ import {
   DeleteCustomerModal,
   ClearModal,
 } from './queue-modals';
-import {postQueue} from '../../util/api-functions';
+import {postQueue, pushNotifications} from '../../util/api-functions';
 import {QueueListener} from '../../util/queue-listener';
 import UserCard from './queue-card';
 import QueueList from './queue-list';
 import QueueControls from './queue-controls';
 import './queue-view.css';
-import { stat } from 'fs';
 
 
 interface ViewProps {
@@ -100,8 +99,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
    */
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
-    const newQ: Queue =
-      new Queue(stateQ.uid, stateQ.open, list);
+    const newQ: Queue = new Queue(stateQ.uid, stateQ.open, list);
     setQ(newQ);
     setParty(undefined);
     postQueue(newQ);
@@ -113,10 +111,13 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
    */
   const sendMessage = (message: string) => {
     const list = stateQ.parties.slice();
-    list[party![1]].messages.push([new Date(), message]);
+    party![0].messages.push([new Date(), message]);
     const newQ = new Queue(stateQ.uid, stateQ.open, list);
     setQ(newQ);
     postQueue(newQ);
+    if (party![0].pushToken) {
+      pushNotifications(message, [party![0].pushToken]);
+    }
   };
 
   /**

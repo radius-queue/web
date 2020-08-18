@@ -84,8 +84,16 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
     }
 
     if (checkValid()) {
-      const party : Party =
-        new Party(firstName, size, phoneNumber, quote, new Date(), lastName);
+      const party : Party = new Party(
+          firstName,
+          size,
+          phoneNumber,
+          quote,
+          new Date(),
+          lastName,
+          [],
+          '',
+      );
 
       mainAction(party);
       onHide();

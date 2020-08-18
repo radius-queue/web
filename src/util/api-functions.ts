@@ -146,6 +146,28 @@ export const newQueue = async (uid: string) : Promise<Queue> => {
   return await response.json();
 };
 
+/**
+ * Sends notifications
+ * @param {string} message the message to be pushed to the users.
+ * @param {string[]} pushTokens push tokens for each of the users that will be
+ * sent a message.
+ */
+export const pushNotifications = async (
+  message: string,
+  pushTokens : string[],
+) => {
+  const idToken : string = await auth.currentUser!.getIdToken();
+
+  const options : any = fetchOptions('POST', idToken);
+  options.body = JSON.stringify({tokens: pushTokens, message});
+
+  const response = await fetch(`${ROOT_URL}/api/push`, options);
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+};
+
 const fetchOptions = (method: string, token: string) => (
   {
     method: method,
@@ -163,7 +185,7 @@ const hoursFromAPI = (val: [string | null, string | null]) => {
   ];
 };
 
-const partyFromAPI : (val: any) => Party = (val : any) => {
+const partyFromAPI = (val : any) : Party => {
   return {
     ...val,
     messages: val.messages.map(
