@@ -23,6 +23,7 @@
 
 #body-container {
   text-align: center;
+  overflow-y: hidden;
 }
 
 #business-hour {
@@ -57,6 +58,7 @@
 
 #loading-profile-p {
   font-size: 3vmin;
+  overflow-y: hidden;
 }
 
 #logo-container {

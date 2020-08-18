@@ -115,8 +115,11 @@ const DefaultLandingPage = () => {
             />
           </div>
           <div className={redHover ? 'red-text-on' : 'red-text-off'} >
-            <h1>Title 1</h1>
-            <p>Description goes here...</p>
+            <h1>Intuitive and practical</h1>
+            <p>Welcome to the future of the waiting room. With Radius, businesses like yours can create and <br></br>manage a virtual waiting room for free.
+              With a sleek queue design that allows you to add, remove, <br></br>and rearrange parties, managing a waiting room has never been more simple and efficient.
+            <br></br>Our additional messaging feature allows you to contact parties with notifications of their wait time and <br></br>even personalized messages on Radius' complementary
+              customer-side mobile app.</p>
           </div>
           <div className={greenString}>
             <img
@@ -126,8 +129,10 @@ const DefaultLandingPage = () => {
             />
           </div>
           <div className={greenHover ? 'green-text-on' : 'green-text-off'} >
-            <h1>Title 2</h1>
-            <p>Description goes here...</p>
+            <h1>Tailored to your business</h1>
+            <p>Radius allows you to fully customize your profile and queue preferences.<br></br>
+              Our flagship feature allows you to set a distance from which customers can check-in <br></br>to the waiting room to ensure they are within a reasonable distance.
+              Furthermore, all business <br></br>info will be displayed on the Radius mobile app for customers to see, a great marketing opportunity!. </p>
           </div>
           <div className={blueString}>
             <img
@@ -137,8 +142,10 @@ const DefaultLandingPage = () => {
             />
           </div>
           <div className={blueHover ? 'blue-text-on' : 'blue-text-off'} >
-            <h1>Title 3</h1>
-            <p>Description goes here...</p>
+            <h1>A timely solution</h1>
+            <p>In light of the coronavirus pandemic, many walk-in businesses face <br></br>the issue of social distancing their customers in confined waiting spaces. <br></br>
+              Radius eliminates this concern by allowing customers to virtually check-in to <br></br>a waiting room, prioritizing customer health and safety, and making
+              it easier to <br></br>adhere to social distancing guidelines.</p>
           </div>
         </div>
       </div>
