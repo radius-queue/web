@@ -141,8 +141,8 @@ const AssetsPage = ({uid, setBusiness, business} : AssetsProps) => {
             id='app-feed'
             style={{background: (images[0])?
               'url(' + images[0][1] + ')': 'red'}}>
-            <p>{business!.type}</p>
-            <h1>{business!.name}</h1>
+            <p style={{fontWeight: 'bold'}}>{business!.type}</p>
+            <h1 style={{fontWeight: 'bold', fontSize: 40}}>{business!.name}</h1>
           </div>
         </div>
 
