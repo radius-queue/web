@@ -64,7 +64,7 @@ const QueueLoadingPage = () => {
  * @return {jsx} React Boostrap Container with the Queue Page to be
  * displayed in an absence of business data.
  */
-const DefaultQueuePage = () => {
+export const DefaultQueuePage = () => {
   return (
     <Container>
       <Card id='default-container'>
