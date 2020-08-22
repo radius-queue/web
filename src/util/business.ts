@@ -61,6 +61,7 @@ export class BusinessLocation {
    * @param {number} geoFenceRadius Optional radius around business location
    *    (in meters) that a customer is allowed to enter queue, Default value
    *    of -1
+   * @param {string[]} images The array of image urls
    */
   constructor(name: string, address: string, phoneNumber: string, hours: [Date | null, Date | null][],
       coordinates: number[], queues: string[] = [],
