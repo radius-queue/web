@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './landing-page.css';
+import { analytics } from 'firebase';
 
 /**
  * the landing page for our website.
@@ -11,29 +12,41 @@ const DefaultLandingPage = () => {
   const [redHover, setRedHover] = useState(false);
   const [greenHover, setGreenHover] = useState(false);
   const [blueHover, setBlueHover] = useState(false);
+  const [isAnimating, setisAnimating] = useState(true);
 
   useEffect(() => {
-    const [redOn, redOff, redRadius] = callRedRadius();
-    const [greenOn, greenOff, greenRadius] = callGreenRadius();
-    const [blueOn, blueOff, blueRadius] = callBlueRadius();
-    return () => {
-      (redRadius as HTMLElement).removeEventListener('mouseenter', redOn);
-      (blueRadius as HTMLElement).removeEventListener('mouseenter', blueOn);
-      (greenRadius as HTMLElement).removeEventListener('mouseenter', greenOn);
-      (greenRadius as HTMLElement).removeEventListener('mouseleave', greenOff);
-      (redRadius as HTMLElement).removeEventListener('mouseleave', redOff);
-      (blueRadius as HTMLElement).removeEventListener('mouseleave', blueOff);
-    };
-  }, [redHover, greenHover, blueHover]);
+    const timer = setTimeout(() => {
+      setisAnimating(false);
+    }, 7000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!isAnimating) {
+      console.log('triggered');
+      const [redOn, redOff, redRadius] = callRedRadius();
+      const [greenOn, greenOff, greenRadius] = callGreenRadius();
+      const [blueOn, blueOff, blueRadius] = callBlueRadius();
+
+      return () => {
+        (redRadius as HTMLElement).removeEventListener('mouseenter', redOn);
+        (blueRadius as HTMLElement).removeEventListener('mouseenter', blueOn);
+        (greenRadius as HTMLElement).removeEventListener('mouseenter', greenOn);
+        (greenRadius as HTMLElement).removeEventListener('mouseleave', greenOff);
+        (redRadius as HTMLElement).removeEventListener('mouseleave', redOff);
+        (blueRadius as HTMLElement).removeEventListener('mouseleave', blueOff);
+      };
+    }
+  }, [redHover, greenHover, blueHover, isAnimating]);
 
   const callRedRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
     const redRadius = document.getElementById('red-radii-outline');
     const handler1 = (e: any) => {
-      setRedHover(!redHover);
+      setRedHover(true);
     };
     redRadius?.addEventListener('mouseenter', handler1);
     const handler2 = (e: any) => {
-      setRedHover(!redHover);
+      setRedHover(false);
     };
     redRadius?.addEventListener('mouseleave', handler2);
     return [handler1, handler2, redRadius!];
@@ -42,11 +55,11 @@ const DefaultLandingPage = () => {
   const callGreenRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
     const greenRadius = document.getElementById('green-radii-outline');
     const handler1 = (e: any) => {
-      setGreenHover(!greenHover);
+      setGreenHover(true);
     };
     greenRadius?.addEventListener('mouseenter', handler1);
     const handler2 = (e: any) => {
-      setGreenHover(!greenHover);
+      setGreenHover(false);
     };
     greenRadius?.addEventListener('mouseleave', handler2);
     return [handler1, handler2, greenRadius!];
@@ -55,11 +68,11 @@ const DefaultLandingPage = () => {
   const callBlueRadius = (): [(e: any) => void, (e: any) => void, HTMLElement] => {
     const blueRadius = document.getElementById('blue-radii-outline');
     const handler1 = (e: any) => {
-      setBlueHover(!blueHover);
+      setBlueHover(true);
     };
     blueRadius?.addEventListener('mouseenter', handler1);
     const handler2 = (e: any) => {
-      setBlueHover(!blueHover);
+      setBlueHover(false);
     };
     blueRadius?.addEventListener('mouseleave', handler2);
     return [handler1, handler2, blueRadius!];
