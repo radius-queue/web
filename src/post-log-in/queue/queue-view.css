@@ -87,8 +87,8 @@
 }
 
 .highlighted {
-  background-color: #4a9bf3 !important;
-  border-color: #4a9bf3 !important;
+  background-color: var(--light) !important;
+  border-color: var(#007bff) !important;
   color: #fafafa !important;
 }
 
@@ -98,4 +98,9 @@
   max-width: 90%;
   max-height: 90%;
   margin: auto;
+}
+
+.button {
+  background-color: var(--light) !important;
+  border-color: var(--light) !important; 
 }

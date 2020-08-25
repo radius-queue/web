@@ -76,12 +76,15 @@ const QueueControls = ({queue, clear}: QueueControlsProps) => {
             <ToggleButton
               value='open'
               onChange={() => openQueue(queue)}
+              checked={queue.open}
+              variant={'secondary'}
             >
               Open Queue
             </ToggleButton>
             <ToggleButton
               value='closed'
               onChange={() => closeQueue(queue)}
+              variant={'secondary'}
             >
               Close Queue
             </ToggleButton>
@@ -103,6 +106,7 @@ const QueueControls = ({queue, clear}: QueueControlsProps) => {
           <Button
             id='control-message-button'
             onClick={() => sendMessage()}
+            className={'button'}
           >
             Send Message to All
           </Button>

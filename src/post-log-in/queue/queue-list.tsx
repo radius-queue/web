@@ -95,6 +95,7 @@ const QueueList = ({queue, currentPartyInfo, time, showParty,
                     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
                       moveOne(e, idx, -1)
                   }
+                  variant={'secondary'}
                 >
                   <CaretUpFill />
                 </Button>
@@ -104,12 +105,14 @@ const QueueList = ({queue, currentPartyInfo, time, showParty,
                     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
                       moveOne(e, idx, 1)
                   }
+                  variant={'secondary'}
                 >
                   <CaretDownFill />
                 </Button>
                 <Button
                   className='queue-list-buttons'
                   onClick={showDeleteModal}
+                  variant={'secondary'}
                 >
                   <TrashFill />
                 </Button>
@@ -120,6 +123,7 @@ const QueueList = ({queue, currentPartyInfo, time, showParty,
       <Button
         id="add-customer-button"
         onClick={showAddModal}
+        className={'button'}
       >
         Add a Party
       </Button>

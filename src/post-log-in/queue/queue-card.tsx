@@ -60,12 +60,14 @@ const UserCard = ({party, sendMessage, time} : CardProps) => {
             <Button
               style={{margin: '10px'}}
               onClick={() => sendMessage(READY_MESSAGE)}
+              variant={'secondary'}
             >
               Send Ready Notification
             </Button>
             <Button
               style={{margin: '10px'}}
               onClick={() => sendMessage(FIVE_MIN_MESSAGE)}
+              variant={'secondary'}
             >
               Send 5 Min. Notification
             </Button>
@@ -82,6 +84,7 @@ const UserCard = ({party, sendMessage, time} : CardProps) => {
             <Button
               style={{width: '100%'}}
               onClick={sendPM}
+              className={'button'}
             >
               Send Custom Message
             </Button>

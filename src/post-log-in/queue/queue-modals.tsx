@@ -197,7 +197,7 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
         </Col>
       </Form.Row>
       <Modal.Footer>
-        <Button type='submit'>Add Party</Button>
+        <Button type='submit' className={'button'}>Add Party</Button>
       </Modal.Footer>
     </Form>
   </Modal>);
