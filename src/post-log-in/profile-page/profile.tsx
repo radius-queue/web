@@ -152,6 +152,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
     if (allFieldsCompleted()) {
       setEditing(false);
       enableOtherNavs();
+      const images = (business) ? business.locations[0].images : [];
       const locationHours : [Date | null, Date | null][] = getHoursArray(hours);
       const locationParams : [string, string, string,
         [Date | null, Date | null][], number[], string[], number, string[]] =
@@ -163,7 +164,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
         [building!.lat(), building!.lng()],
         [uid],
         radius,
-        business!.locations[0].images,
+        images,
       ];
       const newLocation : BusinessLocation[] = [
         new BusinessLocation(...locationParams),
