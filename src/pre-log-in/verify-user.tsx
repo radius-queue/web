@@ -51,8 +51,8 @@ const VerifyUserModal = ({show, onHide}: VerifyUserModalProps) => {
       <Modal.Body>
         <h4>Please verify your email before logging in.</h4>
         <p>
-          An email has been sent to you with a link to log in
-          to your account.
+          A verification email has been sent to you with a link.
+          Once you click the link, you will be able to log in.
         </p>
       </Modal.Body>
       <Modal.Footer id="pre-modal-footer">
