@@ -16,7 +16,6 @@ interface ListProps {
   queue: Queue,
   currentPartyInfo: [Party, number] | undefined,
   showParty: (party: [Party, number]) => void,
-  setQueue: (queue: Queue) => void,
   showAddModal: () => void,
   showDeleteModal: () => void,
   time: Date,
@@ -28,7 +27,7 @@ interface ListProps {
  * @return {jsx} A React Bootstrap Card filled with the given queue info
  * and functionality.
  */
-const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
+const QueueList = ({queue, currentPartyInfo, time, showParty,
   showAddModal, showDeleteModal} : ListProps) => {
   const moveOne = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
       index : number,
@@ -51,7 +50,6 @@ const QueueList = ({queue, currentPartyInfo, time, showParty, setQueue,
       if (currentPartyInfo) {
         showParty([currentPartyInfo[0], currentPartyInfo[1] + offset]);
       }
-      setQueue(newQ);
       postQueue(newQ);
     }
   };
@@ -134,7 +132,6 @@ QueueList.propTypes = {
   currentPartyInfo: PropTypes.object,
   time: PropTypes.object,
   showParty: PropTypes.func,
-  setQueue: PropTypes.func,
   showAddModal: PropTypes.func,
   showDeleteModal: PropTypes.func,
 };

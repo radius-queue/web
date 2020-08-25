@@ -87,9 +87,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
   const addParty = (party: Party) => {
     const list: Party[] = stateQ!.parties.slice();
     list.push(party);
-    const newQueue : Queue =
-      new Queue(stateQ.uid, stateQ.open, list);
-    setQ(newQueue);
+    const newQueue : Queue = new Queue(stateQ.uid, stateQ.open, list);
     postQueue(newQueue);
   };
 
@@ -100,7 +98,6 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
   const removeParty = (party: Party) => {
     const list: Party[] = stateQ.parties.filter((val) => val !== party);
     const newQ: Queue = new Queue(stateQ.uid, stateQ.open, list);
-    setQ(newQ);
     setParty(undefined);
     postQueue(newQ);
   };
@@ -113,7 +110,6 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
     const list = stateQ.parties.slice();
     party![0].messages.push([new Date(), message]);
     const newQ = new Queue(stateQ.uid, stateQ.open, list);
-    setQ(newQ);
     postQueue(newQ);
     if (party![0].pushToken) {
       pushNotifications(message, [party![0].pushToken]);
@@ -124,9 +120,7 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
    * Clears all parties from the current queue.
    */
   const clearQueue = () => {
-    const newQ: Queue =
-      new Queue(stateQ.uid, stateQ.open, []);
-    setQ(newQ);
+    const newQ: Queue = new Queue(stateQ.uid, stateQ.open, []);
     setParty(undefined);
     postQueue(newQ);
   };
@@ -136,11 +130,9 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
       <QueueControls
         queue={stateQ}
         clear={() => setClearModal(true)}
-        setQueue={(q: Queue) => setQ(q)}
       />
       <QueueList queue={stateQ}
         showParty={setParty}
-        setQueue={setQ}
         showAddModal={() => setAddModal(true)}
         showDeleteModal={() => setDeleteModal(true)}
         currentPartyInfo={party}

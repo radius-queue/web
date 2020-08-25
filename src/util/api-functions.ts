@@ -109,6 +109,7 @@ export const postQueue = async (queue : Queue) => {
 
   const options : any = fetchOptions('POST', idToken);
   options.body = JSON.stringify({queue});
+  console.log(options.body);
 
   const response = await fetch(`${ROOT_URL}/api/queues`, options);
   if (response.status === 403) {
@@ -156,10 +157,14 @@ export const pushNotifications = async (
   message: string,
   pushTokens : string[],
 ) => {
+  if (!pushTokens.length) {
+    return;
+  }
   const idToken : string = await auth.currentUser!.getIdToken();
 
   const options : any = fetchOptions('POST', idToken);
   options.body = JSON.stringify({tokens: pushTokens, message});
+  console.log(options.body);
 
   const response = await fetch(`${ROOT_URL}/api/push`, options);
 

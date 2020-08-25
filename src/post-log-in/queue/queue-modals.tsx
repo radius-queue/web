@@ -79,9 +79,6 @@ export const AddCustomerModal = ({show, close, mainAction} : ModalProps) => {
    */
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (e.currentTarget.checkValidity() === false) {
-      e.stopPropagation();
-    }
 
     if (checkValid()) {
       const party : Party = new Party(

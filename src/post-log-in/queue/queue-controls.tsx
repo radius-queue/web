@@ -11,7 +11,6 @@ import {Queue, Party} from '../../util/queue';
 interface QueueControlsProps {
   queue: Queue, // the current queue
   clear: () => void, // clears the queue
-  setQueue: (q: Queue) => void, // updates the parent state with the passed in Q
 }
 
 /**
@@ -20,10 +19,8 @@ interface QueueControlsProps {
  * @param {function(Queue)} setQueue the function that
  * sets the top level queue
  */
-const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
-  const newQ : Queue =
-    new Queue(queue.uid, true, queue.parties);
-  setQueue(newQ);
+const openQueue = (queue: Queue) => {
+  const newQ : Queue = new Queue(queue.uid, true, queue.parties);
   postQueue(newQ);
 };
 
@@ -32,10 +29,8 @@ const openQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
  * @param {Queue} queue The queue to be opened.
  * @param {function(Queue)} setQueue
  */
-const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
-  const newQ : Queue =
-    new Queue(queue.uid, false, queue.parties);
-  setQueue(newQ);
+const closeQueue = (queue: Queue) => {
+  const newQ : Queue = new Queue(queue.uid, false, queue.parties);
   postQueue(newQ);
 };
 
@@ -48,10 +43,10 @@ const closeQueue = (queue: Queue, setQueue: (q: Queue) => void) => {
  * @return {jsx} A React Bootstrap Card filled with the controls for the
  * displayed queue.
  */
-const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
+const QueueControls = ({queue, clear}: QueueControlsProps) => {
   const [message, setMessage] = useState<string>('');
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const newParties = queue.parties.slice();
     const date = new Date();
     const messages : string[] = [];
@@ -61,12 +56,10 @@ const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
         messages.push(val.pushToken);
       }
     });
-
     const newQ: Queue = new Queue(queue.uid, queue.open, newParties);
     setMessage('');
-    setQueue(newQ);
-    postQueue(newQ);
-    pushNotifications(message, messages);
+    await pushNotifications(message, messages);
+    await postQueue(newQ);
   };
 
   const selectedOpenClosed: string = queue.open ? 'open' : 'closed';
@@ -82,13 +75,13 @@ const QueueControls = ({queue, setQueue, clear}: QueueControlsProps) => {
           >
             <ToggleButton
               value='open'
-              onChange={() => openQueue(queue, setQueue)}
+              onChange={() => openQueue(queue)}
             >
               Open Queue
             </ToggleButton>
             <ToggleButton
               value='closed'
-              onChange={() => closeQueue(queue, setQueue)}
+              onChange={() => closeQueue(queue)}
             >
               Close Queue
             </ToggleButton>

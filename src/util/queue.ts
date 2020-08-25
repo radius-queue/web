@@ -57,7 +57,7 @@ export class Party {
     this.phoneNumber = phoneNumber;
     this.quote = quote;
     this.messages = messages;
-    this.pushToken = '';
+    this.pushToken = pushToken;
     // this.uid = uid || "";
   }
 
@@ -113,6 +113,8 @@ export class Party {
           this.messageFromFB(party.messages),
           party.pushToken,
         ];
+
+    console.log(`Party ${party.firstName}: `, new Party(...partyPrams));
     return new Party(...partyPrams);
   }
 
@@ -120,6 +122,7 @@ export class Party {
     * @param party
     */
   static toFirebase(party: Party): any {
+    console.log(`Party ${party.firstName}: `, party);
     return {
       firstName: party.firstName,
       size: party.size,
