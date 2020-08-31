@@ -366,7 +366,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                   setEditing(true);
                   disableOtherNavs();
                 }}
-                className='editing-button-group'
+                id='edit-info-button'
                 >
                   Edit Your Info
                 </Button> :
@@ -394,7 +394,7 @@ const ProfilePage = ({uid, setBusiness, business, setQueue}: ProfileProps) => {
                     <Button
                       key='submit'
                       type='submit'
-                      className='editing-button-group'
+                      id='edit-info-button'
                       variant='success'
                     >
                       Submit Business Profile

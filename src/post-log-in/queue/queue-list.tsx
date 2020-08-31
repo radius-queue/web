@@ -88,7 +88,7 @@ const QueueList = ({queue, currentPartyInfo, time, showParty,
               <Col md={3}>
                 {timeDiffInMinutes(time, person.checkIn)} minutes
               </Col>
-              <Col md={3}>
+              <Col md={3} id='action-buttons'>
                 <Button
                   className='queue-list-buttons'
                   onClick={
