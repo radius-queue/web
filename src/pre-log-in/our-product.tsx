@@ -226,7 +226,7 @@ const OurProductPage = () => {
                             className="emulator-img"
                           />
                         </Row>
-                        You will see this screen appear. Click "Tap to Play" to
+                        If you are using an emulator, you will see this screen appear. Click "Tap to Play" to
                         enter the emulator.
                       </Col>
                     </Row>
@@ -245,7 +245,7 @@ const OurProductPage = () => {
                             className="emulator-img"
                           />
                         </Row>
-                        You may have to wait in a queue to access the Expo
+                        When using an emulator, you may have to wait in a queue to access the Expo
                         emulator.
                       </Col>
                     </Row>
@@ -264,13 +264,13 @@ const OurProductPage = () => {
                             className="emulator-img"
                           />
                         </Row>
-                        Once allowed inside the emulator, scroll down. You will
+                        Once on the Expo project page, scroll down. You will
                         see a purple button saying "Open project using Expo."
                         Clicking that button will open the Radius mobile app!
                         If you have an Android device with the Expo app
                         installed, you have the option of scanning the QR
                         code displayed on this page to run the app on your
-                        device.
+                        device. You may also skip to step 8 of the tutorial if you are running the app on an Android device.
                       </Col>
                     </Row>
                   </Container>
