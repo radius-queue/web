@@ -109,7 +109,7 @@ const DefaultLandingPage = () => {
         <div className="d-block d-lg-none" id="small-container">
           <img src="../../images/radius-logo.png" id="landing-logo" alt="Radius logo" />
           <p>The waiting room reimagined.</p>
-          <img src="../../images/storefront-only.png" id="landing-storefronts" alt="Storefronts" />
+          <img src="../images/background-radii.png" id="landing-storefronts" alt="Storefronts" />
         </div>
         <div className="d-none d-lg-block">
           <div id={(redHover || greenHover || blueHover) ? 'background-image-dim' : 'background-image'}>
