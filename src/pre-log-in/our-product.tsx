@@ -56,7 +56,7 @@ const OurProductPage = () => {
                         with a link to verify your email address. Once
                         you've verified your email, head over to
                         the <Link to="/log-in">Log In</Link> tab
-                        and log in!
+                        and log in! Make sure you're on a desktop computer for the best results.
                       </Col>
                     </Row>
                   </Container>
