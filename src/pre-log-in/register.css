@@ -1,23 +1,23 @@
 #reg-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    background-image: url('/../images/background-radii.png');
-    background-size: 125px 70px;
-    margin-top: auto;
-    margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-image: url('/../images/background-radii.png');
+  background-size: 125px 70px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 #reg-card {
-    display: flex;
-    padding: 30px;
-    margin: 10px;
-    width: 30rem;
-    background-color: var(--white);
-    color: var(--black);
-    justify-content: space-between;
-  }
+  display: flex;
+  padding: 30px;
+  margin: 10px;
+  width: 30rem;
+  background-color: var(--white);
+  color: var(--black);
+  justify-content: space-between;
+}
 
   @media screen and (max-width: 500px) {
     #reg-card {
@@ -34,6 +34,10 @@
 #reg-card .btn:hover {
     background-color: var(--dark-hover);
     border-color: var(--dark-hover);
+}
+
+#description {
+  color: white;
 }
 
 .form-header-reg {

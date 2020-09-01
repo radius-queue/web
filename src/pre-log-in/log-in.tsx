@@ -3,6 +3,7 @@ import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
 import './log-in.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
@@ -77,8 +78,13 @@ const BusinessLogInPage = () => {
 
   return (
     <div id="login-container">
+      <Container id="landing-page-display">
+        <h1>Log In</h1>
+        <p id="description">
+          Get Back to Safely Serving Your Customers
+        </p>
+      </Container>
       <Card id="login-card">
-        <h1 className="form-header">Log in to Radius for Business</h1>
         <Form noValidate onSubmit={submitFormValues}>
           <Form.Group controlId="businessLogInEmail">
             <Form.Label>Email Address:</Form.Label>

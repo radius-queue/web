@@ -3,6 +3,7 @@ import {useForm} from '../logic/logic';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
 import './register.css';
 import './../firebase.ts';
 import firebase from 'firebase/app';
@@ -115,70 +116,70 @@ const RegistrationPage = () => {
 
   return (
     <div id="reg-container">
+      <Container id="landing-page-display">
+        <h1>Register</h1>
+        <p id="description">
+          Come Reimagine the Waiting Room With Us
+        </p>
+      </Container>
       <Card id="reg-card">
-        <Card.Title className="form-header-reg">
-        Register your Business with Radius</Card.Title>
+        <Form noValidate onSubmit={submitForm}>
+          <Form.Group controlId="email">
+            <Form.Label>Email Address:</Form.Label>
+            <Form.Control
+              className="input-box"
+              type="email"
+              name="email"
+              value={formValues.email}
+              placeholder="account@example.com"
+              onChange={setFormValues}
+              isInvalid={validity.submitted && !validity.email[0]}
+            />
+            <Form.Control.Feedback type='invalid'>
+              {validity.email[1]}
+            </Form.Control.Feedback>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
 
-        <Card.Body>
-          <Form noValidate onSubmit={submitForm}>
-            <Form.Group controlId="email">
-              <Form.Label>Email Address:</Form.Label>
-              <Form.Control
-                className="input-box"
-                type="email"
-                name="email"
-                value={formValues.email}
-                placeholder="account@example.com"
-                onChange={setFormValues}
-                isInvalid={validity.submitted && !validity.email[0]}
-              />
-              <Form.Control.Feedback type='invalid'>
-                {validity.email[1]}
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
+          <Form.Group controlId="password">
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              className="input-box"
+              type="password"
+              name="password"
+              value={formValues.password}
+              placeholder="Password"
+              onChange={setFormValues}
+              isValid={validity.submitted && !!validity.password[0]}
+              isInvalid={validity.submitted && !validity.password[0]}
+            />
+            <Form.Control.Feedback type='invalid'>
+              {validity.password[1]}
+            </Form.Control.Feedback>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
 
-            <Form.Group controlId="password">
-              <Form.Label>Password:</Form.Label>
-              <Form.Control
-                className="input-box"
-                type="password"
-                name="password"
-                value={formValues.password}
-                placeholder="Password"
-                onChange={setFormValues}
-                isValid={validity.submitted && !!validity.password[0]}
-                isInvalid={validity.submitted && !validity.password[0]}
-              />
-              <Form.Control.Feedback type='invalid'>
-                {validity.password[1]}
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
+          <Form.Group controlId="confirm">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              className="input-box"
+              type="password"
+              name="confirm"
+              value={formValues.confirm}
+              placeholder="Confirm Password"
+              onChange={setFormValues}
+              isValid={validity.submitted && !!validity.password[0]}
+              isInvalid={validity.submitted && !validity.password[0]}
+            />
+            <Form.Control.Feedback type='invalid'>
+              {validity.password[1]}
+            </Form.Control.Feedback>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
 
-            <Form.Group controlId="confirm">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                className="input-box"
-                type="password"
-                name="confirm"
-                value={formValues.confirm}
-                placeholder="Confirm Password"
-                onChange={setFormValues}
-                isValid={validity.submitted && !!validity.password[0]}
-                isInvalid={validity.submitted && !validity.password[0]}
-              />
-              <Form.Control.Feedback type='invalid'>
-                {validity.password[1]}
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-
-            <Button type='submit' style={{width: '100%'}}>
-            Register</Button>
-          </Form>
-        </Card.Body>
-
+          <Button type='submit' style={{width: '100%'}}>
+          Register</Button>
+        </Form>
       </Card>
       <div id="already-account">
         Already have an account? <Link to="./log-in">

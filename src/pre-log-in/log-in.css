@@ -73,3 +73,7 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+#description {
+  color: white;
+}
