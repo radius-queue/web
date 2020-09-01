@@ -115,7 +115,7 @@ const DefaultLandingPage = () => {
               <Clock size={30} className='icon'/>
               <h5>A Timely Solution</h5>
               <p>
-                Radius addresses the primary concern of small businesses in the Coronavirus era,
+                Radius addresses the primary concern of small businesses in the Coronavirus era:
                 how to effectively serve customers while ensuring the safety
                 of everyone involved. 
               </p>
