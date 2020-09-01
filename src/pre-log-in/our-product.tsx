@@ -238,6 +238,25 @@ const OurProductPage = () => {
                       </Col>
                       <Col>
                         <Row>
+                          <img src="../images/example-emulator-waiting.png"
+                            alt="Example emulator waiting to play"
+                            className="emulator-img"
+                          />
+                        </Row>
+                        You may have to wait in a queue to access the Expo
+                        emulator.
+                      </Col>
+                    </Row>
+                  </Container>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Container>
+                    <Row>
+                      <Col xs={1} className="step-number">
+                        4.
+                      </Col>
+                      <Col>
+                        <Row>
                           <img src="../images/example-emulator-open.png"
                             alt="Example emulator with open button"
                             className="emulator-img"
@@ -258,7 +277,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        4.
+                        5.
                       </Col>
                       <Col>
                         <Row>
@@ -280,7 +299,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        5.
+                        6.
                       </Col>
                       <Col>
                         <Row>
@@ -300,7 +319,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        6.
+                        7.
                       </Col>
                       <Col>
                         <Row>
@@ -320,7 +339,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        6.
+                        8.
                       </Col>
                       <Col>
                         <Row>
@@ -344,7 +363,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        7.
+                        9.
                       </Col>
                       <Col>
                         <Row>
@@ -369,7 +388,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        8.
+                        10.
                       </Col>
                       <Col>
                         <Row>
@@ -392,7 +411,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        9.
+                        11.
                       </Col>
                       <Col>
                         <Row>
@@ -412,7 +431,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        10.
+                        12.
                       </Col>
                       <Col>
                         <Row>
@@ -434,7 +453,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        11.
+                        13.
                       </Col>
                       <Col>
                         <Row>
