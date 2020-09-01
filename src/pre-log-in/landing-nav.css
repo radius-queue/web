@@ -1,11 +1,14 @@
-#landing-page-header {
-  display: flex;
-  margin-left: 8%;
-  margin-right: 8%;
-  padding: 0;
-  height: 10vh;
-  justify-content: space-between;
-  align-items: center;
+
+@media screen and (min-width: 1000px) {
+  #landing-page-header {
+    display: flex;
+    margin-left: 8%;
+    margin-right: 8%;
+    padding: 0;
+    height: 10vh;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 #the-title {
@@ -26,12 +29,13 @@
 
 #landing-page-links a {
   color: var(--light);
-  transition: all linear .2s;
-  margin-left: 25px;
+  transition: all linear .2s !important;
+  margin-left: 25px !important;
+  align-items: right !important;
 }
 
 #landing-page-links a:hover {
-  text-decoration: none;
+  text-decoration: none !important;
   color: var(--light-hover);
 }
 

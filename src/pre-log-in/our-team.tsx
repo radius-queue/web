@@ -9,7 +9,7 @@ const OurTeamPage = () => {
     <div id="team">
       <div id="landing-page-display">
         <h1>Meet the Team</h1>
-        <p>
+        <p id="subheader">
           We Love Solving Problems and Helping You Safely Serve Your Customers.
         </p>
       </div>
@@ -56,9 +56,9 @@ const OurTeamPage = () => {
                 leverage the power of technology to make lives better.
               </p>
             </div>
-            <ul>
+            <ul style={{textAlign: 'left'}}>
               <li>Favorite Restaurant: Aji Sushi</li>
-              <li>Happy Place: The 15th tee box at Chambers Bay</li>
+              <li>Happy Place: 15th tee at Chambers Bay</li>
               <li>Favorite TV Show: The West Wing</li>
             </ul>
           </Col>

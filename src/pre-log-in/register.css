@@ -20,6 +20,12 @@
     justify-content: space-between;
   }
 
+  @media screen and (max-width: 500px) {
+    #reg-card {
+      width: 70%;
+    }
+  }
+
 #reg-card .btn {
     background-color: var(--black);
     color: white;

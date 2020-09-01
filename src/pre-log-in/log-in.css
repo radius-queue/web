@@ -8,6 +8,7 @@
   margin-top: auto;
   margin-bottom: auto;
   height: 89vh;
+  overflow: hidden;
 }
 
 #login-card {
@@ -18,6 +19,12 @@
   background-color: var(--white);
   color: var(--black);
   justify-content: space-between;
+}
+
+@media screen and (max-width: 500px) {
+  #login-card {
+    width: 70%;
+  }
 }
 
 #login-card .btn {
