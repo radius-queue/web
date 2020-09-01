@@ -21,7 +21,7 @@ const OurProductPage = () => {
           of your own creation for the tutorial.
         </p>
       </Container>
-      <Container>
+      <Container id="tutorial-container">
         <Row id="tutorial">
           <Row className="span-width" md={1} lg={2}>
             <Col lg={2}>
