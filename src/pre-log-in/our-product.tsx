@@ -23,25 +23,25 @@ const OurProductPage = () => {
       </Container>
       <Container>
         <Row id="tutorial">
-          <Row className="span-width">
-            <Col xs={2}>
+          <Row className="span-width" md={1} lg={2}>
+            <Col lg={2}>
               <h3 className="subheader">Watch the Radius Intro Video</h3>
             </Col>
-            <Col>
+            <Col lg={10}>
               <ListGroup className="list-group">
                 <ListGroup.Item>
                   <Row>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/WaKoYsUl0IY" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/WaKoYsUl0IY" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                   </Row>
                 </ListGroup.Item>
               </ListGroup>
             </Col>
           </Row>
-          <Row className="span-width">
-            <Col xs={2}>
+          <Row className="span-width" md={1} lg={2}>
+            <Col lg={2}>
               <h3 className="subheader">Set Up Your Virtual Waiting Room</h3>
             </Col>
-            <Col>
+            <Col lg={10}>
               <ListGroup className="list-group">
                 <ListGroup.Item>
                   <Container>
@@ -189,11 +189,11 @@ const OurProductPage = () => {
               </ListGroup>
             </Col>
           </Row>
-          <Row className="span-width">
-            <Col xs={2}>
+          <Row className="span-width" md={1} lg={2}>
+            <Col lg={2}>
               <h3 className="subheader">Explore the Radius Mobile App</h3>
             </Col>
-            <Col>
+            <Col lg={10}>
               <ListGroup className="list-group">
                 <ListGroup.Item>
                   <Container>
@@ -203,7 +203,7 @@ const OurProductPage = () => {
                       </Col>
                       <Col>
                         If you have an Android mobile device with the Expo app installed, go to the following link
-                        to use our Radius mobile app: <a target="_blank" rel="noreferrer" href="https://expo.io/@songziz/radius-mobile">https://expo.io/@songziz/radius-mobile</a>.
+                        to use our Radius mobile app: <a target="_blank" rel="noreferrer" id="emulator-link" href="https://expo.io/@songziz/radius-mobile">https://expo.io/@songziz/radius-mobile</a>.
                         If you do not have an Android mobile device,
                         we will use an emulator provided by Expo to view
                         the Radius mobile app. We ask that you be patient

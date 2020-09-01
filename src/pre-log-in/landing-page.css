@@ -3,12 +3,37 @@
   flex-direction: column;
   align-items: center;
   opacity: 1;
+  overflow: hidden;
 }
 
 #landing-page-display img {
   height: 90vh;
   width: 100vmax;
   filter: contrast(120%) brightness(80%);
+}
+
+#landing-logo {
+  width: 70% !important;
+  height: auto !important;
+}
+
+#landing-storefronts {
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  width: 100vw !important;
+  height: 90vh !important;
+  overflow: hidden;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+#small-container {
+  overflow: hidden;
+}
+
+#small-container p {
+  font-size: 24pt;
 }
 
 #linked-in {

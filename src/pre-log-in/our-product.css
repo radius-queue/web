@@ -8,11 +8,18 @@
   color: var(--white);
 }
 
+#emulator-link {
+  word-break: break-all;
+}
+
 iframe {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 700px;
+  height: 400px;
+  max-width: 90%;
 }
 
 #tutorial {
@@ -45,7 +52,8 @@ iframe {
 }
 
 .nav-img {
-  height: 50px;
+  width: 250px;
+  max-width: 90%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 3px;
@@ -61,14 +69,16 @@ iframe {
   margin-top: 50px;
   margin-bottom: 10px;
   border-radius: 8px;
+  border-width: 5px;
+  border-color: var(--black);
 }
 
 .emulator-img {
-  height: 400px;
+  width: 250px;
+  max-width: 90%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10px;
-  border-radius: 8px;
 }
 
 #description {
