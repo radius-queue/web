@@ -202,11 +202,13 @@ const OurProductPage = () => {
                         1.
                       </Col>
                       <Col>
-                        So that you do not have to download any software,
+                        If you have an Android mobile device, go to the following link
+                        to use our Radius mobile app: <a target="_blank" rel="noreferrer" href="https://expo.io/@songziz/radius-mobile">https://expo.io/@songziz/radius-mobile</a>.
+                        If you do not have an Android mobile device,
                         we will use an emulator provided by Expo to view
                         the Radius mobile app. We ask that you be patient
                         with the emulator, as it is sometimes slow to
-                        load content and respond to user input. <a target="_blank" rel="noreferrer" href="https://expo.io/appetize-simulator?url=https://expo.io/@songziz/radius-mobile">Click here to begin!</a>
+                        load content and respond to user input. <a target="_blank" rel="noreferrer" href="https://expo.io/appetize-simulator?url=https://expo.io/@songziz/radius-mobile">Click here for the emulator.</a>
                       </Col>
                     </Row>
                   </Container>
