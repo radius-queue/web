@@ -20,7 +20,7 @@ export interface MapProps {
  * @return {jsx} Either the "no location info entered" view or the user's
  * Google map with their radius.
  */
-const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
+const Map = ({ radius, buildingLocation, setRadius, editable }: MapProps) => {
   const renderMarker = (map: any) => {
     new google.maps.Marker({
       position: buildingLocation,
@@ -53,11 +53,11 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
   return (
     buildingLocation ?
       <GoogleMapReact
-        bootstrapURLKeys={{key: GOOGLE_API_KEY}}
-        center={{lng: buildingLocation!.lng(), lat: buildingLocation!.lat()}}
+        bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
+        center={{ lng: buildingLocation!.lng(), lat: buildingLocation!.lat() }}
         defaultZoom={17}
         yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({map, maps, ref}) => renderMarker(map)}
+        onGoogleApiLoaded={({ map, maps, ref }) => renderMarker(map)}
         key={buildingLocation.toString() + `${editable}`}
       /> :
       (<Card.Body id='loading-profile-container'>
@@ -68,7 +68,7 @@ const Map = ({radius, buildingLocation, setRadius, editable} : MapProps) => {
         </Card.Title>
         <img
           id='loading-profile-logo'
-          src='../../images/radius-logo.PNG'
+          src='../../images/radius-logo.png'
           alt='Radius Logo'
         />
       </Card.Body>)
