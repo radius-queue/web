@@ -57,13 +57,9 @@
 }
 
 #progress-bar-container {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   height: auto;
   width: 80vw;
   margin: 10px;
-}
-
-#hub-content {
-  overflow-y: hidden;
 }
