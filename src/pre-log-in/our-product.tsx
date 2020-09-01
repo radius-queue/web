@@ -202,7 +202,7 @@ const OurProductPage = () => {
                         1.
                       </Col>
                       <Col>
-                        If you have an Android mobile device, go to the following link
+                        If you have an Android mobile device with the Expo app installed, go to the following link
                         to use our Radius mobile app: <a target="_blank" rel="noreferrer" href="https://expo.io/@songziz/radius-mobile">https://expo.io/@songziz/radius-mobile</a>.
                         If you do not have an Android mobile device,
                         we will use an emulator provided by Expo to view
