@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import BusinessLogInPage from './pre-log-in/log-in';
 import RegistrationPage from './pre-log-in/register';
 import OurTeamPage from './pre-log-in/our-team';
+import OurProductPage from './pre-log-in/our-product';
 import DefaultLandingPage from './pre-log-in/landing-page';
 import LandingPageNav from './pre-log-in/landing-nav';
 import {Hub} from './post-log-in/hub';
@@ -53,6 +54,10 @@ function App() {
         <Route exact path="/our-team">
           <LandingPageNav />
           <OurTeamPage />
+        </Route>
+        <Route exact path="/our-product">
+          <LandingPageNav />
+          <OurProductPage />
         </Route>
         <Route exact path="/">
           <LandingPageNav />

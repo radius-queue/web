@@ -10,6 +10,12 @@ const LandingPageNav = () => {
       <Link id='the-title' to="/">Radius</Link>
       <Nav id='landing-page-links'>
         <NavLink
+          to="/our-product"
+          activeClassName="landing-nav-selected"
+        >
+          Our Product
+        </NavLink>
+        <NavLink
           to="/our-team"
           activeClassName="landing-nav-selected"
         >

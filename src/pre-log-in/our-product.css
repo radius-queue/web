@@ -1,0 +1,80 @@
+#page {
+  background-image: url('/../images/background-radii.png');
+  background-size: 125px 70px;
+  padding-top: 2vh;
+}
+
+#page p {
+  color: var(--white);
+}
+
+iframe {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#tutorial {
+  margin-top: 100px;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#title {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.span-width {
+  width: 100%;
+  margin-bottom: 8vh;
+}
+
+.subheader {
+  font-size: 15pt;
+}
+
+.col-1 {
+  align-self: flex-start;
+}
+
+.list-group {
+  color: var(--black);
+}
+
+.nav-img {
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  border-radius: 8px;
+}
+
+.example-img {
+  width: 500px;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.emulator-img {
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+#description {
+  width: 80%;
+  text-align: justify;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3vh;
+}
