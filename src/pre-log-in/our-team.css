@@ -6,6 +6,11 @@
   margin-bottom: 30px;
 }
 
+#linked-in {
+  width: 32px;
+  height: auto;
+}
+
 .single-team-member h2 {
   margin-top: 35px;
   margin-bottom: 15px;

@@ -12,13 +12,7 @@ const OurProductPage = () => {
       <Container id="landing-page-display">
         <h1>Our Product</h1>
         <p id="description">
-          This tutorial will give you the full Radius experience.
-          First, watch the Radius intro video to get a feel for
-          our product. Then,
-          we will explain how to set up your very own business
-          on the web app and then how to get in your line using
-          the Radius mobile app! Feel free to use a dummy business
-          of your own creation for the tutorial.
+          Experience Radius With A Detailed Walkthrough
         </p>
       </Container>
       <Container id="tutorial-container">

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, } from 'react';
+import {Clock, Shop, CardList} from 'react-bootstrap-icons';
 import './landing-page.css';
 
 /**
@@ -109,6 +110,35 @@ const DefaultLandingPage = () => {
         <div className="d-block d-lg-none" id="small-container">
           <img src="../../images/radius-logo.png" id="landing-logo" alt="Radius logo" />
           <p>The waiting room reimagined.</p>
+          <div id='product-descriptions'>
+            <div className='single-description'>
+              <Clock size={30} className='icon'/>
+              <h5>A Timely Solution</h5>
+              <p>
+                Radius addresses the primary concern of small businesses in the Coronavirus era,
+                how to effectively serve customers while ensuring the safety
+                of everyone involved. 
+              </p>
+            </div>
+            <div className='single-description'>
+              <Shop size={30} className='icon'/>
+              <h5>Tailored To Your Business</h5>
+              <p>
+                Radius allows you to customize your profile and queue preferences. Our flagship feature
+                lets you create a check-in region around your business so customers can join your waiting
+                room from a distance.
+              </p>
+            </div>
+            <div className='single-description'>
+              <CardList size={30} className='icon'/>
+              <h5>Intuitive and Practical</h5>
+              <p>
+                Radius brings the future of the watiting room to the present. Businesses like yours can
+                create and manage a virtual waiting room for free. With a sleek queue design that
+                allows you to add, remove and rearrange parties easily and efficiently.
+              </p>
+            </div>
+          </div>
         </div>
         <div className="d-none d-lg-block">
           <div id={(redHover || greenHover || blueHover) ? 'background-image-dim' : 'background-image'}>
@@ -130,7 +160,7 @@ const DefaultLandingPage = () => {
             />
           </div>
           <div className={redHover ? 'red-text-on' : 'red-text-off'} >
-            <h1>Intuitive and practical</h1>
+            <h1>Intuitive and Practical</h1>
             <p>Welcome to the future of the waiting room. With Radius, businesses like yours can create and <br></br>manage a virtual waiting room for free.
               With a sleek queue design that allows you to add, remove, <br></br>and rearrange parties, managing a waiting room has never been more simple and efficient.
             <br></br>Our additional messaging feature allows you to contact parties with notifications of their wait time and <br></br>even personalized messages on Radius' complementary
@@ -144,7 +174,7 @@ const DefaultLandingPage = () => {
             />
           </div>
           <div className={greenHover ? 'green-text-on' : 'green-text-off'} >
-            <h1>Tailored to your business</h1>
+            <h1>Tailored To Your Business</h1>
             <p>Radius allows you to fully customize your profile and queue preferences.<br></br>
               Our flagship feature allows you to set a distance from which customers can check-in <br></br>to the waiting room to ensure they are within a reasonable distance.
               Furthermore, all business <br></br>info will be displayed on the Radius mobile app for customers to see, a great marketing opportunity!. </p>
@@ -157,7 +187,7 @@ const DefaultLandingPage = () => {
             />
           </div>
           <div className={blueHover ? 'blue-text-on' : 'blue-text-off'} >
-            <h1>A timely solution</h1>
+            <h1>A Timely Solution</h1>
             <p>In light of the coronavirus pandemic, many walk-in businesses face <br></br>the issue of social distancing their customers in confined waiting spaces. <br></br>
               Radius eliminates this concern by allowing customers to virtually check-in to <br></br>a waiting room, prioritizing customer health and safety, and making
               it easier to <br></br>adhere to social distancing guidelines.</p>

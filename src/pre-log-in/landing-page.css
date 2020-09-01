@@ -42,9 +42,28 @@
   font-size: 24pt;
 }
 
-#linked-in {
-  width: 32px;
-  height: auto;
+#product-descriptions p {
+  color: white;
+  font-size: 11pt;
+}
+
+#product-descriptions {
+  margin-top: 10vh;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.single-description {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.icon {
+  margin-bottom: 5px;
+  color: white;
 }
 
 .link-box {
