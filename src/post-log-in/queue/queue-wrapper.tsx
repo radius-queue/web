@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Skeleton from 'react-loading-skeleton';
-import {Business} from '../../util/business';
-import {Queue} from '../../util/queue';
+import { Business } from '../../util/business';
+import { Queue } from '../../util/queue';
 import './queue-view.css';
 import './queue-wrapper.css';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -40,18 +40,18 @@ const QueueLoadingPage = () => {
       </Card>
       <Card id='control-group-card'>
         <Card.Body>
-          <Skeleton height={100}/>
+          <Skeleton height={100} />
         </Card.Body>
       </Card>
       <Card id='party-card'>
         <Card.Body>
           <Card.Title as='h1'>
-            <Skeleton height={100}/>
+            <Skeleton height={100} />
           </Card.Title>
           <Card.Text>
-            <Skeleton count={3} width={450}/>
+            <Skeleton count={3} width={450} />
           </Card.Text>
-          <Skeleton height={175}/>
+          <Skeleton height={175} />
         </Card.Body>
       </Card>
     </Container>
@@ -79,7 +79,7 @@ export const DefaultQueuePage = () => {
             business information.
           </Card.Text>
           <img
-            src='../../images/radius-logo.PNG'
+            src='../../images/radius-logo.png'
             alt='Radius Logo'
             id='no-business-info-logo'
           />
@@ -103,7 +103,7 @@ interface QueueTabProps {
  * @param {QueueTabProps} props properties passed into the component.
  * @return {jsx} the appropriate HTML display for the Queue page.
  */
-const QueueTab = ({business, queue, setQueue}: QueueTabProps) => {
+const QueueTab = ({ business, queue, setQueue }: QueueTabProps) => {
   const [isBusinessLoading, setBusinessLoading] = useState<boolean>(true);
   const [isQueueLoading, setQueueLoading] = useState<boolean>(true);
   const [isDefault, setDefault] = useState<boolean>(false);
@@ -125,10 +125,10 @@ const QueueTab = ({business, queue, setQueue}: QueueTabProps) => {
   }, [queue]);
 
   return (isBusinessLoading || isQueueLoading) ?
-    <QueueLoadingPage/> :
+    <QueueLoadingPage /> :
     isDefault ?
-    <DefaultQueuePage/> :
-    <QueueView queue={queue!} setQueue={setQueue}/>;
+      <DefaultQueuePage /> :
+      <QueueView queue={queue!} setQueue={setQueue} />;
 };
 
 QueueTab.propTypes = {

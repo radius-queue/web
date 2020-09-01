@@ -202,11 +202,13 @@ const OurProductPage = () => {
                         1.
                       </Col>
                       <Col>
-                        So that you do not have to download any software,
+                        If you have an Android mobile device with the Expo app installed, go to the following link
+                        to use our Radius mobile app: <a target="_blank" rel="noreferrer" href="https://expo.io/@songziz/radius-mobile">https://expo.io/@songziz/radius-mobile</a>.
+                        If you do not have an Android mobile device,
                         we will use an emulator provided by Expo to view
                         the Radius mobile app. We ask that you be patient
                         with the emulator, as it is sometimes slow to
-                        load content and respond to user input. <a target="_blank" rel="noreferrer" href="https://expo.io/appetize-simulator?url=https://expo.io/@songziz/radius-mobile">Click here to begin!</a>
+                        load content and respond to user input. <a target="_blank" rel="noreferrer" href="https://expo.io/appetize-simulator?url=https://expo.io/@songziz/radius-mobile">Click here for the emulator.</a>
                       </Col>
                     </Row>
                   </Container>
@@ -224,7 +226,7 @@ const OurProductPage = () => {
                             className="emulator-img"
                           />
                         </Row>
-                        You will see this screen appear. Click "Tap to Play" to
+                        If you are using an emulator, you will see this screen appear. Click "Tap to Play" to
                         enter the emulator.
                       </Col>
                     </Row>
@@ -238,18 +240,13 @@ const OurProductPage = () => {
                       </Col>
                       <Col>
                         <Row>
-                          <img src="../images/example-emulator-open.png"
-                            alt="Example emulator with open button"
+                          <img src="../images/example-emulator-waiting.png"
+                            alt="Example emulator waiting to play"
                             className="emulator-img"
                           />
                         </Row>
-                        Once allowed inside the emulator, scroll down. You will
-                        see a purple button saying "Open project using Expo."
-                        Clicking that button will open the Radius mobile app!
-                        If you have an Android device with the Expo app
-                        installed, you have the option of scanning the QR
-                        code displayed on this page to run the app on your
-                        device.
+                        When using an emulator, you may have to wait in a queue to access the Expo
+                        emulator.
                       </Col>
                     </Row>
                   </Container>
@@ -259,6 +256,30 @@ const OurProductPage = () => {
                     <Row>
                       <Col xs={1} className="step-number">
                         4.
+                      </Col>
+                      <Col>
+                        <Row>
+                          <img src="../images/example-emulator-open.png"
+                            alt="Example emulator with open button"
+                            className="emulator-img"
+                          />
+                        </Row>
+                        Once on the Expo project page, scroll down. You will
+                        see a purple button saying "Open project using Expo."
+                        Clicking that button will open the Radius mobile app!
+                        If you have an Android device with the Expo app
+                        installed, you have the option of scanning the QR
+                        code displayed on this page to run the app on your
+                        device. You may also skip to step 8 of the tutorial if you are running the app on an Android device.
+                      </Col>
+                    </Row>
+                  </Container>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Container>
+                    <Row>
+                      <Col xs={1} className="step-number">
+                        5.
                       </Col>
                       <Col>
                         <Row>
@@ -280,7 +301,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        5.
+                        6.
                       </Col>
                       <Col>
                         <Row>
@@ -300,7 +321,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        6.
+                        7.
                       </Col>
                       <Col>
                         <Row>
@@ -320,7 +341,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        6.
+                        8.
                       </Col>
                       <Col>
                         <Row>
@@ -344,7 +365,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        7.
+                        9.
                       </Col>
                       <Col>
                         <Row>
@@ -369,7 +390,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        8.
+                        10.
                       </Col>
                       <Col>
                         <Row>
@@ -383,7 +404,15 @@ const OurProductPage = () => {
                         the line if you are inside the business' radius.
                         When asked, allow Expo
                         to access the device's location to check if you
-                        are inside the radius.
+                        are inside the radius. Note: If you are using the Expo emulator on your desktop,
+                        your location will be assessed as the location of the Expo server.
+                        Because of this,
+                        you may need to return to the web app and expand your
+                        business' radius significantly to ensure the server is
+                        within your check-in area. When you change your check-in
+                        radius, in order to refresh the business info page on the mobile app,
+                        you'll need to return to the main Feed tab in the
+                        mobile app and reload your business info page again.
                       </Col>
                     </Row>
                   </Container>
@@ -392,7 +421,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        9.
+                        11.
                       </Col>
                       <Col>
                         <Row>
@@ -412,7 +441,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        10.
+                        12.
                       </Col>
                       <Col>
                         <Row>
@@ -434,7 +463,7 @@ const OurProductPage = () => {
                   <Container>
                     <Row>
                       <Col xs={1} className="step-number">
-                        11.
+                        13.
                       </Col>
                       <Col>
                         <Row>
@@ -443,8 +472,11 @@ const OurProductPage = () => {
                             className="emulator-img"
                           />
                         </Row>
-                        Thank you for completing the tutorial! If you have
-                        feedback for us, please reach out to grantmw@uw.edu!
+                        Thank you for completing the tutorial! Since we built
+                        everything from scratch in a short two months, we know
+                        there is plenty of room for Radius to grow.
+                        If you have feedback for us, please don't
+                        hesitate to reach out to grantmw@uw.edu!
                       </Col>
                     </Row>
                   </Container>
