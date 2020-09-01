@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './landing-page.css';
-import { analytics } from 'firebase';
 
 /**
  * the landing page for our website.
@@ -23,7 +22,6 @@ const DefaultLandingPage = () => {
 
   useEffect(() => {
     if (!isAnimating) {
-      console.log('triggered');
       const [redOn, redOff, redRadius] = callRedRadius();
       const [greenOn, greenOff, greenRadius] = callGreenRadius();
       const [blueOn, blueOff, blueRadius] = callBlueRadius();

@@ -106,13 +106,13 @@ const QueueView = ({queue, setQueue} : ViewProps) => {
    * Sends a message to the current selected user
    * @param {string} message the message to be sent
    */
-  const sendMessage = (message: string) => {
+  const sendMessage = async (message: string) => {
     const list = stateQ.parties.slice();
     party![0].messages.push([new Date(), message]);
     const newQ = new Queue(stateQ.uid, stateQ.open, list);
-    postQueue(newQ);
+    await postQueue(newQ);
     if (party![0].pushToken) {
-      pushNotifications(message, [party![0].pushToken]);
+      await pushNotifications(message, [party![0].pushToken]);
     }
   };
 
