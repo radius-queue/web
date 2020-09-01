@@ -402,7 +402,7 @@ const OurProductPage = () => {
                         the line if you are inside the business' radius.
                         When asked, allow Expo
                         to access the device's location to check if you
-                        are inside the radius. Note: Becuase your location
+                        are inside the radius. Note: Because your location
                         will be assessed as the location of the Expo server,
                         you may need to return to the web app and expand your
                         business' radius significantly to ensure the emulator is
