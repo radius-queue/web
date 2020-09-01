@@ -34,6 +34,8 @@
   overflow: hidden;
   background-image: url("/../images/background-radii.png");
   background-size: 125px 70px;
+  height: 90%;
+  width: 100%;
 }
 
 #small-container p {
