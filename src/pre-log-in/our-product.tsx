@@ -404,11 +404,15 @@ const OurProductPage = () => {
                         the line if you are inside the business' radius.
                         When asked, allow Expo
                         to access the device's location to check if you
-                        are inside the radius. Note: Because your location
-                        will be assessed as the location of the Expo server,
+                        are inside the radius. Note: If you are using the Expo emulator on your desktop,
+                        your location will be assessed as the location of the Expo server.
+                        Because of this,
                         you may need to return to the web app and expand your
-                        business' radius significantly to ensure the emulator is
-                        within the check-in area.
+                        business' radius significantly to ensure the server is
+                        within your check-in area. When you change your check-in
+                        radius, in order to refresh the business info page on the mobile app,
+                        you'll need to return to the main Feed tab in the
+                        mobile app and reload your business info page again.
                       </Col>
                     </Row>
                   </Container>
@@ -468,8 +472,11 @@ const OurProductPage = () => {
                             className="emulator-img"
                           />
                         </Row>
-                        Thank you for completing the tutorial! If you have
-                        feedback for us, please reach out to grantmw@uw.edu!
+                        Thank you for completing the tutorial! Since we built
+                        everything from scratch in a short two months, we know
+                        there is plenty of room for Radius to grow.
+                        If you have feedback for us, please don't
+                        hesitate to reach out to grantmw@uw.edu!
                       </Col>
                     </Row>
                   </Container>
