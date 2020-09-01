@@ -18,6 +18,8 @@
 }
 
 #landing-storefronts {
+  margin-top: 10vh;
+  background-size: 125px 70px;
   position: absolute;
   top: 10vh;
   left: 0;
@@ -30,6 +32,8 @@
 
 #small-container {
   overflow: hidden;
+  background-image: url("/../images/background-radii.png");
+  background-size: 125px 70px;
 }
 
 #small-container p {
