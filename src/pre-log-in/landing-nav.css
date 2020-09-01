@@ -39,6 +39,23 @@
   color: var(--light-hover);
 }
 
+.navbar-collapse {
+  background-color: black;
+}
+
+.navbar-nav {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.navbar-nav a {
+  padding: 5px;
+  border-bottom: var(--light) !important;
+  border-bottom-width: 2px !important;
+}
+
 .landing-nav-selected {
   color: var(--light-hover) !important;
 }
